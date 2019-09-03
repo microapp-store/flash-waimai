@@ -1,8 +1,8 @@
 {
-  "name": "web-flash-vue-admin",
+  "name": "flash-waimai-manage",
   "version": "1.0.0",
   "license": "MIT",
-  "description": "web-flash admin with vuejs",
+  "description": "flash-waimai admin with vuejs",
   "author": "enilu <eniluzt@qq.com>",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
