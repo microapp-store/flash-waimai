@@ -11,3 +11,8 @@
     flush privileges;
 
 ```
+- 安装mongodb并创建数据库
+使用mongorestore  导入mongodb数据
+```
+mongorestore.exe -d flash-waimai e:\\elm
+```

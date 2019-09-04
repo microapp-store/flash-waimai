@@ -127,4 +127,25 @@ public class FileService extends BaseService<FileInfo,Long,FileInfoRepository> {
         fileInfo.setAblatePath(configCache.get(ConfigKeyEnum.SYSTEM_FILE_UPLOAD_PATH.getValue()) + File.separator+fileInfo.getRealFileName());
         return fileInfo;
     }
+
+    public FileInfo getByName(String fileName) {
+//        File file = new File("d:\\data\\flash-waimai\\runtime\\upload");
+//        File[] imglist = file.listFiles();
+//        List<FileInfo> fileInfoList = Lists.newArrayList();
+//        for(int i=0;i<imglist.length;i++){
+//            String name = imglist[i].getName();
+//            FileInfo fileInfo = fileInfoRepository.findByRealFileName(name);
+//            if(fileInfo!=null){
+//                continue;
+//            }
+//            fileInfo = new FileInfo();
+//            fileInfo.setRealFileName(name);
+//            fileInfo.setOriginalFileName("商铺图片/"+name);
+//            fileInfoList.add(fileInfo);
+//        }
+//        fileInfoRepository.saveAll(fileInfoList);
+        FileInfo fileInfo = fileInfoRepository.findByRealFileName(fileName);
+        fileInfo.setAblatePath(configCache.get(ConfigKeyEnum.SYSTEM_FILE_UPLOAD_PATH.getValue()) + File.separator+fileInfo.getRealFileName());
+        return fileInfo;
+    }
 }

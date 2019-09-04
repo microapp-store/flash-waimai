@@ -60,6 +60,26 @@ export const constantRouterMap = [
       }
     ]
   },
+  {
+    path: '/data',
+    component: Layout,
+    redirect: '#',
+    name: 'data',
+    alwaysShow: true,
+    meta: {
+      roles: ['administrator', 'developer'],
+      title: '数据管理',
+      icon: 'message'
+  },
+    children: [
+      {
+        path: 'shop',
+        name: 'shop',
+        component:() => import('@/views/data/shop/shopList'),
+        meta: { title: '商铺管理' }
+      }
+    ]
+  },
   { path: '/404', component: () => import('@/views/404'), hidden: true }
 
 ]
