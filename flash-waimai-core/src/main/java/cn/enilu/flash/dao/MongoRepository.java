@@ -111,8 +111,16 @@ public class MongoRepository {
     }
 
     public <T> Page<T> queryPage(Page<T> page,Class<T> klass) {
+       return queryPage(page,klass,null);
+    }
+
+    public <T> Page<T> queryPage(Page<T> page,Class<T> klass,Map<String,Object> params) {
         Pageable pageable = PageRequest.of(page.getCurrent() - 1, page.getSize(), Sort.Direction.DESC,"id");
         Query query = new Query();
+        if(params!=null &&!params.isEmpty()) {
+            Criteria criteria = criteria(params);
+            query = Query.query(criteria);
+        }
         List<T> list = mongoTemplate.find(query.with(pageable),klass);
         Long count = count(klass);
         page.setTotal(count.intValue());

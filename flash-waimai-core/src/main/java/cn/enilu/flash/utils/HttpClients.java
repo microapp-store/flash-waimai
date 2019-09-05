@@ -14,9 +14,7 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.nutz.json.Json;
 import org.nutz.lang.Files;
-import org.nutz.mapl.Mapl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -246,13 +244,11 @@ public class HttpClients {
 	}
 
 	public static void main(String[] args) {
-		String json = Files.read(new File("e:\\flash-waimai\\shop.txt"));
-		Map map = Json.fromJson(Map.class,json);
-		List list = (List) Mapl.cell(map,"data.records");
+		List<String> list = Files.readLines(new File("e:\\flash-waimai\\food_img.json"));
+
 		for(int i=0;i<list.size();i++){
-			Map rec = (Map) list.get(i);
-			String img = (String) rec.get("image_path");
-			downloadImg("http://localhost:8002/img/"+img,"e:\\flash-waimai\\img\\shop\\"+img);
+		String img = list.get(i);
+			downloadImg("http://elm.cangdu.org/img/"+img,"e:\\flash-waimai\\img\\foods\\"+img);
 		}
 		System.out.println(list.size());
 

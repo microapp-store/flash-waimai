@@ -1,6 +1,7 @@
 package cn.enilu.flash.api.controller.business;
 
 import cn.enilu.flash.api.controller.BaseController;
+import cn.enilu.flash.bean.constant.factory.PageFactory;
 import cn.enilu.flash.bean.entity.front.Food;
 import cn.enilu.flash.bean.entity.front.Ids;
 import cn.enilu.flash.bean.entity.front.KeyValue;
@@ -9,7 +10,8 @@ import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.dao.MongoRepository;
 import cn.enilu.flash.service.front.IdsService;
 import cn.enilu.flash.utils.Maps;
-import com.google.common.base.Strings;
+import cn.enilu.flash.utils.StringUtils;
+import cn.enilu.flash.utils.factory.Page;
 import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -52,14 +54,14 @@ public class FoodController extends BaseController {
         return Rets.success();
     }
     @RequestMapping(value="/v2/foods",method = RequestMethod.GET)
-    public Object list(@RequestParam("restaurant_id") String restaurantId,
-                       @RequestParam(value = "offset", defaultValue = "0") Integer offset,
-                       @RequestParam(value = "limit", defaultValue = "20") Integer limit) {
-        restaurantId="11";
-        if (Strings.isNullOrEmpty(restaurantId) || "undefined".equals(restaurantId)) {
-            return mongoRepository.findAll(Food.class);
+    public Object list(@RequestParam(value = "restaurant_id",required = false) Long restaurantId
+                       ) {
+        //restaurantId="11";
+        Page<Food> page = new PageFactory<Food>().defaultPage();
+        if (StringUtils.isNullOrEmpty(restaurantId) || "undefined".equals(restaurantId)) {
+            return Rets.success(mongoRepository.queryPage(page,Food.class));
         } else {
-            return mongoRepository.findAll(Food.class,"restaurant_id",Long.valueOf(restaurantId));
+            return Rets.success(mongoRepository.queryPage(page,Food.class,Maps.newHashMap("restaurant_id",restaurantId)));
         }
     }
 

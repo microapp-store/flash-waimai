@@ -132,7 +132,7 @@
   </div>
 </template>
 
-<script src="./shopList.js"></script>
+<script src="./order.js"></script>
 
 
 <style lang="less">

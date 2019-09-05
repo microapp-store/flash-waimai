@@ -38,7 +38,7 @@ export default {
     size: 'Global Size'
   },
   login: {
-    title: 'web-flash',
+    title: 'flash-waimai',
     logIn: 'Log in',
     username: 'Username',
     password: 'Password'

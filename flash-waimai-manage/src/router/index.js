@@ -68,15 +68,27 @@ export const constantRouterMap = [
     alwaysShow: true,
     meta: {
       roles: ['administrator', 'developer'],
-      title: '数据管理',
+      title: '业务管理',
       icon: 'message'
   },
     children: [
       {
         path: 'shop',
         name: 'shop',
-        component:() => import('@/views/data/shop/shopList'),
+        component:() => import('@/views/business/shop/index'),
         meta: { title: '商铺管理' }
+      },
+      {
+        path: 'food',
+        name: 'food',
+        component:() => import('@/views/business/food/index'),
+        meta: { title: '食品管理' }
+      },
+      {
+        path: 'order',
+        name: 'order',
+        component:() => import('@/views/business/order/index'),
+        meta: { title: '订单管理' }
       }
     ]
   },

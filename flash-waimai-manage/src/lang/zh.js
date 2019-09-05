@@ -38,7 +38,7 @@ export default {
     size: '布局大小'
   },
   login: {
-    title: 'web-flash',
+    title: 'flash-waimai',
     logIn: '登录',
     username: '账号',
     password: '密码'

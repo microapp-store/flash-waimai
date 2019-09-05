@@ -42,12 +42,12 @@ public class ShopController extends BaseController {
 
     public Object getShop(@PathVariable("id")Long id) {
         Object data = mongoRepository.findOne(id,"shops");
-        return data ;
+        return Rets.success(data) ;
     }
 
     @RequestMapping(value = "restaurants",method = RequestMethod.GET)
-
-    public Object listShop(@RequestParam(value = "latitude",required = false) String latitude, @RequestParam(value = "longitude",required = false) String longitude) {
+    public Object listShop(@RequestParam(value = "latitude",required = false) String latitude,
+                           @RequestParam(value = "longitude",required = false) String longitude) {
         if (com.google.common.base.Strings.isNullOrEmpty(latitude) || "undefined".equals(latitude)
                 || com.google.common.base.Strings.isNullOrEmpty(longitude) || "undefined".equals(longitude)) {
             Page<Shop> page = new PageFactory<Shop>().defaultPage();
@@ -220,8 +220,7 @@ public class ShopController extends BaseController {
     }
 
 
-    @RequestMapping(value = "/v2/menu{id}",method = RequestMethod.GET)
-
+    @RequestMapping(value = "/v2/menu/{id}",method = RequestMethod.GET)
     public Object getMenus(@PathVariable("id")Long id){
         return Rets.success(mongoRepository.findOne(id,"menus"));
     }

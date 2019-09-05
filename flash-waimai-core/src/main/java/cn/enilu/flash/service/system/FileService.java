@@ -129,7 +129,7 @@ public class FileService extends BaseService<FileInfo,Long,FileInfoRepository> {
     }
 
     public FileInfo getByName(String fileName) {
-//        File file = new File("d:\\data\\flash-waimai\\runtime\\upload");
+//        File file = new File("E:\\flash-waimai\\img\\foods");
 //        File[] imglist = file.listFiles();
 //        List<FileInfo> fileInfoList = Lists.newArrayList();
 //        for(int i=0;i<imglist.length;i++){
@@ -140,7 +140,7 @@ public class FileService extends BaseService<FileInfo,Long,FileInfoRepository> {
 //            }
 //            fileInfo = new FileInfo();
 //            fileInfo.setRealFileName(name);
-//            fileInfo.setOriginalFileName("商铺图片/"+name);
+//            fileInfo.setOriginalFileName("食品图片");
 //            fileInfoList.add(fileInfo);
 //        }
 //        fileInfoRepository.saveAll(fileInfoList);
