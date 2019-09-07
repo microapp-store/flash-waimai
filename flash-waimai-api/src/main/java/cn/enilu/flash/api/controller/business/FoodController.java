@@ -6,9 +6,12 @@ import cn.enilu.flash.bean.entity.front.Food;
 import cn.enilu.flash.bean.entity.front.Ids;
 import cn.enilu.flash.bean.entity.front.KeyValue;
 import cn.enilu.flash.bean.entity.front.SpecFood;
+import cn.enilu.flash.bean.vo.business.FoodVo;
+import cn.enilu.flash.bean.vo.business.SpecVo;
 import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.dao.MongoRepository;
 import cn.enilu.flash.service.front.IdsService;
+import cn.enilu.flash.utils.Lists;
 import cn.enilu.flash.utils.Maps;
 import cn.enilu.flash.utils.StringUtils;
 import cn.enilu.flash.utils.factory.Page;
@@ -17,10 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created  on 2017/12/29 0029.
@@ -72,16 +75,33 @@ public class FoodController extends BaseController {
         return Rets.success("count", count);
     }
     @RequestMapping(value = "/v2/food/{id}",method = RequestMethod.DELETE)
-
     public Object delete(@PathVariable("id") Long id) {
          mongoRepository.delete("foods", Maps.newHashMap("item_id",id));
         return Rets.success();
     }
     //todo 未完成
     @RequestMapping(value = "/v2/updatefood",method = RequestMethod.POST)
-    public Object update(HttpServletRequest request){
-        Map<String,Object> data = getRequestPayload(Map.class);
-        System.out.println(Json.toJson(data));
+    public Object update(@ModelAttribute @Valid FoodVo food){
+        List<SpecVo> specVoList = Json.fromJsonAsList(SpecVo.class,food.getSpecsJson());
+        List<SpecFood> specList = Lists.newArrayList();
+        for(SpecVo specVo:specVoList){
+            SpecFood specFood = new SpecFood();
+            specFood.setName(specVo.getSpecs());
+            specFood.setPrice(Double.valueOf(specVo.getPrice()));
+            specFood.setPacking_fee(Double.valueOf(specVo.getPacking_fee()));
+            specFood.setSpecs_name(specVo.getSpecs());
+            specList.add(specFood);
+        }
+        Food old = mongoRepository.findOne(Food.class,"item_id",food.getId());
+        System.out.println(Json.toJson(food));
+
+        old.setName(food.getName());
+        old.setDescription(food.getDescript());
+        old.setCategory_id(food.getIdMenu());
+        old.setImage_path(food.getImagePath());
+        old.setSpecfoods(specList);
+        System.out.println(Json.toJson(old));
+        mongoRepository.update(old);
         return Rets.success();
     }
 

@@ -68,7 +68,7 @@ public class HttpKit {
         return new WafRequestWrapper(request);
     }
     public static  String getToken(){
-        return  getRequest().getHeader("Authorization");
+        return  getRequest().getHeader(Constants.TOKEN_NAME);
     }
 
     /**

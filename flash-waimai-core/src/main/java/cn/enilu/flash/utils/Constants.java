@@ -1,6 +1,7 @@
 package cn.enilu.flash.utils;
 
 public interface Constants {
+    String TOKEN_NAME ="Authorization";
 
     long SYSTEM_USER_ID=-1;
 

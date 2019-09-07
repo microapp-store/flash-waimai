@@ -3,20 +3,23 @@ package cn.enilu.flash.bean.entity.front;
 import java.util.List;
 
 /**
- * Created  on 2018/1/3 0003.
+ * 食品规格
  *
  * @author zt
  */
 public class SpecFood {
+    //原价
     private Double original_price;
     private Integer sku_id;
     private String name;
     private String pinyin_name;
     private Long restaurant_id;
     private Long food_id;
+    //包装费
     private Double packing_fee=0.0;
     private Double recent_rating=0.0;
     private Double promotion_stock=-1.0;
+    //现价
     private Double price;
     private Boolean sold_out;
     private Double recent_popularity=0.0;
@@ -24,6 +27,7 @@ public class SpecFood {
     private Long item_id;
     private Integer checkout_mode=0;
     private Integer stock=1000;
+    //规格名称
     private String specs_name;
     private List<KeyValue> specs;
 

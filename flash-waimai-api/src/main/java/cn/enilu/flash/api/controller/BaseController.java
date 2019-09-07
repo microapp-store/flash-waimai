@@ -3,6 +3,7 @@ package cn.enilu.flash.api.controller;
 
 import cn.enilu.flash.api.utils.ApiConstants;
 import cn.enilu.flash.security.JwtUtil;
+import cn.enilu.flash.utils.Constants;
 import cn.enilu.flash.utils.HttpKit;
 import cn.enilu.flash.utils.StringUtils;
 import com.alibaba.fastjson.JSON;
@@ -38,7 +39,7 @@ public class BaseController {
      * @return
      */
     public Long getIdUser(HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
+        String token = request.getHeader(Constants.TOKEN_NAME);
 
         Long idUser = JwtUtil.getUserId(token);
         if (idUser == null) {
@@ -54,11 +55,11 @@ public class BaseController {
      * @return
      */
     public String getToken(HttpServletRequest request) {
-        return request.getHeader("Authorization");
+        return request.getHeader(Constants.TOKEN_NAME);
     }
 
     public String getToken() {
-        return HttpKit.getRequest().getHeader("Authorization");
+        return HttpKit.getRequest().getHeader(Constants.TOKEN_NAME);
     }
 
     /**

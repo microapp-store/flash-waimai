@@ -139,8 +139,9 @@ public class FileController extends BaseController {
         }
 
         FileInputStream fis = null;
-        response.setContentType("image/"+fileInfo.getRealFileName().split("\\.")[1]);
+
         try {
+            response.setContentType("image/"+fileInfo.getRealFileName().split("\\.")[1]);
             OutputStream out = response.getOutputStream();
             File file = new File(fileInfo.getAblatePath());
             fis = new FileInputStream(file);
@@ -149,7 +150,7 @@ public class FileController extends BaseController {
             out.write(b);
             out.flush();
         } catch (Exception e) {
-            logger.error("getImgStream error",e);
+            logger.error("getImgStream error",e.getMessage());
         } finally {
             if (fis != null) {
                 try {

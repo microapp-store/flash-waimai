@@ -7,6 +7,7 @@ import cn.enilu.flash.core.log.LogManager;
 import cn.enilu.flash.core.log.LogTaskFactory;
 import cn.enilu.flash.security.JwtUtil;
 import cn.enilu.flash.service.system.LogObjectHolder;
+import cn.enilu.flash.utils.Constants;
 import cn.enilu.flash.utils.HttpKit;
 import cn.enilu.flash.utils.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -70,7 +71,7 @@ public class LogAop {
         //获取用户id，admin和api模块获取idUser方式不同
         Long idUser = null;
         HttpServletRequest request = HttpKit.getRequest();
-        String token = request.getHeader("Authorization");
+        String token = request.getHeader(Constants.TOKEN_NAME);
         if(StringUtils.isNotEmpty(token)) {
             idUser = JwtUtil.getUserId(token);
         }

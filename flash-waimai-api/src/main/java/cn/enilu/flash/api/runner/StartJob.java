@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * 启动定时任务
+ * 初始化定时任务
  *
  * @author enilu
  * @Date 2019-08-13

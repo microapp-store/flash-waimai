@@ -1,17 +1,24 @@
 import { getApiUrl } from '@/utils/utils'
 import { baseUrl, baseImgPath } from '@/config/env'
+import { getToken } from '@/utils/auth'
 
 import {
   getFoods,
   updateFood,
   deleteFood
-} from '@/api/getData'
+} from '@/api/business/food'
 import { getResturantDetail, getMenuById, getMenu } from '@/api/business/shop'
+import { Loading } from 'element-ui'
+
 export default {
   data() {
     return {
       baseUrl,
       baseImgPath,
+      uploadUrl: '',
+      uploadHeaders: {
+        'Authorization': ''
+      },
       restaurant_id: null,
       city: {},
       offset: 0,
@@ -46,6 +53,8 @@ export default {
   created() {
     this.restaurant_id = this.$route.query.restaurant_id
     this.initData()
+    this.uploadUrl = getApiUrl() + '/file'
+    this.uploadHeaders['Authorization'] = getToken()
   },
   computed: {
     specs: function() {
@@ -69,7 +78,7 @@ export default {
     async getMenu() {
       this.menuOptions = []
       try {
-        console.log('seltable',this.selectTable)
+        console.log('seltable', this.selectTable)
         const menuResponse = await getMenu({ restaurant_id: this.selectTable.restaurant_id, allMenu: true })
         const menu = menuResponse.data
         menu.forEach((item, index) => {
@@ -175,16 +184,13 @@ export default {
     },
     async handleDelete(index, row) {
       try {
-        const res = await deleteFood(row.item_id)
-        if (res.status === 1) {
+        deleteFood(row.item_id).then(response => {
           this.$message({
             type: 'success',
             message: '删除食品成功'
           })
           this.tableData.splice(index, 1)
-        } else {
-          throw new Error(res.message)
-        }
+        })
       } catch (err) {
         this.$message({
           type: 'error',
@@ -212,29 +218,56 @@ export default {
       }
       return isRightType && isLt2M
     },
+
+    handleBeforeUpload() {
+      this.loadingInstance = Loading.service({
+        lock: true,
+        text: this.$t('common.uploading'),
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
+    },
+    handleUploadSuccess(response, raw) {
+      this.loadingInstance.close()
+      if (response.code === 20000) {
+        console.log(response.data)
+        this.selectTable.image_path = response.data.realFileName
+        this.selectTable.image = getApiUrl() + '/file/getImgStream?fileName=' + response.data.realFileName
+      } else {
+        this.$message({
+          message: this.$t('common.uploadError'),
+          type: 'error'
+        })
+      }
+    },
     async updateFood() {
       this.dialogFormVisible = false
-      try {
-        const subData = { new_category_id: this.selectMenu.value, specs: this.specs }
-        const postData = { ...this.selectTable, ...subData }
-        console.log('postdata',postData)
-        const res = await updateFood(postData)
-        console.log(res)
-        if (res.status === 1) {
-          this.$message({
-            type: 'success',
-            message: '更新食品信息成功'
-          })
-          this.getFoods()
-        } else {
-          this.$message({
-            type: 'error',
-            message: res.message
-          })
-        }
-      } catch (err) {
-        console.log('更新餐馆信息失败', err)
-      }
+
+      // const subData = { new_category_id: this.selectMenu.value, specs: this.specs }
+      // const postData = { ...this.selectTable, ...subData }
+
+      const me = this
+      updateFood({
+        name: me.selectTable.name,
+        id: me.selectTable.item_id,
+        descript: me.selectTable.description,
+        idMenu: me.selectMenu.value,
+        idShop: me.selectTable.restaurant_id,
+        imagePath: me.selectTable.image_path,
+        specsJson: JSON.stringify(me.specs)
+      }).then(response => {
+        this.fetchData()
+        this.$message({
+          type: 'success',
+          message: '更新食品信息成功'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'error',
+          message: err.message
+        })
+      })
+
     },
     fetchNext() {
       this.listQuery.page = this.listQuery.page + 1

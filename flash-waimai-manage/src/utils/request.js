@@ -2,14 +2,13 @@ import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
 import store from '../store'
 import { getToken } from '@/utils/auth'
-
+// axios.defaults.withCredentials=true
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
   timeout: 10000
 
 })
-
 
 // request拦截器
 service.interceptors.request.use(
@@ -18,12 +17,13 @@ service.interceptors.request.use(
     if (token) {
       config.headers['Authorization'] = token // 让每个请求携带自定义token 请根据实际情况自行修改
     }
-    // config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
+    // config.headers.common['Content-Type'] = 'application/x-www-form-urlencoded'
+    // config.data = true
     return config
   },
   error => {
     // Do something with request error
-    console.log('error',error) // for debug
+    console.log('error', error) // for debug
     Promise.reject(error)
   }
 )
@@ -46,13 +46,13 @@ service.interceptors.response.use(
   },
   error => {
     //debug
-    if(error.response && error.response.data.errors) {
+    if (error.response && error.response.data.errors) {
       Message({
         message: error.response.data.errors[0].defaultMessage,
         type: 'error',
         duration: 5 * 1000
       })
-    }else {
+    } else {
       if (error.response && error.response.data.message) {
         Message({
           message: error.response.data.message,

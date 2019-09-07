@@ -96,10 +96,12 @@
           <el-form-item label="食品图片" label-width="100px">
             <el-upload
               class="avatar-uploader"
-              :action="baseUrl + '/v1/addimg/food'"
+
               :show-file-list="false"
-              :on-success="handleServiceAvatarScucess"
-              :before-upload="beforeAvatarUpload">
+              :action="uploadUrl"
+              :headers="uploadHeaders"
+              :before-upload="handleBeforeUpload"
+              :on-success="handleUploadSuccess">
               <img v-if="selectTable.image_path" :src="selectTable.image" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>

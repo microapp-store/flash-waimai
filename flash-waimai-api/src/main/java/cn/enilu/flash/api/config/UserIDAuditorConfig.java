@@ -20,7 +20,7 @@ public class UserIDAuditorConfig implements AuditorAware<Long> {
     @Override
     public Optional<Long> getCurrentAuditor() {
         try {
-            String token = HttpKit.getRequest().getHeader("Authorization");
+            String token = HttpKit.getRequest().getHeader(Constants.TOKEN_NAME);
             if (StringUtils.isNotEmpty(token)) {
                 return Optional.of(JwtUtil.getUserId(token));
             }

@@ -145,7 +145,9 @@ public class FileService extends BaseService<FileInfo,Long,FileInfoRepository> {
 //        }
 //        fileInfoRepository.saveAll(fileInfoList);
         FileInfo fileInfo = fileInfoRepository.findByRealFileName(fileName);
-        fileInfo.setAblatePath(configCache.get(ConfigKeyEnum.SYSTEM_FILE_UPLOAD_PATH.getValue()) + File.separator+fileInfo.getRealFileName());
+        if(fileInfo!=null) {
+            fileInfo.setAblatePath(configCache.get(ConfigKeyEnum.SYSTEM_FILE_UPLOAD_PATH.getValue()) + File.separator + fileInfo.getRealFileName());
+        }
         return fileInfo;
     }
 }
