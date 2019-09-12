@@ -2,16 +2,17 @@ package cn.enilu.flash.utils;
 
 
 import com.google.common.base.Strings;
+import net.sourceforge.pinyin4j.PinyinHelper;
+import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
+import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
+import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
+import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
+import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
 import java.nio.charset.Charset;
-import java.text.DecimalFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -23,10 +24,8 @@ import java.util.regex.Pattern;
 public class StringUtils {
 
     public static final String EMPTY = "";
-    private static final AtomicLong ORDER_SEQ = new AtomicLong(1);
     private static final Pattern SELECT_PATTERN_COMPILE = Pattern.compile("(?si)^.*?select(.*?)from");
 
-    private static final Pattern PATTERN_URL_VERSION = Pattern.compile("/.*?/.*?/.*?/(v[0-9]+)");
     private static  final Pattern PATERN_IP = Pattern.compile("((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)");
     /**
      * 是否为空字符
@@ -207,7 +206,6 @@ public class StringUtils {
      * 根据文件扩展名判断文件类型,是否为图片文件
      */
     public static boolean isPic(String fileName) {
-        // return fileName.matches("[\\s\\S]+.[gif|jpg|png|jpeg|bmp]");
         return fileName.matches("^[\\s\\S]+\\.+(gif|jpg|jpeg|png|bmp)$");
     }
 
@@ -215,13 +213,6 @@ public class StringUtils {
         return PATERN_IP.matcher(ip).find();
     }
 
-    public static String getMethod(Field field) {
-        return (field.getType() == boolean.class ? "is" : "get") + field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1);
-    }
-
-    public static String getMethod(String field) {
-        return "get" + field.substring(0, 1).toUpperCase() + field.substring(1);
-    }
 
     /**
      * 根据文件扩展名判断文件类型,是否为图片文件
@@ -245,39 +236,6 @@ public class StringUtils {
         return false;
     }
 
-    /**
-     * 获取MD5摘要信息
-     */
-    public static String getMD5(String msg) {
-        return MD5.getMD5String(msg);
-    }
-
-    /**
-     * 获取新的订单号
-     */
-    public static String getNewOrderNo() {
-        String orderNo = DateUtil.format(new Date(),"yyyyMMddHHmmssSSS");
-        orderNo += String.format("%04d", ORDER_SEQ.incrementAndGet() % 9999 + 1);
-        return orderNo;
-    }
-
-    /**
-     * 获取新支付交易号
-     */
-    public static String getReqSnNo(String mertid) {
-        String rst = "";
-        DecimalFormat formatter = new DecimalFormat("00000");
-        String index = formatter.format(ORDER_SEQ.incrementAndGet() % 9999 + 1);
-        rst = mertid + DateUtil.getAllTime()+ index;
-        return rst;
-    }
-
-    /**
-     * 获取新的用户唯一标识码
-     */
-    public static String getNewUserNo() {
-        return MD5.getMD5String(RandomUtils.getUUIDRandom());
-    }
 
     public static boolean validIP(String rule, String ip) {
         if ("1.1.1.1".equals(ip)) {
@@ -297,31 +255,8 @@ public class StringUtils {
         return str.replaceAll("\\t|\\s", "");
     }
 
-    /**
-     * 组织机构代码清理
-     */
-    public static String orgCodeFormat(String orgCode) {
-        if (Strings.isNullOrEmpty(orgCode)) {
-            return "";
-        }
-        orgCode = orgCode.replaceAll("[^\\da-zA-Z]", "");
-        return orgCode.length() == 9 ? orgCode : "";
-    }
 
 
-
-    public static String getResUrl(String url) {
-        return url.replaceAll("/v[0-9]+", "");
-    }
-
-    public static String getUrlVersion(String url) {
-        Matcher m = PATTERN_URL_VERSION.matcher(url);
-        if (m.find()) {
-            return m.group(1);
-        }
-
-        return null;
-    }
 
     public static String cutLeft(String str, int width) {
         if (str == null) {
@@ -620,8 +555,34 @@ public class StringUtils {
         }
         return null == charset ? str.getBytes() : str.getBytes(charset);
     }
-
-
+    public static String getPingYin(String inputString) {
+        HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
+        format.setCaseType(HanyuPinyinCaseType.LOWERCASE);
+        format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
+        format.setVCharType(HanyuPinyinVCharType.WITH_V);
+        String output = "";
+        if (inputString != null && inputString.length() > 0
+                && !"null".equals(inputString)) {
+            char[] input = inputString.trim().toCharArray();
+            try {
+                for (int i = 0; i < input.length; i++) {
+                    if (java.lang.Character.toString(input[i]).matches(
+                            "[\\u4E00-\\u9FA5]+")) {
+                        String[] temp = PinyinHelper.toHanyuPinyinStringArray(
+                                input[i], format);
+                        output += temp[0];
+                    } else {
+                        output += java.lang.Character.toString(input[i]);
+                    }
+                }
+            } catch (BadHanyuPinyinOutputFormatCombination e) {
+                e.printStackTrace();
+            }
+        } else {
+            return "*";
+        }
+        return output;
+    }
     /**
      * 切分字符串<br>
      * from jodd

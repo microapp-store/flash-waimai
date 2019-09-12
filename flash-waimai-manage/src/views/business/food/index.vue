@@ -32,7 +32,7 @@
                 <span>{{ props.row.rating }}</span>
               </el-form-item>
               <el-form-item label="食品分类">
-                <span>{{ props.row.category_name }}</span>
+                <span>{{ props.row.category_id }}</span>
               </el-form-item>
               <el-form-item label="月销量">
                 <span>{{ props.row.month_sales }}</span>

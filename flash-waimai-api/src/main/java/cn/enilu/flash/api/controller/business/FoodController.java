@@ -11,6 +11,7 @@ import cn.enilu.flash.bean.vo.business.SpecVo;
 import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.dao.MongoRepository;
 import cn.enilu.flash.service.front.IdsService;
+import cn.enilu.flash.utils.BeanUtil;
 import cn.enilu.flash.utils.Lists;
 import cn.enilu.flash.utils.Maps;
 import cn.enilu.flash.utils.StringUtils;
@@ -19,11 +20,11 @@ import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created  on 2017/12/29 0029.
@@ -40,25 +41,58 @@ public class FoodController extends BaseController {
     @Autowired
     private IdsService idsService;
 
-    @RequestMapping(value = "addfood",method = RequestMethod.GET)
+    @RequestMapping(value = "addfood",method = RequestMethod.POST)
+    public Object add(@Valid @ModelAttribute FoodVo foodVo) {
+        System.out.println(Json.toJson(foodVo));
+        Food food = new Food();
+        BeanUtil.copyProperties(foodVo,food);
+        food.setRestaurant_id(foodVo.getIdShop());
+        List<SpecVo> specVoList = Json.fromJsonAsList(SpecVo.class,foodVo.getSpecsJson());
+        List<SpecFood> specList = Lists.newArrayList();
+        for(SpecVo specVo:specVoList){
+            SpecFood specFood = new SpecFood();
+            specFood.setName(specVo.getSpecs());
+            specFood.setPinyin_name(StringUtils.getPingYin(specVo.getSpecs()));
+            specFood.setPrice(Double.valueOf(specVo.getPrice()));
+            specFood.setPacking_fee(Double.valueOf(specVo.getPacking_fee()));
+            specFood.setSpecs_name(specVo.getSpecs());
+            specList.add(specFood);
+        }
+        List<String> attributes = Json.fromJsonAsList(String.class,foodVo.getAttributesJson());
+        List<Map> attributes1 = Lists.newArrayList();
+        for(String attribute:attributes){
+            switch (attribute) {
+                case "新":
+                    attributes1.add(Maps.newHashMap(
+                            "icon_color", "5ec452",
+                            "icon_name", "新"
+                    ));
 
-    public Object add(HttpServletRequest request) {
-        String json = getRequestPayload();
-        Food food = Json.fromJson(Food.class, json);
+                    break;
+                case "招牌":
+                    attributes1.add(Maps.newHashMap(
+                            "icon_color", "f07373",
+                            "icon_name", "'招牌'"
+                    ));
+                    break;
+            }
+
+        }
+        food.setAttributes(attributes1);
+        food.setDescription(foodVo.getDescript());
+        food.setSpecfoods(specList);
         food.setItem_id(idsService.getId(Ids.ITEM_ID));
-        List<SpecFood> specFoods = new ArrayList<SpecFood>(2);
-        specFoods.add(buidSpecFood(food));
-        food.setSpecfoods(specFoods);
         setTips(food);
+        food.setPinyin_name(StringUtils.getPingYin(food.getName()));
         food.setSatisfy_rate(new BigDecimal(Math.ceil(Math.random() * 100)).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue());
         food.setSatisfy_count(new BigDecimal(Math.ceil(Math.random() * 1000)).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue());
         food.setRating(new BigDecimal(Math.random() * 5).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue());
+        System.out.println(Json.toJson(food));
         mongoRepository.save(food);
         return Rets.success();
     }
     @RequestMapping(value="/v2/foods",method = RequestMethod.GET)
-    public Object list(@RequestParam(value = "restaurant_id",required = false) Long restaurantId
-                       ) {
+    public Object list(@RequestParam(value = "restaurant_id",required = false) Long restaurantId) {
         //restaurantId="11";
         Page<Food> page = new PageFactory<Food>().defaultPage();
         if (StringUtils.isNullOrEmpty(restaurantId) || "undefined".equals(restaurantId)) {
@@ -92,9 +126,9 @@ public class FoodController extends BaseController {
             specFood.setSpecs_name(specVo.getSpecs());
             specList.add(specFood);
         }
-
         Food old = mongoRepository.findOne(Food.class,"item_id",food.getId());
         old.setName(food.getName());
+        old.setPinyin_name(StringUtils.getPingYin(food.getName()));
         old.setDescription(food.getDescript());
         old.setCategory_id(food.getIdMenu());
         old.setImage_path(food.getImagePath());

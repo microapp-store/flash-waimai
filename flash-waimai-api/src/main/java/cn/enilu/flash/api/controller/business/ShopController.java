@@ -22,7 +22,6 @@ import org.springframework.data.geo.GeoResult;
 import org.springframework.data.geo.GeoResults;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.*;
 
@@ -204,8 +203,7 @@ public class ShopController extends BaseController {
 
     @RequestMapping(value = "addcategory", method = RequestMethod.POST)
 
-    public Object addCategory(HttpServletRequest request) {
-        Menu menu = getRequestPayload(Menu.class);
+    public Object addCategory(@Valid @ModelAttribute Menu menu) {
         menu.setId(idsService.getId(Ids.CATEGORY_ID));
         System.out.println(Json.toJson(menu));
         //todo 进行处理后保存
@@ -220,7 +218,6 @@ public class ShopController extends BaseController {
     }
 
     @RequestMapping(value = "/getcategory/{id}", method = RequestMethod.GET)
-
     public Object getCategory(@PathVariable("id") Long restaurantId) {
         List list = mongoRepository.findAll("menus", "restaurant_id", restaurantId);
         return Rets.success("category_list", list);

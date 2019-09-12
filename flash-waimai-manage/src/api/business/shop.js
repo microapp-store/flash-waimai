@@ -60,6 +60,7 @@ export function getResturantsCount(params) {
     method: 'get'
   })
 }
+
 /**
  * 添加商铺
  */
@@ -110,6 +111,7 @@ export function getResturantDetail(id) {
     method: 'get'
   })
 }
+
 /**
  * 获取menu列表
  */
@@ -122,6 +124,7 @@ export function getMenu(params) {
     params
   })
 }
+
 /**
  * 获取menu详情
  */
@@ -134,3 +137,25 @@ export function getMenuById(category_id) {
   })
 }
 
+/**
+ * 获取当前店铺食品种类
+ */
+
+export function getCategory(restaurant_id) {
+  return request({
+    url: '/shopping/getcategory/' + restaurant_id,
+    method: 'get'
+  })
+}
+
+/**
+ * 添加食品种类
+ */
+
+export function addCategory(params) {
+  return request({
+    url: '/shopping/addcategory',
+    method: 'post',
+    params
+  })
+}

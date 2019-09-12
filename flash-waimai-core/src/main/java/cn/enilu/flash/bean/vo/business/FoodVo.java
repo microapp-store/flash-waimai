@@ -1,5 +1,6 @@
 package cn.enilu.flash.bean.vo.business;
 
+import cn.enilu.flash.bean.entity.front.Food;
 import lombok.Data;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * @date ：Created in 2019/9/7 10:36
  */
 @Data
-public class FoodVo {
+public class FoodVo  extends Food {
     private Long id;
     private String name;
     private String descript;
@@ -19,5 +20,7 @@ public class FoodVo {
     private Long idShop;
     private List<SpecVo> specs;
     private String specsJson;
+    private String attributesJson;
+
 
 }

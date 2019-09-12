@@ -39,18 +39,20 @@ router.beforeEach((to, from, next) => {
           // next()
         }).catch((err) => {
           store.dispatch('FedLogOut').then(() => {
-            Message.error(err || 'Verification failed, please login again')
+            console.log('1111111'.err)
+            // Message.error(err || 'Verification failed, please login again')
             next({ path: '/' })
           })
         })
       } else {
         // 没有动态改变权限的需求可直接next() 删除下方权限判断 ↓
         if (hasPermission(store.getters.roles, to.meta.roles)) {
+          console.log('next')
           next()
         } else {
+          console.log(401)
           next({ path: '/401', replace: true, query: { noGoBack: true }})
         }
-        // next()
       }
     }
   } else {

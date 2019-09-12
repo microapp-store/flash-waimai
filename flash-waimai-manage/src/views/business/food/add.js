@@ -1,5 +1,7 @@
 import { getApiUrl } from '@/utils/utils'
-import { getCategory, addCategory, addFood } from '@/api/business/food'
+import { getToken } from '@/utils/auth'
+import { addFood } from '@/api/business/food'
+import { getCategory, addCategory } from '@/api/business/shop'
 
 export default {
   data() {
@@ -10,6 +12,10 @@ export default {
         categorySelect: '',
         name: '',
         description: ''
+      },
+      fileMgrUrl: getApiUrl() + '/file',
+      uploadHeaders: {
+        'Authorization': ''
       },
       foodForm: {
         name: '',
@@ -51,6 +57,7 @@ export default {
     }
   },
   created() {
+    this.uploadHeaders['Authorization'] = getToken()
     if (this.$route.query.restaurant_id) {
       this.restaurant_id = this.$route.query.restaurant_id
     } else {
@@ -86,7 +93,7 @@ export default {
     async initData() {
       try {
         const result = await getCategory(this.restaurant_id)
-        if (result.status == 1) {
+        if (result.code === 20000) {
           result.category_list.map((item, index) => {
             item.value = index
             item.label = item.name
@@ -102,9 +109,11 @@ export default {
     addCategoryFun() {
       this.showAddCategory = !this.showAddCategory
     },
-    submitcategoryForm(categoryForm) {
-      this.$refs[categoryForm].validate(async(valid) => {
+    submitcategoryForm(formName) {
+      console.log(this.categoryForm)
+      this.$refs[formName].validate(async(valid) => {
         if (valid) {
+          console.log(2,this.categoryForm)
           const params = {
             name: this.categoryForm.name,
             description: this.categoryForm.description,
@@ -112,7 +121,7 @@ export default {
           }
           try {
             const result = await addCategory(params)
-            if (result.status == 1) {
+            if (result.code === 20000) {
               this.initData()
               this.categoryForm.name = ''
               this.categoryForm.description = ''
@@ -136,11 +145,8 @@ export default {
       })
     },
     uploadImg(res, file) {
-      if (res.status == 1) {
-        this.foodForm.image_path = res.image_path
-      } else {
-        this.$message.error('上传图片失败！')
-      }
+      this.foodForm.imagePath = getApiUrl() + '/file/getImgStream?fileName=' + res.data.realFileName
+      this.foodForm.image_path = res.data.realFileName
     },
     beforeImgUpload(file) {
       const isRightType = (file.type === 'image/jpeg') || (file.type === 'image/png')
@@ -181,8 +187,18 @@ export default {
             restaurant_id: this.restaurant_id
           }
           try {
-            const result = await addFood(params)
-            if (result.status == 1) {
+            const me = this
+            const result = await addFood({
+              name: me.foodForm.name,
+              descript: me.foodForm.description,
+              idShop: me.restaurant_id,
+              category_id: me.selectValue.id,
+              image_path: me.foodForm.image_path,
+              activity: me.foodForm.activity,
+              attributesJson:JSON.stringify(me.foodForm.attributes),
+              specsJson: JSON.stringify(me.foodForm.specs)
+            })
+            if (result.code === 20000) {
               console.log(result)
               this.$message({
                 type: 'success',

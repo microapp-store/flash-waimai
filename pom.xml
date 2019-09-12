@@ -294,6 +294,11 @@
                 <artifactId>jxls-poi</artifactId>
                 <version>1.0.9</version>
             </dependency>
+            <dependency>
+                <groupId>com.belerweb</groupId>
+                <artifactId>pinyin4j</artifactId>
+                <version>2.5.1</version>
+            </dependency>
 
             <!-- message  start-->
             <dependency>
@@ -302,6 +307,8 @@
                 <version>1.0.6</version>
             </dependency>
             <!-- message end-->
+
+
         </dependencies>
 
     </dependencyManagement>

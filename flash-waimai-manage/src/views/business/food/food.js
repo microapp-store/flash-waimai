@@ -263,7 +263,6 @@ export default {
           message: err.message
         })
       })
-
     },
     fetchNext() {
       this.listQuery.page = this.listQuery.page + 1
