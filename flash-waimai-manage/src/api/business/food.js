@@ -1,6 +1,18 @@
 import request from '@/utils/request'
 
 /**
+ * 添加食品
+ */
+
+// export const addFood = data => fetch('/shopping/addfood', data, 'POST');
+export function addFood(params) {
+  return request({
+    url: '/shopping/addfood',
+    method: 'post',
+    params
+  })
+}
+/**
  * 获取食品列表
  */
 

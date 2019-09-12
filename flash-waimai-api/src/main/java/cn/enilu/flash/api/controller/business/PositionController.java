@@ -55,19 +55,19 @@ public class PositionController extends BaseController {
 
     }
     @RequestMapping(value = "/v1/cities/{id}",method = RequestMethod.GET)
-
     public Object getCity(@PathVariable("id")Integer id){
-        return positionService.findById(id);
+        return Rets.success(positionService.findById(id));
     }
-    @RequestMapping(value = "/v1/pois",method = RequestMethod.GET)
 
+    @RequestMapping(value = "/v1/pois",method = RequestMethod.GET)
     public Object getPoiByCityAndKeyword(@RequestParam(value = "type",defaultValue = "search")String type,
-                       @RequestParam("city_id")Integer cityId,
-                       @RequestParam("keyword")String keyword){
+                       @RequestParam(value = "city_id")Integer cityId,
+                       @RequestParam(value = "keyword")String keyword){
 
         Map map =   positionService.findById(cityId);
-        return positionService.searchPlace(map.get("name").toString(),keyword);
+        return Rets.success(positionService.searchPlace(map.get("name").toString(),keyword));
     }
+
     //todo 未完成
     @RequestMapping(value = "/v2/pois/{geoHash}",method = RequestMethod.GET)
 

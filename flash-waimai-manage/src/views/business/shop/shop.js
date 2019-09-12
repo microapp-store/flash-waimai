@@ -1,13 +1,13 @@
 import { getApiUrl } from '@/utils/utils'
+import { cityGuess } from '@/api/getData'
 import {
-  cityGuess,
   getResturants,
   getResturantsCount,
   foodCategory,
   updateResturant,
   searchplace,
   deleteResturant
-} from '@/api/getData'
+} from '@/api/business/shop'
 
 export default {
   data() {
@@ -17,7 +17,7 @@ export default {
       // offset: 0,
       // limit: 20,
       count: 0,
-      baseUrl: getApiUrl(),
+      fileMgrUrl: getApiUrl(),
       tableData: [],
       currentPage: 1,
       selectTable: {},
@@ -137,7 +137,7 @@ export default {
       }
     },
     addFood(index, row) {
-      this.$router.push({ path: 'addGoods', query: { restaurant_id: row.id } })
+      this.$router.push({ path: '/data/food/add', query: { restaurant_id: row.id }})
     },
     async handleDelete(index, row) {
       try {

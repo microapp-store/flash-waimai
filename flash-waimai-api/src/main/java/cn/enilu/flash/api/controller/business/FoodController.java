@@ -79,7 +79,7 @@ public class FoodController extends BaseController {
          mongoRepository.delete("foods", Maps.newHashMap("item_id",id));
         return Rets.success();
     }
-    //todo 未完成
+
     @RequestMapping(value = "/v2/updatefood",method = RequestMethod.POST)
     public Object update(@ModelAttribute @Valid FoodVo food){
         List<SpecVo> specVoList = Json.fromJsonAsList(SpecVo.class,food.getSpecsJson());
@@ -92,15 +92,13 @@ public class FoodController extends BaseController {
             specFood.setSpecs_name(specVo.getSpecs());
             specList.add(specFood);
         }
-        Food old = mongoRepository.findOne(Food.class,"item_id",food.getId());
-        System.out.println(Json.toJson(food));
 
+        Food old = mongoRepository.findOne(Food.class,"item_id",food.getId());
         old.setName(food.getName());
         old.setDescription(food.getDescript());
         old.setCategory_id(food.getIdMenu());
         old.setImage_path(food.getImagePath());
         old.setSpecfoods(specList);
-        System.out.println(Json.toJson(old));
         mongoRepository.update(old);
         return Rets.success();
     }

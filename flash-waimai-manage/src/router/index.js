@@ -34,14 +34,14 @@ export const constantRouterMap = [
       component: () => import('@/views/dashboard/index'),
       meta: { title: 'dashboard', icon: 'dashboard', noCache: true }
     },
-    {
-      path: '/account/profile',
-      name: '个人资料',
-      component: () => import('@/views/account/profile.vue'),
-      hidden: true,
-      meta: { title: '个人资料' }
+      {
+        path: '/account/profile',
+        name: '个人资料',
+        component: () => import('@/views/account/profile.vue'),
+        hidden: true,
+        meta: { title: '个人资料' }
 
-    },
+      },
       {
         path: '/account/timeline',
         name: '最近活动',
@@ -70,25 +70,37 @@ export const constantRouterMap = [
       roles: ['administrator', 'developer'],
       title: '业务管理',
       icon: 'message'
-  },
+    },
     children: [
       {
         path: 'shop',
         name: 'shop',
-        component:() => import('@/views/business/shop/index'),
+        component: () => import('@/views/business/shop/index'),
         meta: { title: '商铺管理' }
       },
       {
         path: 'food',
         name: 'food',
-        component:() => import('@/views/business/food/index'),
+        component: () => import('@/views/business/food/index'),
         meta: { title: '食品管理' }
       },
       {
         path: 'order',
         name: 'order',
-        component:() => import('@/views/business/order/index'),
+        component: () => import('@/views/business/order/index'),
         meta: { title: '订单管理' }
+      },
+      {
+        path: 'shop/add',
+        name: 'shop_add',
+        component: () => import('@/views/business/shop/add.vue'),
+        meta: { title: '添加商铺' }
+      },
+      {
+        path: 'food/add',
+        name: 'food_add',
+        component: () => import('@/views/business/food/add.vue'),
+        meta: { title: '添加食品' }
       }
     ]
   },
@@ -101,9 +113,6 @@ export default new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })
-
-
-
 
 export const asyncRouterMap = [
   {
@@ -138,7 +147,7 @@ export const asyncRouterMap = [
         path: 'mgr',
         name: 'Account',
         component: () => import('@/views/system/user/index'),
-        meta: {title: 'userMgr' }
+        meta: { title: 'userMgr' }
       },
       {
         path: 'role',
@@ -150,7 +159,7 @@ export const asyncRouterMap = [
         path: 'task',
         name: 'Task',
         component: () => import('@/views/system/task/index'),
-        meta: { title: 'taskMgr' },
+        meta: { title: 'taskMgr' }
       },
       {
         path: 'taskLog',
@@ -216,13 +225,13 @@ export const asyncRouterMap = [
       {
         path: 'contacts',
         name: 'Contacts',
-        component:() => import('@/views/cms/contacts/index'),
+        component: () => import('@/views/cms/contacts/index'),
         meta: { title: 'contactsMgr' }
       },
       {
         path: 'file',
         name: 'File',
-        component:  () => import('@/views/cms/file/index'),
+        component: () => import('@/views/cms/file/index'),
         meta: {
           title: 'fileMgr'
         }
@@ -244,13 +253,13 @@ export const asyncRouterMap = [
       {
         path: 'druid',
         name: 'druid',
-        component:() => import('@/views/operation/druid/index'),
+        component: () => import('@/views/operation/druid/index'),
         meta: { title: 'druid' }
       },
       {
         path: 'swagger',
         name: 'swagger',
-        component:() => import('@/views/operation/api/index'),
+        component: () => import('@/views/operation/api/index'),
         meta: { title: 'swagger' }
       },
       {
@@ -282,13 +291,13 @@ export const asyncRouterMap = [
       {
         path: 'history',
         name: 'message',
-        component:() => import('@/views/message/message/index'),
+        component: () => import('@/views/message/message/index'),
         meta: { title: 'historyMessage' }
       },
       {
         path: 'template',
         name: 'template',
-        component:() => import('@/views/message/template/index'),
+        component: () => import('@/views/message/template/index'),
         meta: { title: 'messageTemplate' }
       },
       {
@@ -299,6 +308,6 @@ export const asyncRouterMap = [
       }
     ]
   },
-  {path: '/404', component: () => import('@/views/404'), hidden: true}
-];
+  { path: '/404', component: () => import('@/views/404'), hidden: true }
+]
 

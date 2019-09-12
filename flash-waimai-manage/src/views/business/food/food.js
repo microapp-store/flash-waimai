@@ -2,11 +2,7 @@ import { getApiUrl } from '@/utils/utils'
 import { baseUrl, baseImgPath } from '@/config/env'
 import { getToken } from '@/utils/auth'
 
-import {
-  getFoods,
-  updateFood,
-  deleteFood
-} from '@/api/business/food'
+import { getFoods, updateFood, deleteFood } from '@/api/business/food'
 import { getResturantDetail, getMenuById, getMenu } from '@/api/business/shop'
 import { Loading } from 'element-ui'
 
@@ -15,7 +11,7 @@ export default {
     return {
       baseUrl,
       baseImgPath,
-      uploadUrl: '',
+      fileMgrUrl: '',
       uploadHeaders: {
         'Authorization': ''
       },
@@ -53,7 +49,7 @@ export default {
   created() {
     this.restaurant_id = this.$route.query.restaurant_id
     this.initData()
-    this.uploadUrl = getApiUrl() + '/file'
+    this.fileMgrUrl = getApiUrl() + '/file'
     this.uploadHeaders['Authorization'] = getToken()
   },
   computed: {

@@ -98,7 +98,7 @@
               class="avatar-uploader"
 
               :show-file-list="false"
-              :action="uploadUrl"
+              :action="fileMgrUrl"
               :headers="uploadHeaders"
               :before-upload="handleBeforeUpload"
               :on-success="handleUploadSuccess">

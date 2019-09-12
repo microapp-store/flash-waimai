@@ -6,6 +6,7 @@ import cn.enilu.flash.bean.entity.front.Ids;
 import cn.enilu.flash.bean.entity.front.Menu;
 import cn.enilu.flash.bean.entity.front.Shop;
 import cn.enilu.flash.bean.vo.business.CityInfo;
+import cn.enilu.flash.bean.vo.business.ShopVo;
 import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.dao.MongoRepository;
 import cn.enilu.flash.service.front.IdsService;
@@ -15,6 +16,7 @@ import cn.enilu.flash.utils.factory.Page;
 import com.google.common.collect.Lists;
 import org.nutz.json.Json;
 import org.nutz.lang.Strings;
+import org.nutz.mapl.Mapl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.GeoResult;
 import org.springframework.data.geo.GeoResults;
@@ -97,11 +99,15 @@ public class ShopController extends BaseController {
 
     @RequestMapping(value = "/addShop",method = RequestMethod.POST)
 
-    public Object addShop(HttpServletRequest request) {
-        String json = getRequestPayload();
-        Map data = (Map) Json.fromJson(json);
-        Shop shop = Json.fromJson(Shop.class, json);
+    public Object addShop(@ModelAttribute @Valid ShopVo shopVo) {
+        System.out.println(Json.toJson(shopVo));
+        Map data = (Map) Mapl.toMaplist(shopVo);
+        Shop shop = new Shop();
         shop.setId(idsService.getId(Ids.RESTAURANT_ID));
+        System.out.println(Json.toJson(shop));
+        if(1==1){
+            return Rets.success();
+        }
         List<Map> supports = new ArrayList<Map>(4);
         if ((boolean) data.get("bao")) {
             supports.add(buildSupport("已加入“外卖保”计划，食品安全有保障", "999999", "保", 7, "外卖保"));
