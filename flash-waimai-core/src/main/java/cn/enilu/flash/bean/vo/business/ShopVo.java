@@ -9,12 +9,18 @@ import lombok.Data;
  */
 @Data
 public class ShopVo extends Shop {
+
     private String activitiesJson;
-    private String delivery_mode;
+    private Boolean deliveryMode;
     private Boolean news;
     private Boolean bao;
     private Boolean zhun;
     private Boolean piao;
+    private String image_path;
+    private String business_license_image;
+    private String catering_service_license_image;
+    private String startTime;
+    private String endTime;
 }
 
 

@@ -37,9 +37,9 @@
               <span>品牌保证</span>
               <el-switch on-text="" off-text="" v-model="formData.is_premium"></el-switch>
               <span>蜂鸟专送</span>
-              <el-switch on-text="" off-text="" v-model="formData.delivery_mode"></el-switch>
+              <el-switch on-text="" off-text="" v-model="formData.deliveryMode"></el-switch>
               <span>新开店铺</span>
-              <el-switch on-text="" off-text="" v-model="formData.new"></el-switch>
+              <el-switch on-text="" off-text="" v-model="formData.news"></el-switch>
             </el-form-item>
             <el-form-item style="white-space: nowrap;">
               <span>外卖保</span>

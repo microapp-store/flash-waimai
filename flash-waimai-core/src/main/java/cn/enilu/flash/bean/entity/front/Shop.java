@@ -1,9 +1,10 @@
 package cn.enilu.flash.bean.entity.front;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import cn.enilu.flash.utils.Lists;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import java.util.Map;
 public class Shop extends BaseMongoEntity {
     @Id
     private String _id;
+    @NotBlank(message = "商铺名称不能为空")
     private String name;
     private String address;
     private Long id;
@@ -24,7 +26,7 @@ public class Shop extends BaseMongoEntity {
     private List location;
     private String phone;
     private String category;
-    private List supports;
+    private List supports= Lists.newArrayList();
     private Integer status=1;
     private Integer recent_order_num=500;
     private Integer rating_count=200;

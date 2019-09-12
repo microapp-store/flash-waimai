@@ -22,8 +22,8 @@ export default {
         float_delivery_fee: 5, //运费
         float_minimum_order_amount: 20, //起价
         is_premium: true,
-        delivery_mode: true,
-        new: true,
+        deliveryMode: true,
+        news: true,
         bao: true,
         zhun: true,
         piao: true,
@@ -223,52 +223,40 @@ export default {
           delete this.formData.activities
           this.formData.activitiesJson = activitiesJson
           console.log(this.formData)
-
-          try {
-            const result = addShop(this.formData)
-            if (result.code === 20000) {
-              this.$message({
-                type: 'success',
-                message: '添加成功'
-              })
-              this.formData = {
-                name: '', //店铺名称
-                address: '', //地址
-                latitude: '',
-                longitude: '',
-                description: '', //介绍
-                phone: '',
-                promotion_info: '',
-                float_delivery_fee: 5, //运费
-                float_minimum_order_amount: 20, //起价
-                is_premium: true,
-                delivery_mode: true,
-                new: true,
-                bao: true,
-                zhun: true,
-                piao: true,
-                startTime: '',
-                endTime: '',
-                image_path: '',
-                business_license_image: '',
-                catering_service_license_image: ''
-              }
-              this.selectedCategory = ['快餐便当', '简餐']
-              this.activities = [{
-                icon_name: '减',
-                name: '满减优惠',
-                description: '满30减5，满60减8'
-              }]
-            } else {
-              this.$message({
-                type: 'error',
-                message: result.message
-              })
+          addShop(this.formData).then(response => {
+            this.$message({
+              type: 'success',
+              message: '添加成功'
+            })
+            this.formData = {
+              name: '', //店铺名称
+              address: '', //地址
+              latitude: '',
+              longitude: '',
+              description: '', //介绍
+              phone: '',
+              promotion_info: '',
+              float_delivery_fee: 5, //运费
+              float_minimum_order_amount: 20, //起价
+              is_premium: true,
+              deliveryMode: true,
+              news: true,
+              bao: true,
+              zhun: true,
+              piao: true,
+              startTime: '',
+              endTime: '',
+              image_path: '',
+              business_license_image: '',
+              catering_service_license_image: ''
             }
-            console.log(result)
-          } catch (err) {
-            console.log(err)
-          }
+            this.selectedCategory = ['快餐便当', '简餐']
+            this.activities = [{
+              icon_name: '减',
+              name: '满减优惠',
+              description: '满30减5，满60减8'
+            }]
+          })
         } else {
           this.$notify.error({
             title: '错误',

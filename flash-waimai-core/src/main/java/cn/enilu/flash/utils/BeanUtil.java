@@ -2,12 +2,11 @@ package cn.enilu.flash.utils;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.apache.poi.ss.formula.functions.T;
+import org.nutz.lang.Mirror;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.cglib.beans.BeanMap;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
@@ -100,6 +99,20 @@ public class BeanUtil {
             }
         }
         return list;
+    }
+
+    public static  void copyProperties(Object src,Object dest){
+        Mirror mirrorSrc = Mirror.me(src.getClass());
+        Mirror mirrorDest = Mirror.me(dest.getClass());
+        Field[] fieldsSrc = mirrorSrc.getFields();
+        for(Field field:fieldsSrc){
+            try {
+                Field fieldDest = mirrorDest.getField(field.getName());
+                mirrorDest.setValue(dest,fieldDest,mirrorSrc.getValue(src,field));
+            }catch (Exception e){
+
+            }
+        }
     }
 
 
