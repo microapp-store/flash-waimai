@@ -36,3 +36,8 @@ mongorestore.exe -d flash-waimai e:\\elm
 ## 目前还在开发中
 - flash-waimai-manage [初步完成]
 - flash-waimai-mobile[开发中]
+
+
+# License
+
+[GPL](https://github.com/microapp-store/flash-waimai/blob/master/COPYING)
