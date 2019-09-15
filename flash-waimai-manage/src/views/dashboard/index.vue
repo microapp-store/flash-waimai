@@ -19,7 +19,7 @@
       <el-col :span="6">
         <el-card class="box-card">
           <el-col :span="12">
-            <svg-icon  icon-class="user" ></svg-icon>
+            <svg-icon  icon-class="user"></svg-icon>
           </el-col>
           <el-col :span="12" >
             <div class="card-panel-text">{{ $t('dashboard.newUser') }}</div>

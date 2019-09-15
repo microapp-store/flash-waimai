@@ -14,12 +14,9 @@ import cn.enilu.flash.service.front.PositionService;
 import cn.enilu.flash.utils.BeanUtil;
 import cn.enilu.flash.utils.Maps;
 import cn.enilu.flash.utils.factory.Page;
-import com.google.common.collect.Lists;
 import org.nutz.json.Json;
 import org.nutz.lang.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.geo.GeoResult;
-import org.springframework.data.geo.GeoResults;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -56,13 +53,16 @@ public class ShopController extends BaseController {
             return Rets.success(mongoRepository.queryPage(page, Shop.class));
         } else {
             //查询指定经纬度范围内的餐厅
-            GeoResults<Map> geoResults = mongoRepository.near(Double.valueOf(longitude), Double.valueOf(latitude), "shops");
-            List<GeoResult<Map>> geoResultList = geoResults.getContent();
-            List list = Lists.newArrayList();
-            for (int i = 0; i < geoResultList.size(); i++) {
-                list.add(geoResultList.get(i).getContent());
-            }
-            return Rets.success(list);
+            //todo mongo4.2之后不支持geoNear command，暂时先用下面方法返回测试数据
+//            GeoResults<Map> geoResults = mongoRepository.near(Double.valueOf(longitude), Double.valueOf(latitude), "shops");
+//            List<GeoResult<Map>> geoResultList = geoResults.getContent();
+//            List list = Lists.newArrayList();
+//            for (int i = 0; i < geoResultList.size(); i++) {
+//                list.add(geoResultList.get(i).getContent());
+//            }
+//            return Rets.success(list);
+            Page<Shop> page = new PageFactory<Shop>().defaultPage();
+            return Rets.success(mongoRepository.queryPage(page, Shop.class));
         }
     }
 

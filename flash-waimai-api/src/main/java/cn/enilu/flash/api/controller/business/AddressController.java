@@ -26,7 +26,7 @@ public class AddressController extends BaseController {
     private IdsService idsService;
     @RequestMapping(value = "/v1/users/${user_id}/addresses",method = RequestMethod.GET)
     public Object address(@PathVariable("user_id")Long userId){
-        return mongoRepository.findAll(Address.class,"user_id",userId);
+        return Rets.success(mongoRepository.findAll(Address.class,"user_id",userId));
     }
     @RequestMapping(value = "/v1/usres/${user_id}/addresses",method =  RequestMethod.POST)
     public Object save(@PathVariable("user_id")Long userId){

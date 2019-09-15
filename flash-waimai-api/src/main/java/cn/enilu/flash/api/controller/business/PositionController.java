@@ -69,9 +69,9 @@ public class PositionController extends BaseController {
     }
 
     //todo 未完成
-    @RequestMapping(value = "/v2/pois/{geoHash}",method = RequestMethod.GET)
+    @RequestMapping(value = "/position/pois/{geoHash}",method = RequestMethod.GET)
 
     public Object getPoiByGeoHash(@PathVariable("geoHash")String geoHash){
-        return Rets.failure();
+        return Rets.success(positionService.pois(geoHash));
     }
 }

@@ -2,6 +2,7 @@ package cn.enilu.flash.api.controller.business;
 
 import cn.enilu.flash.api.controller.BaseController;
 import cn.enilu.flash.bean.entity.front.Delivery;
+import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.dao.MongoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,6 @@ public class DeliveryController extends BaseController {
     @RequestMapping(value = "/shopping/v1/restaurants/delivery_modes",method = RequestMethod.GET)
     public Object list(@RequestParam(value = "latitude",required = false) String latitude,
                        @RequestParam(value = "longitude",required = false) String longitude){
-        return mongoRepository.findAll(Delivery.class);
+        return Rets.success(mongoRepository.findAll(Delivery.class));
     }
 }

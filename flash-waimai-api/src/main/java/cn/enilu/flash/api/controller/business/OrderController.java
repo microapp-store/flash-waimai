@@ -39,9 +39,9 @@ public class OrderController extends BaseController {
                        @RequestParam(value = "limit", defaultValue = "20") Integer limit) {
         restaurantId="11";
         if (Strings.isBlank(restaurantId)||Strings.equals("undefined",restaurantId)){
-            return mongoRepository.findAll(Order.class,"restaurant_id",Long.valueOf(restaurantId));
+            return Rets.success(mongoRepository.findAll(Order.class,"restaurant_id",Long.valueOf(restaurantId)));
         } else {
-            return mongoRepository.findAll(Order.class);
+            return Rets.success(mongoRepository.findAll(Order.class));
         }
     }
 

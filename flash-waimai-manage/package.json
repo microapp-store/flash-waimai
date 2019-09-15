@@ -11,7 +11,7 @@
     "start": "npm run dev",
     "build": "node build/build.js",
     "build:report": "npm_config_report=true node build/build.js",
-    "lint": "eslint --ext .js,.vue src",
+    "lint": "eslint --ext .js,w.vue src",
     "test": "npm run lint"
   },
   "dependencies": {

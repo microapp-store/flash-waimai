@@ -36,37 +36,37 @@ public class PositionService {
         map.put("key", appConfiguration.getTencentKey());
         Map result = null;
         try {
-            String str = HttpClients.get(appConfiguration.getApiQqGetLocation(), map);
-            result = (Map) Json.fromJson(str);// new JsonParser().parse(str).getAsJsonObject();
+            String str = HttpClients.get(appConfiguration.getApiUrl() + "location/v1/ip", map);
+            result = (Map) Json.fromJson(str);
         } catch (Exception e) {
-            logger.error("获取地理位置异常",e);
+            logger.error("获取地理位置异常", e);
         }
         if (result == null || Integer.valueOf(result.get("status").toString()) != 0) {
             try {
                 map.put("key", appConfiguration.getTencentKey2());
-                String str = HttpClients.get(appConfiguration.getApiQqGetLocation(), map);
+                String str = HttpClients.get(appConfiguration.getApiUrl() + "location/v1/ip", map);
                 result = (Map) Json.fromJson(str);
             } catch (Exception e) {
-                logger.error("获取地理位置异常",e);
+                logger.error("获取地理位置异常", e);
             }
         }
         if (result == null || Integer.valueOf(result.get("status").toString()) != 0) {
             try {
                 map.put("key", appConfiguration.getTencentKey3());
-                String str = HttpClients.get(appConfiguration.getApiQqGetLocation(), map);
+                String str = HttpClients.get(appConfiguration.getApiUrl() + "location/v1/ip", map);
                 result = (Map) Json.fromJson(str);
             } catch (Exception e) {
-                logger.error("获取地理位置异常",e);
+                logger.error("获取地理位置异常", e);
             }
 
         }
-        if ( Integer.valueOf(result.get("status").toString()) == 0) {
+        if (Integer.valueOf(result.get("status").toString()) == 0) {
             Map resultData = (Map) result.get("result");
 
-            String lat = String.valueOf(Mapl.cell(resultData,"location.lat"));
-            String lng = String.valueOf( Mapl.cell(resultData,"location.lng"));
-            String city = (String) Mapl.cell(resultData,"ad_info.city");
-            city = city.replace("市","");
+            String lat = String.valueOf(Mapl.cell(resultData, "location.lat"));
+            String lng = String.valueOf(Mapl.cell(resultData, "location.lng"));
+            String city = (String) Mapl.cell(resultData, "ad_info.city");
+            city = city.replace("市", "");
             CityInfo cityInfo = new CityInfo();
             cityInfo.setCity(city);
             cityInfo.setLat(lat);
@@ -77,25 +77,26 @@ public class PositionService {
         return null;
     }
 
-    public List searchPlace(String cityName,String keyword){
-        Map<String,String> params = Maps.newHashMap();
-        params.put("key",appConfiguration.getTencentKey());
+    public List searchPlace(String cityName, String keyword) {
+        Map<String, String> params = Maps.newHashMap();
+        params.put("key", appConfiguration.getTencentKey());
         params.put("keyword", URLEncoder.encode(keyword));
-        params.put("boundary","region("+URLEncoder.encode(cityName)+",0)");
-        params.put("page_size","10");
+        params.put("boundary", "region(" + URLEncoder.encode(cityName) + ",0)");
+        params.put("page_size", "10");
         try {
-            String str = HttpClients.get(appConfiguration.getApiQqSearchPlace(), params);
+            String str = HttpClients.get(appConfiguration.getApiUrl() + "place/v1/search", params);
             Map result = (Map) Json.fromJson(str);
             if (Integer.valueOf(result.get("status").toString()).intValue() == 0) {
-               return (List) result.get("data");
+                return (List) result.get("data");
             }
-        }catch (Exception e){
-            throw  new RuntimeException(e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
         }
         return null;
 
     }
-    public Map findById(Integer id){
+
+    public Map findById(Integer id) {
         Map cities = mongoRepository.findOne("cities");
         Map<String, List> data = (Map) cities.get("data");
         Map result = null;
@@ -111,7 +112,8 @@ public class PositionService {
         }
         return result;
     }
-    public Map findByName(String cityName){
+
+    public Map findByName(String cityName) {
         Map cities = mongoRepository.findOne("cities");
         Map<String, List> data = (Map) cities.get("data");
         Map result = null;
@@ -124,6 +126,34 @@ public class PositionService {
                     break;
                 }
             }
+        }
+        return result;
+    }
+
+    /**
+     * 根据经纬度坐标获取位置信息
+     *
+     * @param geohash
+     * @return
+     */
+    public Map pois(String geohash) {
+        Map<String, String> map = Maps.newHashMap();
+        map.put("location", geohash);
+        map.put("key", appConfiguration.getTencentKey());
+        Map result = Maps.newHashMap();
+        try {
+            String str = HttpClients.get(appConfiguration.getApiUrl() + "geocoder/v1", map);
+            Map response = (Map) Json.fromJson(str);
+            if ("0".equals(response.get("status").toString())) {
+                result.put("address", Mapl.cell(response,"result.address"));
+                result.put("city", Mapl.cell(response, "result.address_component.city"));
+                result.put("name", Mapl.cell(response, "result.formatted_addresses.recommend"));
+                result.put("latitude", Mapl.cell(response, "result.location.lat"));
+                result.put("longitude", Mapl.cell(response, "result.location.lng"));
+            }
+
+        } catch (Exception e) {
+            logger.error("获取地理位置异常", e);
         }
         return result;
     }

@@ -37,7 +37,7 @@
 	    	<shop-list v-if="hasGetData" :geohash="geohash"></shop-list>
     	</div>
     	<foot-guide></foot-guide>
-    </div>    
+    </div>
 </template>
 
 <script>
@@ -80,7 +80,9 @@ export default {
     mounted(){
         //获取导航食品类型列表
        	msiteFoodTypes(this.geohash).then(res => {
+       	  console.log('res',res)
        		let resLength = res.length;
+       	  console.log(resLength)
        		let resArr = [...res]; // 返回一个新的数组
        		let foodArr = [];
     		for (let i = 0, j = 0; i < resLength; i += 8, j++) {

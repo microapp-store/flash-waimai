@@ -2,6 +2,7 @@ package cn.enilu.flash.api.controller.business;
 
 import cn.enilu.flash.api.controller.BaseController;
 import cn.enilu.flash.bean.entity.front.Ids;
+import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.dao.MongoRepository;
 import cn.enilu.flash.service.front.IdsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,6 @@ public class CartController extends BaseController {
     }
     @RequestMapping(value = "v1/carts/${cart_id}/remarks",method = RequestMethod.GET)
     public Object remarks(@PathVariable("cart_id")Long cartId){
-        return mongoRepository.findOne("remarks");
+        return Rets.success(mongoRepository.findOne("remarks"));
     }
 }

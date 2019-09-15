@@ -13,10 +13,12 @@ let imgBaseUrl = '';
 
 
 if (process.env.NODE_ENV == 'development') {
-    imgBaseUrl = '/img/';
-
+    // imgBaseUrl = '/img/';
+        imgBaseUrl = '/file/getImgStream?fileName='
+  console.log('development',baseUrl)
 }else if(process.env.NODE_ENV == 'production'){
 	baseUrl = '//elm.cangdu.org';
+	console.log('product',baseUrl)
     imgBaseUrl = '//elm.cangdu.org/img/';
 }
 
