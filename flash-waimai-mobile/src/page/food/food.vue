@@ -295,8 +295,9 @@ export default {
     },
     //选中Category右侧列表的某个选项时，进行筛选，重新获取数据并渲染
     getCategoryIds(id, name) {
-	  console.log(id, name)
+	    console.log(id, name)
       this.restaurant_category_ids = id;
+      this.restaurant_category_id = id;
       this.sortBy = "";
       this.foodTitle = this.headTitle = name;
     },

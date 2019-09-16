@@ -44,7 +44,7 @@ public class Shop extends BaseMongoEntity {
     private String float_minimum_order_amount;
     private String float_delivery_fee;
     private String distance;
-    private String order_lead_time;
+    private String order_lead_time="30分钟";
     private String description;
     private Map delivery_mode;
     private List activities;

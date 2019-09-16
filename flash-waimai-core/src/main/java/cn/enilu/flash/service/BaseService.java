@@ -120,13 +120,13 @@ public abstract  class BaseService<T, ID extends Serializable, R extends BaseRep
         }
 
     }
-    @CacheEvict(value = Cache.APPLICATION ,key = "#root.targetClass.simpleName+':'+#record.id")
+    @CacheEvict(value = Cache.APPLICATION ,key = "#root.targetClass.simpleName+':'+#p0.id")
     @Override
     public T update(T record) {
         return dao.save(record);
     }
     @Override
-    @CacheEvict(value = Cache.APPLICATION ,key = "#root.targetClass.simpleName+':'+#record.id")
+    @CacheEvict(value = Cache.APPLICATION ,key = "#root.targetClass.simpleName+':'+#p0.id")
     public T saveOrUpdate(T record) {
         return dao.save(record);
     }

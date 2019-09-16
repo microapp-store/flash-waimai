@@ -127,23 +127,8 @@ public class FileService extends BaseService<FileInfo,Long,FileInfoRepository> {
         fileInfo.setAblatePath(configCache.get(ConfigKeyEnum.SYSTEM_FILE_UPLOAD_PATH.getValue()) + File.separator+fileInfo.getRealFileName());
         return fileInfo;
     }
-
+    @Cacheable(value = Cache.APPLICATION, key = "'" + CacheKey.FILE_INFO + "'+#fileName")
     public FileInfo getByName(String fileName) {
-//        File file = new File("E:\\flash-waimai\\img\\foods");
-//        File[] imglist = file.listFiles();
-//        List<FileInfo> fileInfoList = Lists.newArrayList();
-//        for(int i=0;i<imglist.length;i++){
-//            String name = imglist[i].getName();
-//            FileInfo fileInfo = fileInfoRepository.findByRealFileName(name);
-//            if(fileInfo!=null){
-//                continue;
-//            }
-//            fileInfo = new FileInfo();
-//            fileInfo.setRealFileName(name);
-//            fileInfo.setOriginalFileName("食品图片");
-//            fileInfoList.add(fileInfo);
-//        }
-//        fileInfoRepository.saveAll(fileInfoList);
         FileInfo fileInfo = fileInfoRepository.findByRealFileName(fileName);
         if(fileInfo!=null) {
             fileInfo.setAblatePath(configCache.get(ConfigKeyEnum.SYSTEM_FILE_UPLOAD_PATH.getValue()) + File.separator + fileInfo.getRealFileName());

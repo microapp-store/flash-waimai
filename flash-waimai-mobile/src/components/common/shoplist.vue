@@ -30,15 +30,17 @@
 					<h5 class="fee_distance">
 						<p class="fee">
 							¥{{item.float_minimum_order_amount}}起送
-							<span class="segmentation">/</span>
+							<span class="segmentation">|</span>
 							{{item.piecewise_agent_fee.tips}}
 						</p>
 						<p class="distance_time">
-							<span v-if="Number(item.distance)">{{item.distance > 1000? (item.distance/1000).toFixed(2) + 'km': item.distance + 'm'}}
-								<span class="segmentation">/</span>
-							</span>
-							<span v-else>{{item.distance}}</span>
-							<span class="segmentation">/</span>
+							<template v-if="Number(item.distance)">{{item.distance > 1000? (item.distance/1000).toFixed(2) + 'km': item.distance + 'm'}}
+								<span class="segmentation">|</span>
+							</template>
+							<template v-else>
+                {{item.distance}}
+							<span class="segmentation">|</span>
+              </template>
 							<span class="order_time">{{item.order_lead_time}}</span>
 						</p>
 					</h5>
@@ -151,7 +153,8 @@ export default {
 		async listenPropChange(){
 			this.showLoading = true;
 			this.offset = 0;
-			let res = await shopList(this.latitude, this.longitude, this.offset, '', this.restaurantCategoryIds, this.sortByType, this.deliveryMode, this.supportIds);
+			let resResponse = await shopList(this.latitude, this.longitude, this.offset, '' , this.restaurantCategoryIds, this.sortByType, this.deliveryMode, this.supportIds);
+			let res = resResponse.records
 			this.hideLoading();
 			//考虑到本地模拟数据是引用类型，所以返回一个新的数组
 			this.shopListArr = [...res];
@@ -177,6 +180,7 @@ export default {
 	watch: {
 		//监听父级传来的restaurantCategoryIds，当值发生变化的时候重新获取餐馆数据，作用于排序和筛选
 		restaurantCategoryIds: function (value){
+		  console.log('watchids',value)
 			this.listenPropChange();
 		},
 		//监听父级传来的排序方式

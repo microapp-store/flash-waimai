@@ -12,11 +12,15 @@ import cn.enilu.flash.dao.MongoRepository;
 import cn.enilu.flash.service.front.IdsService;
 import cn.enilu.flash.service.front.PositionService;
 import cn.enilu.flash.utils.BeanUtil;
+import cn.enilu.flash.utils.Lists;
 import cn.enilu.flash.utils.Maps;
 import cn.enilu.flash.utils.factory.Page;
+import cn.enilu.flash.utils.gps.Distance;
 import org.nutz.json.Json;
 import org.nutz.lang.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.geo.GeoResult;
+import org.springframework.data.geo.GeoResults;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -46,23 +50,37 @@ public class ShopController extends BaseController {
 
     @RequestMapping(value = "restaurants", method = RequestMethod.GET)
     public Object listShop(@RequestParam(value = "latitude", required = false) String latitude,
-                           @RequestParam(value = "longitude", required = false) String longitude) {
+                           @RequestParam(value = "longitude", required = false) String longitude,
+                           @RequestParam(value = "restaurant_category_ids[]",required = false) Long[] categoryIds) {
         if (com.google.common.base.Strings.isNullOrEmpty(latitude) || "undefined".equals(latitude)
                 || com.google.common.base.Strings.isNullOrEmpty(longitude) || "undefined".equals(longitude)) {
             Page<Shop> page = new PageFactory<Shop>().defaultPage();
             return Rets.success(mongoRepository.queryPage(page, Shop.class));
         } else {
             //查询指定经纬度范围内的餐厅
-            //todo mongo4.2之后不支持geoNear command，暂时先用下面方法返回测试数据
-//            GeoResults<Map> geoResults = mongoRepository.near(Double.valueOf(longitude), Double.valueOf(latitude), "shops");
-//            List<GeoResult<Map>> geoResultList = geoResults.getContent();
-//            List list = Lists.newArrayList();
-//            for (int i = 0; i < geoResultList.size(); i++) {
-//                list.add(geoResultList.get(i).getContent());
-//            }
-//            return Rets.success(list);
-            Page<Shop> page = new PageFactory<Shop>().defaultPage();
-            return Rets.success(mongoRepository.queryPage(page, Shop.class));
+            Map<String,Object> params = Maps.newHashMap();
+            if(categoryIds!=null&&categoryIds.length>0){
+                Map map = (Map) mongoRepository.findOne(categoryIds[0],"categories");
+                if(map!=null) {
+                    params.put("category",map.get("name").toString());
+                }
+            }
+            GeoResults<Map> geoResults = mongoRepository.near(Double.valueOf(longitude), Double.valueOf(latitude), "shops",params);
+            List<GeoResult<Map>> geoResultList = geoResults.getContent();
+            List list = Lists.newArrayList();
+            for (int i = 0; i < geoResultList.size(); i++) {
+                Map map = geoResultList.get(i).getContent();
+                Distance distance = new Distance(Double.valueOf(longitude),Double.valueOf(latitude),
+                        Double.valueOf(map.get("longitude").toString()),Double.valueOf(map.get("latitude").toString()));
+                map.put("distance",distance.getDistance());
+
+                map.put("order_lead_time","30分钟");
+                list.add(map);
+            }
+            Page<Map> page = new PageFactory<Map>().defaultPage();
+            page.setTotal(list.size());
+            page.setRecords(list);
+            return Rets.success(page);
         }
     }
 

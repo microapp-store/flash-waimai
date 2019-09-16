@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.GeoResults;
+import org.springframework.data.geo.Metrics;
+import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.NearQuery;
@@ -151,8 +154,14 @@ public class MongoRepository {
         return mongoTemplate.find(Query.query(criteria), Map.class, collectionName);
     }
 
-    public GeoResults<Map> near(double x, double y, String collectionName) {
-        return mongoTemplate.geoNear(NearQuery.near(x, y), Map.class, collectionName);
+    public GeoResults<Map> near(double x, double y, String collectionName,Map<String,Object> params) {
+        Point location = new Point(x,y);
+        NearQuery nearQuery = NearQuery.near(location).maxDistance(new Distance(5, Metrics.MILES));
+        if(params!=null && !params.isEmpty()){
+            Query query = Query.query(criteria(params));
+            nearQuery.query(query);
+        }
+        return mongoTemplate.geoNear(nearQuery,Map.class,collectionName);
     }
 
     public long count(Class klass) {

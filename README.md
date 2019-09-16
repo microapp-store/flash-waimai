@@ -3,6 +3,14 @@
 - 基于spring boot和vue的前后端分离的外卖系统
 - 包含完整的手机端，后台管理功能
 
+## 技术选型
+- 核心框架：Spring Boot
+- 数据库层：Spring data jpa/Spring data mongodb
+- 数据库连接池：Druid
+- 缓存：Ehcache
+- 前端：Vue.js
+- 数据库：mysql5.5以上,Mongodb4.0(不要使用最新版4.2)
+
 ## 快速开始
 - 数据存储采用了mysql和mongodb，其中基础管理配置功能使用mysql，业务数据使用mongodb存储。
 - 创建mysql数据库

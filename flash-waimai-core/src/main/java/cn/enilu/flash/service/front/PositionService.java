@@ -1,6 +1,7 @@
 package cn.enilu.flash.service.front;
 
 import cn.enilu.flash.bean.AppConfiguration;
+import cn.enilu.flash.bean.constant.cache.Cache;
 import cn.enilu.flash.bean.vo.business.CityInfo;
 import cn.enilu.flash.dao.MongoRepository;
 import cn.enilu.flash.utils.HttpClients;
@@ -10,6 +11,7 @@ import org.nutz.mapl.Mapl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.net.URLEncoder;
@@ -76,8 +78,9 @@ public class PositionService {
         }
         return null;
     }
-
+    @Cacheable(value = Cache.APPLICATION ,key = "#root.targetClass.simpleName+':'+#cityName+'-'+#keyword")
     public List searchPlace(String cityName, String keyword) {
+        logger.info("获取地址信息:{}，{}",cityName,keyword);
         Map<String, String> params = Maps.newHashMap();
         params.put("key", appConfiguration.getTencentKey());
         params.put("keyword", URLEncoder.encode(keyword));
@@ -136,7 +139,10 @@ public class PositionService {
      * @param geohash
      * @return
      */
+
+    @Cacheable(value = Cache.APPLICATION ,key = "#root.targetClass.simpleName+':'+#geohash")
     public Map pois(String geohash) {
+        logger.info("获取地址信息:{}",geohash);
         Map<String, String> map = Maps.newHashMap();
         map.put("location", geohash);
         map.put("key", appConfiguration.getTencentKey());
@@ -150,6 +156,8 @@ public class PositionService {
                 result.put("name", Mapl.cell(response, "result.formatted_addresses.recommend"));
                 result.put("latitude", Mapl.cell(response, "result.location.lat"));
                 result.put("longitude", Mapl.cell(response, "result.location.lng"));
+            }else{
+                logger.error("获取地理位置信息失败:{}",str);
             }
 
         } catch (Exception e) {
