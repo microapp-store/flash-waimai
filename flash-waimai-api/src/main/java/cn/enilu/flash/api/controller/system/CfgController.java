@@ -88,9 +88,9 @@ public class CfgController extends BaseController {
             old.setCfgName(cfg.getCfgName());
             old.setCfgValue(cfg.getCfgValue());
             old.setCfgDesc(cfg.getCfgDesc());
-            cfgService.update(old);
+            cfgService.saveOrUpdate(old);
         }else {
-            cfgService.insert(cfg);
+            cfgService.saveOrUpdate(cfg);
         }
         return Rets.success();
     }
