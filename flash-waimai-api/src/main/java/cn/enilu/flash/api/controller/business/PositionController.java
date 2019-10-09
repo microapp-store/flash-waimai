@@ -9,6 +9,8 @@ import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import ch.qos.logback.classic.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
@@ -19,6 +21,7 @@ import java.util.Map;
  */
 @RestController
 public class PositionController extends BaseController {
+
     @Autowired
     private MongoRepository mongoRepository;
     @Autowired
@@ -63,15 +66,13 @@ public class PositionController extends BaseController {
     public Object getPoiByCityAndKeyword(@RequestParam(value = "type",defaultValue = "search")String type,
                        @RequestParam(value = "city_id")Integer cityId,
                        @RequestParam(value = "keyword")String keyword){
-
         Map map =   positionService.findById(cityId);
         return Rets.success(positionService.searchPlace(map.get("name").toString(),keyword));
     }
 
-    //todo 未完成
-    @RequestMapping(value = "/position/pois/{geoHash}",method = RequestMethod.GET)
-
-    public Object getPoiByGeoHash(@PathVariable("geoHash")String geoHash){
+    @RequestMapping(value = "/v1/position/pois",method = RequestMethod.GET)
+    public Object getPoiByGeoHash(@RequestParam("geohash")String geoHash){
+        System.out.println("geohash:"+geoHash);
         return Rets.success(positionService.pois(geoHash));
     }
 }

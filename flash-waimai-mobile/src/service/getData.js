@@ -50,7 +50,9 @@ export const searchplace = (cityid, value) => fetch('/v1/pois', {
  * 获取msite页面地址信息
  */
 
-export const msiteAddress = geohash => fetch('/position/pois/' + geohash);
+export const msiteAddress = geohash => fetch('/v1/position/pois',{
+	geohash
+});
 
 
 /**
@@ -456,7 +458,7 @@ export const deleteAddress = (userid, addressid) => fetch( '/v1/users/' + userid
 /**
  * 账号密码登录
  */
-export const accountLogin = (username, password, captcha_code) => fetch('/v2/login', {username, password, captcha_code}, 'POST');
+export const accountLogin = (username, password, captchaCode) => fetch('/v1/users/v2/login', {username, password, captchaCode}, 'POST');
 
 
 /**

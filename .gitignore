@@ -4,3 +4,9 @@
 **/readme.md
 **/package-lock.json
 .idea
+.classpath
+.factorypath
+.vscode
+.settings
+.project
+target

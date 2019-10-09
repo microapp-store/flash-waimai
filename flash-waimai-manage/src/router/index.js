@@ -69,7 +69,7 @@ export const constantRouterMap = [
     meta: {
       roles: ['administrator', 'developer'],
       title: '业务管理',
-      icon: 'message'
+      icon: 'shopping'
     },
     children: [
       {
@@ -124,7 +124,7 @@ export const asyncRouterMap = [
     meta: {
       roles: ['administrator'],
       title: 'systemMgr',
-      icon: 'table'
+      icon: 'edit'
     },
     children: [
       {
