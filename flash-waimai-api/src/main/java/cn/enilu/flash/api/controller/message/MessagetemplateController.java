@@ -39,7 +39,12 @@ public class MessagetemplateController {
     @BussinessLog(value = "编辑消息模板", key = "name", dict = CommonDict.class)
     @RequiresPermissions(value = {Permission.MSG_TPL_EDIT})
     public Object save(@ModelAttribute @Valid MessageTemplate tMessageTemplate) {
-        messagetemplateService.saveOrUpdate(tMessageTemplate);
+        if(tMessageTemplate.getId()!=null)
+        {
+            messagetemplateService.update(tMessageTemplate);
+        }else{
+            messagetemplateService.insert(tMessageTemplate);
+        }
         return Rets.success();
     }
 

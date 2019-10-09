@@ -19,7 +19,6 @@ import cn.enilu.flash.utils.StringUtils;
 import cn.enilu.flash.utils.ToolUtil;
 import cn.enilu.flash.utils.factory.Page;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.nutz.json.Json;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +47,6 @@ public class CfgController extends BaseController {
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @RequiresPermissions(value = {Permission.CFG})
     public Object list(@RequestParam(required = false) String cfgName, @RequestParam(required = false) String cfgValue) {
-        logger.info(Json.toJson(cfgService.get(6L)));
         Page<Cfg> page = new PageFactory<Cfg>().defaultPage();
         if(StringUtils.isNotEmpty(cfgName)){
             page.addFilter(SearchFilter.build("cfgName", SearchFilter.Operator.LIKE, cfgName));
@@ -90,9 +88,9 @@ public class CfgController extends BaseController {
             old.setCfgName(cfg.getCfgName());
             old.setCfgValue(cfg.getCfgValue());
             old.setCfgDesc(cfg.getCfgDesc());
-            cfgService.update(old);
+            cfgService.saveOrUpdate(old);
         }else {
-            cfgService.insert(cfg);
+            cfgService.saveOrUpdate(cfg);
         }
         return Rets.success();
     }
