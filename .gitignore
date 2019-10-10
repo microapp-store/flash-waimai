@@ -4,9 +4,10 @@
 **/readme.md
 **/package-lock.json
 .idea
+.DS_Store
+.settings
 .classpath
 .factorypath
-.vscode
-.settings
-.project
 target
+.project
+launch.json
