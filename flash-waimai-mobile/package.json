@@ -6,9 +6,9 @@
   "private": true,
   "license": "GPL",
   "scripts": {
-    "dev": "cross-env NODE_ENV=online node build/dev-server.js",//使用线上api
-    "local": "cross-env NODE_ENV=local node build/dev-server.js",//本地开发
-    "build": "node build/build.js"//发布到生产
+    "dev": "cross-env NODE_ENV=online node build/dev-server.js",
+    "local": "cross-env NODE_ENV=local node build/dev-server.js",
+    "build": "node build/build.js"
   },
   "dependencies": {
     "better-scroll": "^0.1.15",

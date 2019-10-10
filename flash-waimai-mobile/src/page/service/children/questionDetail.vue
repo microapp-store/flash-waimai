@@ -63,6 +63,7 @@
         p, span{
             font-family: Helvetica Neue,Tahoma,Arial;
         }
+      
     }
     .scroll_container{
         position: fixed;
@@ -78,6 +79,10 @@
     	padding: 0 .7rem;
         color: #666;
         padding-bottom: 2rem;
+        li{
+            list-style: unset !important;
+            list-style-position: inside !important;
+        }
     }
-
+ 
 </style>

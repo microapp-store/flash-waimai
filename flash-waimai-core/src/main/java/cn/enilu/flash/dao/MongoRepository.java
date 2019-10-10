@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created  on 2017/12/29 0029.
+ * Created on 2017/12/29 0029.
  *
  * @author zt
  */
@@ -63,6 +63,7 @@ public class MongoRepository {
         }
         return mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(id)), update, collectionName);
     }
+
     public UpdateResult update(String id, String collectionName, Map<String, Object> keyValues) {
         Update update = null;
         for (Map.Entry<String, Object> entry : keyValues.entrySet()) {
@@ -87,7 +88,6 @@ public class MongoRepository {
         return mongoTemplate.findOne(Query.query(Criteria.where("id").is(id)), Map.class, collectionName);
     }
 
-
     public Map findOne(String collectionName, Object... extraKeyValues) {
         Criteria criteria = criteria(extraKeyValues);
         if (criteria == null) {
@@ -98,6 +98,12 @@ public class MongoRepository {
             return null;
         }
         return mongoTemplate.findOne(Query.query(criteria), Map.class, collectionName);
+    }
+
+    public <T> T findOne(Class<T> klass) {
+        Query query = new Query();
+        return mongoTemplate.findOne(query, klass);
+
     }
 
     public <T> T findOne(Class<T> klass, Object... keyValues) {
@@ -113,19 +119,19 @@ public class MongoRepository {
         return mongoTemplate.findOne(Query.query(criteria), klass);
     }
 
-    public <T> Page<T> queryPage(Page<T> page,Class<T> klass) {
-       return queryPage(page,klass,null);
+    public <T> Page<T> queryPage(Page<T> page, Class<T> klass) {
+        return queryPage(page, klass, null);
     }
 
-    public <T> Page<T> queryPage(Page<T> page,Class<T> klass,Map<String,Object> params) {
-        Pageable pageable = PageRequest.of(page.getCurrent() - 1, page.getSize(), Sort.Direction.DESC,"id");
+    public <T> Page<T> queryPage(Page<T> page, Class<T> klass, Map<String, Object> params) {
+        Pageable pageable = PageRequest.of(page.getCurrent() - 1, page.getSize(), Sort.Direction.DESC, "id");
         Query query = new Query();
-        if(params!=null &&!params.isEmpty()) {
+        if (params != null && !params.isEmpty()) {
             Criteria criteria = criteria(params);
             query = Query.query(criteria);
         }
-        List<T> list = mongoTemplate.find(query.with(pageable),klass);
-        Long count = count(klass);
+        List<T> list = mongoTemplate.find(query.with(pageable), klass);
+        Long count = count(klass, params);
         page.setTotal(count.intValue());
         page.setRecords(list);
         return page;
@@ -154,14 +160,14 @@ public class MongoRepository {
         return mongoTemplate.find(Query.query(criteria), Map.class, collectionName);
     }
 
-    public GeoResults<Map> near(double x, double y, String collectionName,Map<String,Object> params) {
-        Point location = new Point(x,y);
+    public GeoResults<Map> near(double x, double y, String collectionName, Map<String, Object> params) {
+        Point location = new Point(x, y);
         NearQuery nearQuery = NearQuery.near(location).maxDistance(new Distance(5, Metrics.MILES));
-        if(params!=null && !params.isEmpty()){
+        if (params != null && !params.isEmpty()) {
             Query query = Query.query(criteria(params));
             nearQuery.query(query);
         }
-        return mongoTemplate.geoNear(nearQuery,Map.class,collectionName);
+        return mongoTemplate.geoNear(nearQuery, Map.class, collectionName);
     }
 
     public long count(Class klass) {
@@ -190,7 +196,6 @@ public class MongoRepository {
             return mongoTemplate.count(Query.query(criteria), collection);
         }
     }
-
 
     private Criteria criteria(Map<String, Object> map) {
         Criteria criteria = null;
@@ -224,6 +229,5 @@ public class MongoRepository {
         }
         return criteria;
     }
-
 
 }

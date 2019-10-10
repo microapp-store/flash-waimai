@@ -23,7 +23,7 @@
                                 </svg>
                             </p>
                             <p>月售 {{item.month_sales||item.recent_order_num}} 单</p>
-                            <p>{{item.delivery_fee||item.float_minimum_order_amount}} 元起送 / 距离{{item.distance}}</p>
+                            <p>{{item.delivery_fee||item.float_minimum_order_amount}} 元起送 / 距离{{item.distance > 1000? (item.distance/1000).toFixed(2) + 'km': item.distance + 'm'}}</p>
                         </div>
                         <ul class="item_right_detail">
                             <li v-for="activities in item.restaurant_activity" :key="activities.id">

@@ -31,6 +31,6 @@ public class FrontUserInfo  extends BaseMongoEntity{
     private Integer current_address_id=0;
     private Integer balance=0;
     private Integer brand_member_new=0;
-    private String avatar;
+    private String avatar="avatar.jpg";
 
 }

@@ -60,7 +60,9 @@
             ]),
             //获取信息
             async initData(){
-                this.serviceData = await getService();
+                let response = await getService();
+                console.log('response',response)
+                this.serviceData = response.data
                 Object.keys(this.serviceData).forEach(item => {
                     let avoidRepeat = false;
                     this.questionTitle.forEach((insertItem) => {

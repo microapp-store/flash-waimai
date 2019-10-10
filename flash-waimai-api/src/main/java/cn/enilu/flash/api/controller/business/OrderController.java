@@ -1,10 +1,13 @@
 package cn.enilu.flash.api.controller.business;
 
 import cn.enilu.flash.api.controller.BaseController;
+import cn.enilu.flash.bean.constant.factory.PageFactory;
 import cn.enilu.flash.bean.entity.front.Order;
 import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.dao.MongoRepository;
 import cn.enilu.flash.utils.Maps;
+import cn.enilu.flash.utils.factory.Page;
+
 import org.nutz.lang.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +21,12 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController extends BaseController {
     @Autowired
     private MongoRepository mongoRepository;
-    @RequestMapping("/bos/v2/users/${user_id}/orders")
-    public Object orders(@PathVariable("user_id")Long userId){
-        return mongoRepository.findAll(Order.class,"user_id",userId);
+    @RequestMapping(value = "/bos/v2/users/{user_id}/orders" ,method = RequestMethod.GET)
+    public Object orders(@PathVariable("user_id")Long userId,@RequestParam("limit") Integer limit,
+    @RequestParam("offset")Integer offset){
+        Page<Order> page = new PageFactory<Order>().defaultPage();
+       return Rets.success(mongoRepository.queryPage(page, Order.class,Maps.newHashMap("user_id", userId)));
+        // return mongoRepository.findAll(Order.class,"user_id",userId);
 
     }
     @RequestMapping(value = "/bos/orders/count",method = RequestMethod.GET)

@@ -47,7 +47,10 @@ public class User2Controller extends BaseController {
     public Object getUser(){
         return getSession("currentUser");
     }
-
+    @RequestMapping(method = RequestMethod.GET)
+    public Object getUser(@RequestParam("user_id") Long userId){
+        return getSession("currentUser");
+    }
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public Object list(@RequestParam("offset") Integer offset,@RequestParam("limit") Integer limit){
         List list = mongoRepository.findAll("userinfos");

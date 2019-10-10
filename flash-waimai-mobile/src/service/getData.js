@@ -401,7 +401,7 @@ export const exChangeHongbao = (id, exchange_code, captcha_code) => fetch('/v1/u
  * 获取用户信息
  */
 
-export const getUser = () => fetch('/v1/user', {user_id: getStore('user_id')});
+export const getUser = () => fetch('/v1/users', {user_id: getStore('user_id')});
 
 
 /**
@@ -464,7 +464,7 @@ export const accountLogin = (username, password, captchaCode) => fetch('/v1/user
 /**
  * 退出登录
  */
-export const signout = () => fetch('/v2/signout');
+export const signout = () => fetch('/v1/users/v2/signout');
 
 
 /**

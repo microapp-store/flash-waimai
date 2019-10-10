@@ -150,7 +150,7 @@ public class FileController extends BaseController {
             out.write(b);
             out.flush();
         } catch (Exception e) {
-            logger.error("getImgStream error",e.getMessage());
+            logger.error("getImgStream error",e);
         } finally {
             if (fis != null) {
                 try {

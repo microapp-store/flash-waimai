@@ -87,7 +87,10 @@
             //初始化获取信息
             async initData(){
                 if (this.userInfo && this.userInfo.user_id) {
-                    let res = await getOrderList(this.userInfo.user_id, this.offset);
+                    let response = await getOrderList(this.userInfo.user_id, this.offset);
+                    console.log('response',response)                    
+                    let res = response.records
+                    console.log('res',res)
                     this.orderList = [...res];
                     this.hideLoading();
                 }else{

@@ -24,11 +24,11 @@ public class AddressController extends BaseController {
     private MongoRepository mongoRepository;
     @Autowired
     private IdsService idsService;
-    @RequestMapping(value = "/v1/users/${user_id}/addresses",method = RequestMethod.GET)
+    @RequestMapping(value = "/v1/users/{user_id}/addresses",method = RequestMethod.GET)
     public Object address(@PathVariable("user_id")Long userId){
         return Rets.success(mongoRepository.findAll(Address.class,"user_id",userId));
     }
-    @RequestMapping(value = "/v1/usres/${user_id}/addresses",method =  RequestMethod.POST)
+    @RequestMapping(value = "/v1/usres/{user_id}/addresses",method =  RequestMethod.POST)
     public Object save(@PathVariable("user_id")Long userId){
         Address address = getRequestPayload(Address.class);
         address.setUser_id(userId);
