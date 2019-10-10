@@ -4,3 +4,10 @@
 **/readme.md
 **/package-lock.json
 .idea
+.DS_Store
+.settings
+.classpath
+.factorypath
+target
+.project
+launch.json
