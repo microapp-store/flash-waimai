@@ -11,6 +11,13 @@
 - 前端：Vue.js
 - 数据库：mysql5.5以上,Mongodb4.0(不要使用最新版4.2)
 
+## 模块
+- flash-waimai-mobile 手机端站点
+- flash-waimai-manage后台管理系统
+- flash-waimai-api java接口服务
+- flash-waimai-core 底层核心模块
+- flash-waimai-generate 代码生成模块
+
 ## 快速开始
 - 数据存储采用了mysql和mongodb，其中基础管理配置功能使用mysql，业务数据使用mongodb存储。
 - 创建mysql数据库
@@ -38,15 +45,12 @@ mongorestore.exe -d flash-waimai d:\\elm
     - 运行npm run local
     - 启动成功后访问 http://localhost:8000
 
-## 模块
-
-- flash-waimai-mobile 手机端站点
-- flash-waimai-manage后台管理系统
-- flash-waimai-api java接口服务
-- flash-waimai-core 底层核心模块
-- flash-waimai-generate 代码生成模块
-    
-## 目前还在开发中
+## 运行效果图
+- 后台管理
+![admin](doc/admin.gif)
+- 手机端    
+![mobile](doc/mobile.gif)
+## 开发进度
 - flash-waimai-manage [初步完成]
 - flash-waimai-mobile[完善中]
 
