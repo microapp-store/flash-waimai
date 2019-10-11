@@ -54,7 +54,7 @@ mongorestore.exe -d flash-waimai d:\\elm
 - 感谢[bailicangdu](https://github.com/bailicangdu),[enilu](https://github.com/enilu),本项目参考参考借鉴了[vue2-elm](https://github.com/bailicangdu/vue2-elm)，[web-flash](https://github.com/enilu/web-flash)，[vue2-manage](https://github.com/bailicangdu/vue2-manage)
 
 ## 交流
-- QQ:936439613
+- QQ:936439613 微信:myenilu
 # License
 
 [GPL](https://github.com/microapp-store/flash-waimai/blob/master/COPYING)
