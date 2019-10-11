@@ -81,7 +81,6 @@
     import {mapState} from 'vuex'
     import {getImgPath} from 'src/components/common/mixin'
     import {imgBaseUrl} from 'src/config/env'
-
     export default {
     	data(){
             return{

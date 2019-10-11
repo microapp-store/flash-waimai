@@ -27,6 +27,8 @@
 ```
 mongorestore.exe -d flash-waimai d:\\elm
 ```
+- 下载测试图片：链接：https://pan.baidu.com/s/1rvZDspoapWa6rEq2D_5kzw 提取码：urzw ，将图片存放到t_sys_cfg表中system.file.upload.path配置的目录的目录
+
 - 启动管理平台，进入flash-waimai-manage目录：
     - 运行 npm install --registry=https://registry.npm.taobao.org
     - 运行npm run dev

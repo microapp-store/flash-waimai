@@ -5,6 +5,7 @@ import cn.enilu.flash.bean.constant.factory.PageFactory;
 import cn.enilu.flash.bean.entity.front.Food;
 import cn.enilu.flash.bean.entity.front.Ids;
 import cn.enilu.flash.bean.entity.front.KeyValue;
+import cn.enilu.flash.bean.entity.front.Menu;
 import cn.enilu.flash.bean.entity.front.SpecFood;
 import cn.enilu.flash.bean.vo.business.FoodVo;
 import cn.enilu.flash.bean.vo.business.SpecVo;
@@ -86,9 +87,11 @@ public class FoodController extends BaseController {
         food.setPinyin_name(StringUtils.getPingYin(food.getName()));
         food.setSatisfy_rate(new BigDecimal(Math.ceil(Math.random() * 100)).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue());
         food.setSatisfy_count(new BigDecimal(Math.ceil(Math.random() * 1000)).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue());
-        food.setRating(new BigDecimal(Math.random() * 5).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue());
-        System.out.println(Json.toJson(food));
+        food.setRating(new BigDecimal(Math.random() * 5).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue());        
         mongoRepository.save(food);
+        Menu menu = mongoRepository.findOne(Menu.class,food.getCategory_id());
+        menu.getFoods().add(food);
+        mongoRepository.update(menu);
         return Rets.success();
     }
     @RequestMapping(value="/v2/foods",method = RequestMethod.GET)
@@ -134,6 +137,15 @@ public class FoodController extends BaseController {
         old.setImage_path(food.getImagePath());
         old.setSpecfoods(specList);
         mongoRepository.update(old);
+        Menu menu = mongoRepository.findOne(Menu.class,old.getCategory_id());
+        for(Food item:menu.getFoods()){
+            if(item.getItem_id().intValue() == old.getItem_id().intValue()){
+                menu.getFoods().remove(item);
+                menu.getFoods().add(old);
+                break;
+            }
+        }
+        mongoRepository.update(menu);
         return Rets.success();
     }
 

@@ -150,7 +150,7 @@ public class FileController extends BaseController {
             out.write(b);
             out.flush();
         } catch (Exception e) {
-            logger.error("getImgStream error",e);
+            logger.error("文件不存在",e.getMessage());
         } finally {
             if (fis != null) {
                 try {
