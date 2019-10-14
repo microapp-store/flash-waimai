@@ -5,7 +5,6 @@ import cn.enilu.flash.bean.constant.cache.CacheKey;
 import cn.enilu.flash.bean.entity.system.FileInfo;
 import cn.enilu.flash.bean.enumeration.ConfigKeyEnum;
 import cn.enilu.flash.cache.ConfigCache;
-import cn.enilu.flash.cache.TokenCache;
 import cn.enilu.flash.dao.system.FileInfoRepository;
 import cn.enilu.flash.security.JwtUtil;
 import cn.enilu.flash.service.BaseService;
@@ -31,8 +30,6 @@ public class FileService extends BaseService<FileInfo,Long,FileInfoRepository> {
     private ConfigCache configCache;
     @Autowired
     private FileInfoRepository fileInfoRepository;
-    @Autowired
-    private TokenCache tokenCache;
 
     /**
      * 文件上传

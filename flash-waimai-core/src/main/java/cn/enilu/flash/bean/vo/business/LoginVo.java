@@ -6,4 +6,5 @@ public class LoginVo{
     private String username;
     private String password;
     private String captchaCode;
+    private String captchCodeId;
 }

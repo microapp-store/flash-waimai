@@ -1,4 +1,4 @@
- <template>
+<template>
 	<div class="rating_page">
         <head-top :head-title="name" go-back='true'></head-top>
         <section class="header_img">
@@ -35,7 +35,6 @@
     import ratingStar from 'src/components/common/ratingStar'
     import buyCart from 'src/components/common/buyCart'
     import {imgBaseUrl} from 'src/config/env'
-
     export default {
     	data(){
             return{
@@ -155,5 +154,4 @@
             }
         }
     }
-
 </style>

@@ -1,4 +1,4 @@
- <template>
+<template>
     <div>
         <section v-if="!showLoading" class="shop_container">
             <nav class="goback" @click="goback">
@@ -7,7 +7,9 @@
                 </svg>
             </nav>
             <header class="shop_detail_header" ref="shopheader" :style="{zIndex: showActivities? '14':'10'}">
-                <img :src="imgBaseUrl + shopDetailData.image_path" class="header_cover_img">
+                <div class="header_cover_img_con">
+                  <img :src="imgBaseUrl + shopDetailData.image_path" class="header_cover_img">
+                </div>
                 <section class="description_header">
                     <router-link to="/shop/shopDetail" class="description_top">
                         <section class="description_left">
@@ -324,7 +326,6 @@
     import {loadMore, getImgPath} from 'src/components/common/mixin'
     import {imgBaseUrl} from 'src/config/env'
     import BScroll from 'better-scroll'
-
     export default {
         data(){
             return{
@@ -465,11 +466,9 @@
                     swipeTime: 2000,
                     click: true,
                 });
-
                 const wrapperMenu = new BScroll('#wrapper_menu', {
                     click: true,
                 });
-
                 const wrapMenuHeight = this.$refs.wrapperMenu.clientHeight;
                 this.foodScroll.on('scroll', (pos) => {
                     if (!this.$refs.wrapperMenu) {
@@ -758,15 +757,21 @@
         padding-left: 0.2rem;
     }
     .shop_detail_header{
-        overflow: hidden;
+        // overflow: hidden;
         position: relative;
-        .header_cover_img{
-            width: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 9;
-            filter: blur(10px);
+        .header_cover_img_con {
+          height: 100%;
+          overflow: hidden;
+          position: absolute;
+          width: 100%;
+          .header_cover_img{
+              width: 100%;
+              position: absolute;
+              top: 0;
+              left: 0;
+              z-index: 9;
+              filter: blur(10px);
+          }
         }
         .description_header{
             position: relative;
@@ -888,7 +893,6 @@
                 padding: .2rem .4rem;
                 border-radius: 0.5rem;
             }
-
         }
         .close_activities{
             position: absolute;
@@ -896,11 +900,11 @@
             @include cl;
         }
     }
-
     .food_container{
         display: flex;
         flex: 1;
         padding-bottom: 2rem;
+        overflow: hidden;
     }
     .menu_container{
         display: flex;
@@ -1080,7 +1084,6 @@
                                 display: inline-block;
                                 transform: scale(.8);
                                 margin-left: -0.35rem;
-
                             }
                         }
                     }
@@ -1157,7 +1160,6 @@
             .cart_num{
                 @include ct;
                 left: 3.5rem;
-
                 div{
                     color: #fff;
                 }
@@ -1235,7 +1237,6 @@
                     span:nth-of-type(1){
                         @include sc(.6rem, #f60);
                         font-family: Helvetica Neue,Tahoma;
-
                     }
                     span:nth-of-type(2){
                         @include sc(.7rem, #f60);
@@ -1538,7 +1539,6 @@
         position: fixed;
         bottom: 30px;
         left: 30px;
-
         svg{
             @include wh(.9rem, .9rem);
             fill: #3190e8;
@@ -1572,5 +1572,4 @@
     .toggle-cart-enter, .toggle-cart-leave-active {
         transform: translateY(100%);
     }
-
 </style>

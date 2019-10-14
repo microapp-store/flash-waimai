@@ -123,10 +123,8 @@ export default {
     addressSelect(address) {
       this.formData.latitude = address.latitude
       this.formData.longitude = address.longitude
-      console.log(this.formData.latitude, this.formData.longitude)
     },
     handleShopAvatarScucess(res, file) {
-      console.log('res', res)
       this.formData.imagePath = getApiUrl() + '/file/getImgStream?fileName=' + res.data.realFileName
       this.formData.image_path = res.data.realFileName
     },
@@ -222,7 +220,6 @@ export default {
           const activitiesJson = JSON.stringify(activities)
           delete this.formData.activities
           this.formData.activitiesJson = activitiesJson
-          console.log(this.formData)
           addShop(this.formData).then(response => {
             this.$message({
               type: 'success',

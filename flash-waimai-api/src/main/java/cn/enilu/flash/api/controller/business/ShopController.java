@@ -248,8 +248,7 @@ public class ShopController extends BaseController {
     }
 
     @RequestMapping(value = "/v2/menu", method = RequestMethod.GET)
-
-    public Object getMenu(@RequestParam("restaurant_id") Long restaurantId, @RequestParam("allMenu") boolean allMEnu) {
+    public Object getMenu(@RequestParam("restaurant_id") Long restaurantId, @RequestParam(name="allMenu",required=false) boolean allMEnu) {
         return Rets.success(mongoRepository.findAll("menus", "restaurant_id", restaurantId));
     }
 
