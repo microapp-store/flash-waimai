@@ -14,12 +14,10 @@ let imgBaseUrl = '';
 
 if (process.env.NODE_ENV == 'development') {
     // imgBaseUrl = '/img/';
-        imgBaseUrl = '/file/getImgStream?fileName='
-  console.log('development',baseUrl)
+        imgBaseUrl = '/file/getImgStream?fileName='  
 }else if(process.env.NODE_ENV == 'production'){
-	baseUrl = '//elm.cangdu.org';
-	console.log('product',baseUrl)
-    imgBaseUrl = '//elm.cangdu.org/img/';
+	baseUrl = '//waimai-api.microapp.store';
+    imgBaseUrl = '//waimai-api.microapp.store/file/getImgStream?fileName=';
 }
 
 export {

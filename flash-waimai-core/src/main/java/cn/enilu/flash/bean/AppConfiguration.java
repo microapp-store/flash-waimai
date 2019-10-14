@@ -19,11 +19,7 @@ public class AppConfiguration {
     @Value("${cfg.tencentkey2}")
     private String tencentKey2;
     @Value("${cfg.tencentkey3}")
-    private String tencentKey3;
-    @Value("${cfg.baidukey}")
-    private String baiduKey;
-    @Value("${cfg.baidukey2}")
-    private String baiduKey2;
+    private String tencentKey3;    
     @Value("${img.dir}")
     private String imgDir;
 

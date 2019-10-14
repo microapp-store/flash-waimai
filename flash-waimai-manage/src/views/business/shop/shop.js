@@ -1,4 +1,5 @@
 import { getApiUrl } from '@/utils/utils'
+import { getToken } from '@/utils/auth'
 import { cityGuess } from '@/api/getData'
 import {
   getResturants,
@@ -13,11 +14,11 @@ export default {
   data() {
     return {
       city: {},
-
-      // offset: 0,
-      // limit: 20,
       count: 0,
-      fileMgrUrl: getApiUrl(),
+      fileMgrUrl: getApiUrl() + '/file',
+      uploadHeaders: {
+        'Authorization': ''
+      },
       tableData: [],
       currentPage: 1,
       selectTable: {},
@@ -34,6 +35,7 @@ export default {
   },
   created() {
     this.initData()
+    this.uploadHeaders['Authorization'] = getToken()
   },
 
   methods: {
@@ -78,11 +80,9 @@ export default {
       }
     },
     async fetchData() {
-      // const {latitude, longitude} = this.city;
       const latitude = ''
       const longitude = ''
       getResturants({ page: this.listQuery.page, limit: this.listQuery.limit }).then(response => {
-        console.log(response)
         const restaurants = response.data.records
         this.total = response.data.total
         this.tableData = []
@@ -127,8 +127,7 @@ export default {
     },
     handleEdit(index, row) {
       this.selectTable = row
-      this.selectTable.image = getApiUrl() + '/file/getImgStream?fileName=' + row.image_path
-      console.log(this.selectTable)
+      this.selectTable.image = getApiUrl() + '/file/getImgStream?fileName=' + row.image_path    
       this.address.address = row.address
       this.dialogFormVisible = true
       this.selectedCategory = row.category.split('/')
@@ -180,11 +179,9 @@ export default {
       this.address = { address, latitude, longitude }
     },
     handleServiceAvatarScucess(res, file) {
-      if (res.status == 1) {
-        this.selectTable.image_path = res.image_path
-      } else {
-        this.$message.error('上传图片失败！')
-      }
+      this.selectTable.image_path = res.data.realFileName
+      this.selectTable.image =  getApiUrl() + '/file/getImgStream?fileName=' + res.data.realFileName
+      
     },
     beforeAvatarUpload(file) {
       const isRightType = (file.type === 'image/jpeg') || (file.type === 'image/png')
@@ -202,8 +199,7 @@ export default {
       this.dialogFormVisible = false
       try {
         Object.assign(this.selectTable, this.address)
-        this.selectTable.category = this.selectedCategory.join('/')
-        console.log(this.selectTable)
+        this.selectTable.category = this.selectedCategory.join('/')         
         updateResturant(this.selectTable).then(response => {
           this.$message({
             type: 'success',

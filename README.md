@@ -50,6 +50,12 @@ mongorestore.exe -d flash-waimai d:\\elm
 ![admin](doc/admin.gif)
 - 手机端    
 ![mobile](doc/mobile.gif)
+
+## 在线演示
+- 查看演示系统请不要随意删除数据
+- 后台管理：[http://waimai-admin.microapp.store](http://waimai-admin.microapp.store)
+- 手机端:[http://waimai-mobile.microapp.store](http://waimai-mobile.microapp.store/#/login)
+- 
 ## 开发进度
 - flash-waimai-manage [初步完成]
 - flash-waimai-mobile[完善中]

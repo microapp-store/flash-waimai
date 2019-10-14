@@ -41,19 +41,19 @@ public class TaskService extends BaseService<Task,Long,TaskRepository> {
 	}
 
 @Override
-	public Task update(Task task) {
-		logger.info("更新定时任务{}", task.getName());
-		taskRepository.save(task);
+	public Task update(Task record) {
+		logger.info("更新定时任务{}", record.getName());
+		taskRepository.save(record);
 		try {
-			QuartzJob job = jobService.getJob(task.getId().toString(), task.getJobGroup());
+			QuartzJob job = jobService.getJob(record.getId().toString(), record.getJobGroup());
 			if (job != null) {
 				jobService.deleteJob(job);
 			}
-			jobService.addJob(jobService.getJob(task));
+			jobService.addJob(jobService.getJob(record));
 		} catch (SchedulerException e) {
 			logger.error(e.getMessage(), e);
 		}
-		return task;
+		return record;
 	}
 
 

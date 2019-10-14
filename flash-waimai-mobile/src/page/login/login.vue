@@ -69,6 +69,7 @@
                 userAccount: null, //用户名
                 passWord: null, //密码
                 captchaCodeImg: null, //验证码地址
+                captchCodeId:null,//验证码id
                 codeNumber: null, //验证码
                 showAlert: false, //显示提示组件
                 alertText: null, //提示的内容
@@ -101,8 +102,10 @@
             },
             //获取验证吗，线上环境使用固定的图片，生产环境使用真实的验证码
             async getCaptchaCode(){
-                let res = await getcaptchas();
-                this.captchaCodeImg = res.code;
+                let res = await getcaptchas()
+                console.log('res',res)
+                this.captchaCodeImg = res.code
+                this.captchCodeId = res.captchCodeId
             },
             //获取短信验证码
             async getVerifyCode(){
@@ -164,7 +167,7 @@
                         return
                     }
                     //用户名登录
-                    this.userInfo = await accountLogin(this.userAccount, this.passWord, this.codeNumber);
+                    this.userInfo = await accountLogin(this.userAccount, this.passWord, this.codeNumber,this.captchCodeId);
                 }
                 //如果返回的值不正确，则弹出提示框，返回的值正确则返回上一页
                 if (!this.userInfo.user_id) {

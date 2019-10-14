@@ -12,3 +12,4 @@ target
 .project
 launch.json
 .vscode
+dist
