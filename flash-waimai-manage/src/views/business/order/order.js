@@ -35,7 +35,6 @@ export default {
             item.index = index
         })
         this.list = list
-        console.log('list',list)
         this.listLoading = false
         this.total = response.data.total
       })
@@ -50,6 +49,7 @@ export default {
     },
     async expandRow(row, status){
       if(status.length>0) {
+        this.expandRowData = []
         const restaurant = await getResturantDetail(row.restaurant_id);
         const userInfo = await getUserInfo(row.user_id);
         const addressInfo = await getAddressById(row.address_id);
@@ -61,7 +61,6 @@ export default {
             user_name: userInfo.data.username
           }
         });
-        this.expandRowData = []
         this.expandRowData.push(row.index);
       }else{
         this.expandRowData = []
