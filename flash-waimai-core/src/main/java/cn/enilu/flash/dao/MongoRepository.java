@@ -79,7 +79,13 @@ public class MongoRepository {
     public <T, P> T findOne(Class<T> klass, P key) {
         return findOne(klass, "id", key);
     }
-
+    public <T> T findOne(Class<T> klass, Map<String,Object> params) {
+        Criteria criteria = criteria(params);
+        if (criteria == null) {
+            return mongoTemplate.findOne(Query.query(criteria), klass);
+        }
+        return null;
+    }
     public <T> T findOne(Class<T> klass, String key, Object value) {
         return mongoTemplate.findOne(Query.query(Criteria.where(key).is(value)), klass);
     }

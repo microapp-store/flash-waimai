@@ -3,10 +3,15 @@ package cn.enilu.flash.api.controller.business;
 import cn.enilu.flash.api.controller.BaseController;
 import cn.enilu.flash.bean.entity.front.Address;
 import cn.enilu.flash.bean.entity.front.Ids;
+import cn.enilu.flash.bean.enumeration.BizExceptionEnum;
+import cn.enilu.flash.bean.exception.GunsException;
 import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.dao.MongoRepository;
 import cn.enilu.flash.service.front.IdsService;
 import cn.enilu.flash.utils.Maps;
+import cn.enilu.flash.utils.ToolUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class AddressController extends BaseController {
+    private Logger logger = LoggerFactory.getLogger(AddressController.class);
     @Autowired
     private MongoRepository mongoRepository;
     @Autowired
@@ -40,5 +46,14 @@ public class AddressController extends BaseController {
     public Object delete(@PathVariable("user_id")Long userId,@PathVariable("address_id") Long addressId){
         mongoRepository.delete("addresses", Maps.newHashMap("user_id",userId,"id",addressId));
         return Rets.success("删除地址成功");
+    }
+
+    @RequestMapping(value="/address/{id}",method = RequestMethod.GET)
+    public Object get(@PathVariable Long id){
+        logger.info("id:{}",id);
+        if (ToolUtil.isEmpty(id)) {
+            throw new GunsException(BizExceptionEnum.REQUEST_NULL);
+        }
+         return Rets.success(mongoRepository.findOne(Address.class,id));
     }
 }
