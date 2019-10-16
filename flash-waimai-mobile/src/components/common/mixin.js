@@ -72,7 +72,8 @@ export const getImgPath = {
 		getImgPath(path) {
 			let suffix;
 			if (!path) {
-				return '//elm.cangdu.org/img/default.jpg'
+			  //这里设置一个默认图片
+				return '//waimai-api.microapp.store/file/getImgStream?fileName=16a6d42c05334033.png'
 			}
 			if (path.indexOf('jpeg') !== -1) {
 				suffix = '.jpeg'

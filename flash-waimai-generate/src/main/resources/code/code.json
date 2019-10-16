@@ -3,11 +3,11 @@
   "codeConfig": {
     "type": "cn.enilu.flash.code.CodeConfig",
     "fields": {
-      entityModel: "flash-core",
-      daoModel: "flash-core",
-      serviceModel: "flash-core",
-      controllerModel: "flash-api",
-      viewModel: "flash-vue-admin"
+      entityModel: "flash-waimai-core",
+      daoModel: "flash-waimai-core",
+      serviceModel: "flash-waimai-core",
+      controllerModel: "flash-waimai-api",
+      viewModel: "flash-waimai-manage"
     }
   }
 }

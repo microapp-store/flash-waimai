@@ -31,8 +31,9 @@ public class PositionService {
     private AppConfiguration appConfiguration;
     @Autowired
     private MongoRepository mongoRepository;
-
+    @Cacheable(value = Cache.APPLICATION ,key = "#root.targetClass.simpleName+':'+#ip")
     public CityInfo getPostion(String ip) {
+        logger.info("根据ip:{}获取城市信息",ip);
         Map<String, String> map = Maps.newHashMap();
         map.put("ip", ip);
         map.put("key", appConfiguration.getTencentKey());

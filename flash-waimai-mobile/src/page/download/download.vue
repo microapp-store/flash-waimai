@@ -43,20 +43,23 @@
         props:[],
         methods: {
             download(){
+              this.showAlert = true;
+              this.alertText = '咱无提供'
+
                 //如果是ios用户则提示，否则直接下载
-                if( this.system == 'IOS'){
-                    this.showAlert = true;
-                    this.alertText = 'IOS用户请前往AppStore下载'
-                }else{
-                    try {
-                        let elemIF = document.createElement("iframe");
-                        elemIF.src = 'http://cangdu.org/files/elm.apk';
-                        elemIF.style.display = "none";
-                        document.body.appendChild(elemIF);
-                    } catch (e) {
-                        alert('下载失败')
-                    }
-                }
+                // if( this.system == 'IOS'){
+                //     this.showAlert = true;
+                //     this.alertText = 'IOS用户请前往AppStore下载'
+                // }else{
+                //     try {
+                //         let elemIF = document.createElement("iframe");
+                //         elemIF.src = 'http://microapp.store/files/elm.apk';
+                //         elemIF.style.display = "none";
+                //         document.body.appendChild(elemIF);
+                //     } catch (e) {
+                //         alert('下载失败')
+                //     }
+                // }
             }
         }
     }

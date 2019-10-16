@@ -1,5 +1,4 @@
 import { getApiUrl } from '@/utils/utils'
-import { baseUrl, baseImgPath } from '@/config/env'
 import { getToken } from '@/utils/auth'
 
 import { getFoods, updateFood, deleteFood } from '@/api/business/food'
@@ -9,8 +8,6 @@ import { Loading } from 'element-ui'
 export default {
   data() {
     return {
-      baseUrl,
-      baseImgPath,
       fileMgrUrl: '',
       uploadHeaders: {
         'Authorization': ''

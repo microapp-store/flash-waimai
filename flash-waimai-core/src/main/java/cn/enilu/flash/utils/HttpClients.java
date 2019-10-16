@@ -14,7 +14,6 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.nutz.lang.Files;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -240,17 +239,6 @@ public class HttpClients {
 			logger.debug("抓取图片异常imgUrl:{}\r\npath:{}",imgUrl,path,e);
 		}
 		return null;
-
-	}
-
-	public static void main(String[] args) {
-		List<String> list = Files.readLines(new File("e:\\flash-waimai\\food_img.json"));
-
-		for(int i=0;i<list.size();i++){
-		String img = list.get(i);
-			downloadImg("http://elm.cangdu.org/img/"+img,"e:\\flash-waimai\\img\\foods\\"+img);
-		}
-		System.out.println(list.size());
 
 	}
 

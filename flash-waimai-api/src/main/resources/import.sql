@@ -1977,7 +1977,7 @@ INSERT INTO `t_sys_file_info` VALUES ('1888', '-1', '2019-09-05 17:36:33', '-1',
 INSERT INTO `t_sys_file_info` VALUES ('1889', '-1', '2019-09-05 17:36:33', '-1', '2019-09-05 17:36:33', '食品图片', '16ab45884b939742.jpg');
 INSERT INTO `t_sys_file_info` VALUES ('1890', '-1', '2019-09-05 17:36:33', '-1', '2019-09-05 17:36:33', '食品图片', '16ab513cda439776.jpg');
 INSERT INTO `t_sys_file_info` VALUES ('1891', '-1', '2019-09-05 17:36:33', '-1', '2019-09-05 17:36:33', '食品图片', '16ab5163c0f39778.jpg');
-INSERT INTO `t_sys_file_info` VALUES ('1892', '-1', '2019-09-05 17:36:33', '-1', '2019-09-05 17:36:33', '食品图片', 'elm.cangdu.org');
+INSERT INTO `t_sys_file_info` VALUES ('1892', '-1', '2019-09-05 17:36:33', '-1', '2019-09-05 17:36:33', '食品图片', 'test');
 
 -- ----------------------------
 -- Records of t_sys_login_log

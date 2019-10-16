@@ -19,7 +19,7 @@
 - flash-waimai-generate 代码生成模块
 
 ## 快速开始
-- 数据存储采用了mysql和mongodb，其中基础管理配置功能使用mysql，业务数据使用mongodb存储。
+- 数据存储采用了mysql和mongodb，其中基础管理配置功能数据使用mysql，业务数据使用mongodb存储。
 - 创建mysql数据库
 ```sql
     CREATE DATABASE IF NOT EXISTS waimai DEFAULT CHARSET utf8 COLLATE utf8_general_ci; 
@@ -29,18 +29,20 @@
 ```
 - mysql数据库创建好了之后，启动flash-waimai-api服务，会自动初始化数据，无需开发人员自己手动初始化数据
 - 安装mongodb并创建数据库:flash-waimai
-使用mongorestore命令  导入mongodb数据,由于测试数据量较大，打包放在了百度云盘：链接：https://pan.baidu.com/s/1mfO7yckFL7lMb_O0BPsviw   提取码：apgd 下载后将文件姐要到d:\\elm
+使用mongorestore命令  导入mongodb数据,由于测试数据量较大，打包放在了百度云盘：链接：https://pan.baidu.com/s/1mfO7yckFL7lMb_O0BPsviw   提取码：apgd 下载后将文件解压到d:\\elm，如下命令导入数据：
                                               
 ```
 mongorestore.exe -d flash-waimai d:\\elm
 ```
-- 下载测试图片：链接：https://pan.baidu.com/s/1rvZDspoapWa6rEq2D_5kzw 提取码：urzw ，将图片存放到t_sys_cfg表中system.file.upload.path配置的目录的目录
+- 下载项目测试数据的图片（商家和食品图片）：链接：https://pan.baidu.com/s/1rvZDspoapWa6rEq2D_5kzw 提取码：urzw ，将图片存放到t_sys_cfg表中system.file.upload.path配置的目录下
 
-- 启动管理平台，进入flash-waimai-manage目录：
+- 启动管理平台:
+    - 进入flash-waimai-manage目录：
     - 运行 npm install --registry=https://registry.npm.taobao.org
     - 运行npm run dev
     - 启动成功后访问 http://localhost:9528 ,登录，用户名密码:admin/admin
-- 启动手机端，进入flash-waimai-mobile目录：    
+- 启动手机端:
+    - 进入flash-waimai-mobile目录：    
     - 运行 npm install --registry=https://registry.npm.taobao.org
     - 运行npm run local
     - 启动成功后访问 http://localhost:8000
