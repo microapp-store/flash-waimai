@@ -56,6 +56,10 @@ public class TaskService extends BaseService<Task,Long,TaskRepository> {
 		return record;
 	}
 
+	public void simpleUpdate(Task task){
+		taskRepository.save(task);
+	}
+
 
 	public Task disable(Long id) {
 		Task task = get(id);

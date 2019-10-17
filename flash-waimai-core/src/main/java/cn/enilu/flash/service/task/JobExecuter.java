@@ -24,6 +24,8 @@ public abstract class JobExecuter {
 
     @Autowired
     private TaskLogRepository taskLogRepository;
+    @Autowired
+    private TaskLogService taskLogService;
 
     private QuartzJob job;
 
@@ -39,9 +41,9 @@ public abstract class JobExecuter {
         log.info(">>>>>>>>>>>>>>>>>开始执行定时任务[" + taskName + "]...<<<<<<<<<<<<<<<<<<<");
 
         String exeResult = "执行成功";
-        final TaskLog taskLog = new TaskLog();
+        TaskLog taskLog = new TaskLog();
         taskLog.setName(taskName);
-        final Date exeAt = new Date();
+        Date exeAt = new Date();
         taskLog.setExecAt(exeAt);
         taskLog.setIdTask(task.getId());
         //默认是成功 出异常后改成失败
@@ -57,20 +59,16 @@ public abstract class JobExecuter {
         }
         task.setExecResult(exeResult);
         task.setExecAt(exeAt);
-        taskLogRepository.save(taskLog);
-        taskService.update(task);
+        taskLogService.insert(taskLog);
+        taskService.simpleUpdate(task);
         log.info(">>>>>>>>>>>>>>>>>执行定时任务[" + taskName + "]结束<<<<<<<<<<<<<<<<<<<");
     }
 
     /**
-     *
      * @param dataMap 数据库配置的参数
      */
     public abstract void execute(Map<String, Object> dataMap) throws Exception;
 
-    public String getEmail() {
-        return getEmail("snowalert@xuezhongdai.cn");
-    }
 
     public String getEmail(String defaultEmail) {
         Map<String, Object> dataMap = job.getDataMap();
