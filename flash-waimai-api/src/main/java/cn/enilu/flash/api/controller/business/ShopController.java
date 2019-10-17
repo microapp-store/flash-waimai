@@ -14,6 +14,7 @@ import cn.enilu.flash.service.front.PositionService;
 import cn.enilu.flash.utils.BeanUtil;
 import cn.enilu.flash.utils.Lists;
 import cn.enilu.flash.utils.Maps;
+import cn.enilu.flash.utils.StringUtils;
 import cn.enilu.flash.utils.factory.Page;
 import cn.enilu.flash.utils.gps.Distance;
 import org.nutz.json.Json;
@@ -51,14 +52,18 @@ public class ShopController extends BaseController {
     @RequestMapping(value = "restaurants", method = RequestMethod.GET)
     public Object listShop(@RequestParam(value = "latitude", required = false) String latitude,
                            @RequestParam(value = "longitude", required = false) String longitude,
+                           @RequestParam(value="name",required = false) String name,
                            @RequestParam(value = "restaurant_category_ids[]",required = false) Long[] categoryIds) {
-        if (com.google.common.base.Strings.isNullOrEmpty(latitude) || "undefined".equals(latitude)
-                || com.google.common.base.Strings.isNullOrEmpty(longitude) || "undefined".equals(longitude)) {
+        Map<String,Object> params = Maps.newHashMap();
+        if(StringUtils.isNotEmpty(name)){
+            params.put("name",name);
+        }
+        if (StringUtils.isEmpty(latitude) || "undefined".equals(latitude)
+                || StringUtils.isEmpty(longitude) || "undefined".equals(longitude)) {
             Page<Shop> page = new PageFactory<Shop>().defaultPage();
-            return Rets.success(mongoRepository.queryPage(page, Shop.class));
+            return Rets.success(mongoRepository.queryPage(page, Shop.class,params));
         } else {
             //查询指定经纬度范围内的餐厅
-            Map<String,Object> params = Maps.newHashMap();
             if(categoryIds!=null&&categoryIds.length>0){
                 Map map = (Map) mongoRepository.findOne(categoryIds[0],"categories");
                 if(map!=null) {

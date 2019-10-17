@@ -29,7 +29,8 @@ export default {
       total: 0,
       listQuery: {
         page: 1,
-        limit: 20
+        limit: 20,
+        name:undefined
       }
     }
   },
@@ -82,7 +83,7 @@ export default {
     async fetchData() {
       const latitude = ''
       const longitude = ''
-      getResturants({ page: this.listQuery.page, limit: this.listQuery.limit }).then(response => {
+      getResturants(this.listQuery).then(response => {
         const restaurants = response.data.records
         this.total = response.data.total
         this.tableData = []
@@ -100,6 +101,14 @@ export default {
           this.tableData.push(tableData)
         })
       })
+    },
+
+    search() {
+      this.fetchData()
+    },
+    reset() {
+      this.listQuery.name = ''
+      this.fetchData()
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`)
@@ -127,7 +136,7 @@ export default {
     },
     handleEdit(index, row) {
       this.selectTable = row
-      this.selectTable.image = getApiUrl() + '/file/getImgStream?fileName=' + row.image_path    
+      this.selectTable.image = getApiUrl() + '/file/getImgStream?fileName=' + row.image_path
       this.address.address = row.address
       this.dialogFormVisible = true
       this.selectedCategory = row.category.split('/')
@@ -137,6 +146,9 @@ export default {
     },
     addFood(index, row) {
       this.$router.push({ path: '/data/food/add', query: { restaurant_id: row.id }})
+    },
+    viewFood(index,row) {
+      this.$router.push({path:'/data/food',query:{restaurant_id:row.id}})
     },
     async handleDelete(index, row) {
       try {
@@ -181,7 +193,7 @@ export default {
     handleServiceAvatarScucess(res, file) {
       this.selectTable.image_path = res.data.realFileName
       this.selectTable.image =  getApiUrl() + '/file/getImgStream?fileName=' + res.data.realFileName
-      
+
     },
     beforeAvatarUpload(file) {
       const isRightType = (file.type === 'image/jpeg') || (file.type === 'image/png')
@@ -199,7 +211,7 @@ export default {
       this.dialogFormVisible = false
       try {
         Object.assign(this.selectTable, this.address)
-        this.selectTable.category = this.selectedCategory.join('/')         
+        this.selectTable.category = this.selectedCategory.join('/')
         updateResturant(this.selectTable).then(response => {
           this.$message({
             type: 'success',

@@ -1,6 +1,17 @@
 <template>
   <div class="app-container">
     <div class="block">
+      <el-row  :gutter="20">
+        <el-col :span="6">
+          <el-input v-model="listQuery.name" placeholder="店铺名称"></el-input>
+        </el-col>
+
+        <el-col :span="6">
+          <el-button type="success" icon="el-icon-search" @click.native="search">{{ $t('button.search') }}</el-button>
+          <el-button type="primary" icon="el-icon-refresh" @click.native="reset">{{ $t('button.reset') }}</el-button>
+        </el-col>
+      </el-row>
+      <br>
       <div class="table_container">
         <el-table
           :data="tableData"
@@ -47,7 +58,7 @@
             label="店铺介绍"
             prop="description">
           </el-table-column>
-          <el-table-column label="操作" width="300">
+          <el-table-column label="操作" width="350">
             <template slot-scope="scope">
               <el-button
                 size="mini"
@@ -58,6 +69,11 @@
                 size="mini"
                 type="success"
                 @click="addFood(scope.$index, scope.row)">添加食品
+              </el-button>
+              <el-button
+                size="mini"
+                type="info"
+                @click="viewFood(scope.$index, scope.row)">查看食品
               </el-button>
               <el-button
                 size="mini"
