@@ -115,19 +115,14 @@ export default {
       }
       //获取商铺信息
       this.shopDetailData = await shopDetails(this.shopId, this.latitude, this.longitude);
-      console.log('shopDetailData',this.shopDetailData)
       //获取商铺食品列表
       this.menuList = await foodMenu(this.shopId);
-      console.log('menuList',this.menuList)
       //评论列表
       this.ratingList = await getRatingList(this.shopId, this.ratingOffset);
-      console.log('ratingList',this.ratingList)
       //商铺评论详情
       this.ratingScoresData = await ratingScores(this.shopId);
-      console.log('ratingScoreData',this.ratingScoresData)
       //评论Tag列表
       this.ratingTagsList = await ratingTags(this.shopId);
-      console.log('ratingTagsList',this.ratingTagsList)
       this.RECORD_SHOPDETAIL(this.shopDetailData)
       //隐藏加载动画
       this.hideLoading();

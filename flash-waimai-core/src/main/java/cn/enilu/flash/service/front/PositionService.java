@@ -167,4 +167,7 @@ public class PositionService {
         return result;
     }
 
+    public void getDistance(String from,String to){
+
+    }
 }

@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * Created  on 2018/1/5 0005.
  *
- * @author zt
+ * @author enilu.cn
  */
 @Document(collection = "addresses")
 public class Address extends BaseMongoEntity{
