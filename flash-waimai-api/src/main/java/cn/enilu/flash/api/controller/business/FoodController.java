@@ -82,6 +82,15 @@ public class FoodController extends BaseController {
         food.setAttributes(attributes1);
         food.setDescription(foodVo.getDescript());
         food.setSpecfoods(specList);
+        List specifications =  Lists.newArrayList();
+        List<String> specificationValues = Lists.newArrayList();
+        if(!specList.isEmpty()) {
+            for (SpecFood specFood : specList) {
+                specificationValues.add(specFood.getName());
+            }
+            specifications.add(Maps.newHashMap("name","规格","values",specificationValues));
+        }
+        food.setSpecifications(specifications);
         food.setItem_id(idsService.getId(Ids.ITEM_ID));
         setTips(food);
         food.setPinyin_name(StringUtils.getPingYin(food.getName()));
@@ -89,6 +98,7 @@ public class FoodController extends BaseController {
         food.setSatisfy_count(new BigDecimal(Math.ceil(Math.random() * 1000)).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue());
         food.setRating(new BigDecimal(Math.random() * 5).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue());        
         mongoRepository.save(food);
+
         Menu menu = mongoRepository.findOne(Menu.class,food.getCategory_id());
         menu.getFoods().add(food);
         mongoRepository.update(menu);

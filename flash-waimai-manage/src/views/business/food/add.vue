@@ -5,8 +5,8 @@
       <el-row>
         <el-col :span="14" :offset="4">
           <header class="form_header">选择食品种类</header>
-          <el-form :model="categoryForm" ref="categoryForm" label-width="110px" class="form">
-            <el-row class="category_select">
+          <el-form :model="categoryForm" ref="categoryForm"  label-width="110px" class="form">
+            <el-row class="category_select" >
               <el-form-item label="食品种类">
                 <el-select v-model="categoryForm.categorySelect" :placeholder="selectValue.label" style="width:100%;">
                   <el-option
@@ -20,7 +20,7 @@
             </el-row>
             <el-row class="add_category_row" :class="showAddCategory? 'showEdit': ''">
               <div class="add_category">
-                <el-form-item label="食品种类" prop="name">
+                <el-form-item label="食品种类">
                   <el-input v-model="categoryForm.name"></el-input>
                 </el-form-item>
                 <el-form-item label="种类描述" prop="description">
@@ -60,7 +60,7 @@
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
             </el-form-item>
-            <el-form-item label="食品特点">
+            <el-form-item label="食品特点" prop="attributes">
               <el-select v-model="foodForm.attributes" multiple placeholder="请选择">
                 <el-option
                   v-for="item in attributes"

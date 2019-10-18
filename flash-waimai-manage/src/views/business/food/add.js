@@ -29,10 +29,21 @@ export default {
           price: 20
         }]
       },
+      categoryRules: {
+        name: [
+          { required: true, message: '请选择食品种类', trigger: 'blur' }
+        ]
+      },
       foodrules: {
         name: [
           { required: true, message: '请输入食品名称', trigger: 'blur' }
-        ]
+        ],
+        attributes: [
+          { required: true, message: '请选择食品特点', trigger: 'blur' }
+        ],
+        categoryName: [
+          { required: true, message: '请选择食品种类', trigger: 'blur' }
+        ],
       },
       attributes: [{
         value: '新',

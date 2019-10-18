@@ -80,6 +80,7 @@
             },
             //加入购物车，计算按钮位置。
             addToCart(category_id, item_id, food_id, name, price, specs, packing_fee, sku_id, stock, event){
+                food_id = item_id
                 this.ADD_CART({shopid: this.shopId, category_id, item_id, food_id, name, price, specs, packing_fee, sku_id, stock});
                 let elLeft = event.target.getBoundingClientRect().left;
                 let elBottom = event.target.getBoundingClientRect().bottom;
