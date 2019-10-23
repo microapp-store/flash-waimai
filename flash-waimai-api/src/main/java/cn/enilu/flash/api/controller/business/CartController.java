@@ -5,6 +5,7 @@ import cn.enilu.flash.bean.entity.front.*;
 import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.dao.MongoRepository;
 import cn.enilu.flash.service.front.IdsService;
+import cn.enilu.flash.service.front.PositionService;
 import cn.enilu.flash.utils.Lists;
 import cn.enilu.flash.utils.Maps;
 import org.nutz.json.Json;
@@ -27,6 +28,9 @@ public class CartController extends BaseController {
     private MongoRepository mongoRepository;
     @Autowired
     private IdsService idsService;
+    @Autowired
+    private PositionService positionService;
+
     @RequestMapping(value = "/v1/carts/checkout",method = RequestMethod.POST)
     public Object checkout(HttpServletRequest request){
 
@@ -38,6 +42,9 @@ public class CartController extends BaseController {
         List<Payment> paymentList = mongoRepository.findAll(Payment.class);
         Shop shop = mongoRepository.findOne(Shop.class,restaurantId);
         String to =  shop.getLatitude()+","+shop.getLongitude();
+        Map distance = positionService.getDistance(from,to);
+        String deliver_time = distance!=null?distance.get("duration").toString():"";
+        carts.setDelivery_reach_time(deliver_time);
         carts.setId(idsService.getId(Ids.CART_ID));
         carts.setPayments(paymentList);
         carts.setSig(String.valueOf(Math.ceil(Math.random()*1000000)));

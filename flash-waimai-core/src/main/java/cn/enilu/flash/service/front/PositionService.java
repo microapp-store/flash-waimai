@@ -2,10 +2,11 @@ package cn.enilu.flash.service.front;
 
 import cn.enilu.flash.bean.AppConfiguration;
 import cn.enilu.flash.bean.constant.cache.Cache;
+import cn.enilu.flash.bean.vo.business.City;
 import cn.enilu.flash.bean.vo.business.CityInfo;
 import cn.enilu.flash.dao.MongoRepository;
 import cn.enilu.flash.utils.HttpClients;
-import com.google.common.collect.Maps;
+import cn.enilu.flash.utils.Maps;
 import org.nutz.json.Json;
 import org.nutz.mapl.Mapl;
 import org.slf4j.Logger;
@@ -31,7 +32,25 @@ public class PositionService {
     private AppConfiguration appConfiguration;
     @Autowired
     private MongoRepository mongoRepository;
-    @Cacheable(value = Cache.APPLICATION ,key = "#root.targetClass.simpleName+':'+#ip")
+
+    /**
+     * 根据ip获取所属城市id和名称
+     * @param ip
+     * @return
+     */
+    @Cacheable(value = Cache.APPLICATION ,key = "#root.targetClass.simpleName+':guess_city:'+#ip")
+    public City guessCity(String ip){
+        CityInfo cityInfo = getPostion(ip);
+        if(cityInfo!=null) {
+            Map map = findByName(cityInfo.getCity());
+            City city = new City();
+            city.setId(Integer.valueOf(map.get("id").toString()));
+            city.setName(map.get("name").toString());
+            return city;
+        }
+        return null;
+    }
+    @Cacheable(value = Cache.APPLICATION ,key = "#root.targetClass.simpleName+':position:'+#ip")
     public CityInfo getPostion(String ip) {
         logger.info("根据ip:{}获取城市信息",ip);
         Map<String, String> map = Maps.newHashMap();
@@ -39,7 +58,7 @@ public class PositionService {
         map.put("key", appConfiguration.getTencentKey());
         Map result = null;
         try {
-            String str = HttpClients.get(appConfiguration.getApiUrl() + "location/v1/ip", map);
+            String str = HttpClients.get(appConfiguration.getQqApiUrl() + "location/v1/ip", map);
             result = (Map) Json.fromJson(str);
         } catch (Exception e) {
             logger.error("获取地理位置异常", e);
@@ -47,7 +66,7 @@ public class PositionService {
         if (result == null || Integer.valueOf(result.get("status").toString()) != 0) {
             try {
                 map.put("key", appConfiguration.getTencentKey2());
-                String str = HttpClients.get(appConfiguration.getApiUrl() + "location/v1/ip", map);
+                String str = HttpClients.get(appConfiguration.getQqApiUrl() + "location/v1/ip", map);
                 result = (Map) Json.fromJson(str);
             } catch (Exception e) {
                 logger.error("获取地理位置异常", e);
@@ -56,7 +75,7 @@ public class PositionService {
         if (result == null || Integer.valueOf(result.get("status").toString()) != 0) {
             try {
                 map.put("key", appConfiguration.getTencentKey3());
-                String str = HttpClients.get(appConfiguration.getApiUrl() + "location/v1/ip", map);
+                String str = HttpClients.get(appConfiguration.getQqApiUrl() + "location/v1/ip", map);
                 result = (Map) Json.fromJson(str);
             } catch (Exception e) {
                 logger.error("获取地理位置异常", e);
@@ -88,7 +107,7 @@ public class PositionService {
         params.put("boundary", "region(" + URLEncoder.encode(cityName) + ",0)");
         params.put("page_size", "10");
         try {
-            String str = HttpClients.get(appConfiguration.getApiUrl() + "place/v1/search", params);
+            String str = HttpClients.get(appConfiguration.getQqApiUrl() + "place/v1/search", params);
             Map result = (Map) Json.fromJson(str);
             if (Integer.valueOf(result.get("status").toString()).intValue() == 0) {
                 return (List) result.get("data");
@@ -149,7 +168,7 @@ public class PositionService {
         map.put("key", appConfiguration.getTencentKey());
         Map result = Maps.newHashMap();
         try {
-            String str = HttpClients.get(appConfiguration.getApiUrl() + "geocoder/v1", map);
+            String str = HttpClients.get(appConfiguration.getQqApiUrl() + "geocoder/v1", map);
             Map response = (Map) Json.fromJson(str);
             if ("0".equals(response.get("status").toString())) {
                 result.put("address", Mapl.cell(response,"result.address"));
@@ -167,7 +186,31 @@ public class PositionService {
         return result;
     }
 
-    public void getDistance(String from,String to){
+    public Map<String,String> getDistance(String from,String to){
+        Map<String,String> params = Maps.newHashMap(
+                "ak",appConfiguration.getBaiduKey(),
+                "output","json",
+                "origins",from,
+                "destinations",to
+        );
+        try {
+            //使用百度地图api获取距离值：
+            //routematrix/v2/riding 骑行
+            //routematrix/v2/driving 开车
+            //routematrix/v2/walking 步行
+            String str = HttpClients.get(appConfiguration.getBaiduApiUrl() + "routematrix/v2/riding", params);
+            Map response = (Map) Json.fromJson(str);
+            if("0".equals(response.get("status").toString())){
+              Map result =  Maps.newHashMap(
+                      "distance",Mapl.cell(response,"result[0].distance.text"),
+                      "duration",Mapl.cell(response,"result[0].duration.text")
+              );
+              return result;
+            }
 
+        }catch (Exception e){
+            logger.error("通过百度获取配送距离失败",e);
+        }
+        return null;
     }
 }
