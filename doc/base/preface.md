@@ -1,4 +1,4 @@
-# flash-waimai
+# 前言
 - 一个完整的外卖系统，包括手机端，后台管理，api
 - 基于spring boot和vue的前后端分离的外卖系统
 - 包含完整的手机端，后台管理功能
@@ -49,17 +49,15 @@ mongorestore.exe -d flash-waimai d:\\elm
 
 ## 运行效果图
 - 后台管理
-![admin](doc/admin.gif)
+![admin](../admin.gif)
 - 手机端    
-![mobile](doc/mobile.gif)
+![mobile](../mobile.gif)
 
 ## 在线演示
 - 查看演示系统请不要随意删除数据
 - 后台管理：[http://waimai-admin.microapp.store](http://waimai-admin.microapp.store)
 - 手机端:[http://waimai-mobile.microapp.store](http://waimai-mobile.microapp.store)
-
-## 文档
-[https://microapp.gitee.io/flash-waimai](https://microapp.gitee.io/flash-waimai)
+- 
 ## 开发进度
 - flash-waimai-manage [初步完成]
 - flash-waimai-mobile[完善中]

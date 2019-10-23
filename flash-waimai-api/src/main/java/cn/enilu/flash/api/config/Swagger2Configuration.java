@@ -47,10 +47,10 @@ public class Swagger2Configuration {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("web-flash api")
-                .description("快速构建web管理平台")
-                .termsOfServiceUrl("blog.enilu.cn")
-                .contact("blog.enilu.cn")
+                .title("flash-waimai api")
+                .description("快速构建外卖系统")
+                .termsOfServiceUrl("microapp.store")
+                .contact("www.microapp.store")
                 .version("1.0")
                 .build();
     }

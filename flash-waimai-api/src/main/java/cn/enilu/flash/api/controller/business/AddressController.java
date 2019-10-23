@@ -4,7 +4,7 @@ import cn.enilu.flash.api.controller.BaseController;
 import cn.enilu.flash.bean.entity.front.Address;
 import cn.enilu.flash.bean.entity.front.Ids;
 import cn.enilu.flash.bean.enumeration.BizExceptionEnum;
-import cn.enilu.flash.bean.exception.GunsException;
+import cn.enilu.flash.bean.exception.ApplicationException;
 import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.dao.MongoRepository;
 import cn.enilu.flash.service.front.IdsService;
@@ -52,7 +52,7 @@ public class AddressController extends BaseController {
     public Object get(@PathVariable Long id){
         logger.info("id:{}",id);
         if (ToolUtil.isEmpty(id)) {
-            throw new GunsException(BizExceptionEnum.REQUEST_NULL);
+            throw new ApplicationException(BizExceptionEnum.REQUEST_NULL);
         }
          return Rets.success(mongoRepository.findOne(Address.class,id));
     }

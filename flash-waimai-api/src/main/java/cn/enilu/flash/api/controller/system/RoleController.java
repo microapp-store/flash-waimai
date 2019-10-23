@@ -8,7 +8,7 @@ import cn.enilu.flash.bean.entity.system.Role;
 import cn.enilu.flash.bean.entity.system.User;
 import cn.enilu.flash.bean.enumeration.BizExceptionEnum;
 import cn.enilu.flash.bean.enumeration.Permission;
-import cn.enilu.flash.bean.exception.GunsException;
+import cn.enilu.flash.bean.exception.ApplicationException;
 import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.bean.vo.node.Node;
 import cn.enilu.flash.bean.vo.node.ZTreeNode;
@@ -75,7 +75,7 @@ public class RoleController extends BaseController {
     public Object remove(@RequestParam Long roleId){
         logger.info("id:{}",roleId);
         if (ToolUtil.isEmpty(roleId)) {
-            throw new GunsException(BizExceptionEnum.REQUEST_NULL);
+            throw new ApplicationException(BizExceptionEnum.REQUEST_NULL);
         }
         if(roleId.intValue()<2){
             return Rets.failure("不能删除初始角色");
@@ -83,7 +83,7 @@ public class RoleController extends BaseController {
 
         //不能删除超级管理员角色
         if(roleId.equals(Const.ADMIN_ROLE_ID)){
-            throw new GunsException(BizExceptionEnum.CANT_DELETE_ADMIN);
+            throw new ApplicationException(BizExceptionEnum.CANT_DELETE_ADMIN);
         }
         //缓存被删除的角色名称
         LogObjectHolder.me().set(ConstantFactory.me().getSingleRoleName(roleId));
@@ -97,7 +97,7 @@ public class RoleController extends BaseController {
     public Object setAuthority(Long roleId, String
             permissions) {
         if (ToolUtil.isOneEmpty(roleId)) {
-            throw new GunsException(BizExceptionEnum.REQUEST_NULL);
+            throw new ApplicationException(BizExceptionEnum.REQUEST_NULL);
         }
         roleService.setAuthority(roleId, permissions);
         return Rets.success();
