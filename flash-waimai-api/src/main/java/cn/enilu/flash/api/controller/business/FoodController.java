@@ -18,6 +18,8 @@ import cn.enilu.flash.utils.Maps;
 import cn.enilu.flash.utils.StringUtils;
 import cn.enilu.flash.utils.factory.Page;
 import org.nutz.json.Json;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,10 +43,11 @@ public class FoodController extends BaseController {
 
     @Autowired
     private IdsService idsService;
+    private Logger logger = LoggerFactory.getLogger(FoodController.class);
 
     @RequestMapping(value = "addfood",method = RequestMethod.POST)
     public Object add(@Valid @ModelAttribute FoodVo foodVo) {
-        System.out.println(Json.toJson(foodVo));
+        logger.info(Json.toJson(foodVo));
         Food food = new Food();
         BeanUtil.copyProperties(foodVo,food);
         food.setRestaurant_id(foodVo.getIdShop());
@@ -106,7 +109,6 @@ public class FoodController extends BaseController {
     }
     @RequestMapping(value="/v2/foods",method = RequestMethod.GET)
     public Object list(@RequestParam(value = "restaurant_id",required = false) Long restaurantId) {
-        //restaurantId="11";
         Page<Food> page = new PageFactory<Food>().defaultPage();
         if (StringUtils.isNullOrEmpty(restaurantId) || "undefined".equals(restaurantId)) {
             return Rets.success(mongoRepository.queryPage(page,Food.class));

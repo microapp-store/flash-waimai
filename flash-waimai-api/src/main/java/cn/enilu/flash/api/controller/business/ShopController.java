@@ -4,6 +4,7 @@ import cn.enilu.flash.api.controller.BaseController;
 import cn.enilu.flash.bean.constant.factory.PageFactory;
 import cn.enilu.flash.bean.entity.front.Ids;
 import cn.enilu.flash.bean.entity.front.Menu;
+import cn.enilu.flash.bean.entity.front.Ratings;
 import cn.enilu.flash.bean.entity.front.Shop;
 import cn.enilu.flash.bean.vo.business.CityInfo;
 import cn.enilu.flash.bean.vo.business.ShopVo;
@@ -218,9 +219,13 @@ public class ShopController extends BaseController {
             shop.setLocation(locations);
         }
 
-
         mongoRepository.save(shop);
+        Ratings ratings = mongoRepository.findOne(Ratings.class,Maps.newHashMap("restaurant_id",shop.getId()));
+        if(ratings==null){
+            ratings = new Ratings(shop.getId());
 
+            mongoRepository.save(ratings);
+        }
         return Rets.success();
     }
 

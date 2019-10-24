@@ -190,8 +190,10 @@ export default {
       return ''
     },
     addFood(foodForm) {
+      console.log(this.selectValue.id)
       this.$refs[foodForm].validate(async(valid) => {
         if (valid) {
+
           const params = {
             ...this.foodForm,
             category_id: this.selectValue.id,

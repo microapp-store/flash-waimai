@@ -203,6 +203,7 @@ export default {
       this.totalPrice = 0;
       this.cartFoodList = [];
       this.menuList.forEach((item, index) => {
+        console.log('1',item.foods[0])
         if (this.shopCart&&this.shopCart[item.foods[0].category_id]) {
           let num = 0;
           Object.keys(this.shopCart[item.foods[0].category_id]).forEach(itemid => {

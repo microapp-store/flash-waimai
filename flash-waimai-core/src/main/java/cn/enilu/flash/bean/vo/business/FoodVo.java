@@ -21,6 +21,7 @@ public class FoodVo  extends Food {
     private List<SpecVo> specs;
     private String specsJson;
     private String attributesJson;
+    private Long category_id;
 
 
 }
