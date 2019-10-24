@@ -31,8 +31,8 @@ public class CartController extends BaseController {
     @Autowired
     private PositionService positionService;
 
-    @RequestMapping(value = "/v1/carts/checkout",method = RequestMethod.POST)
-    public Object checkout(HttpServletRequest request){
+    @RequestMapping(value = "/v1/carts/checkout", method = RequestMethod.POST)
+    public Object checkout(HttpServletRequest request) {
 
         Map data = getRequestPayload(Map.class);
         System.out.println(Json.toJson(data));
@@ -40,15 +40,15 @@ public class CartController extends BaseController {
         Long restaurantId = Long.valueOf(data.get("restaurant_id").toString());
         Carts carts = new Carts();
         List<Payment> paymentList = mongoRepository.findAll(Payment.class);
-        Shop shop = mongoRepository.findOne(Shop.class,restaurantId);
-        String to =  shop.getLatitude()+","+shop.getLongitude();
-        Map distance = positionService.getDistance(from,to);
-        String deliver_time = distance!=null?distance.get("duration").toString():"";
+        Shop shop = mongoRepository.findOne(Shop.class, restaurantId);
+        String to = shop.getLatitude() + "," + shop.getLongitude();
+        Map distance = positionService.getDistance(from, to);
+        String deliver_time = distance != null ? distance.get("duration").toString() : "";
         carts.setDelivery_reach_time(deliver_time);
         carts.setId(idsService.getId(Ids.CART_ID));
         carts.setPayments(paymentList);
-        carts.setSig(String.valueOf(Math.ceil(Math.random()*1000000)));
-        carts.setInvoice(Maps.newHashMap("status_text","不需要开发票","is_available",true));
+        carts.setSig(String.valueOf(Math.ceil(Math.random() * 1000000)));
+        carts.setInvoice(Maps.newHashMap("status_text", "不需要开发票", "is_available", true));
 
         Cart cart = new Cart();
         cart.setId(carts.getId());
@@ -58,29 +58,49 @@ public class CartController extends BaseController {
         List<List> entities = (List<List>) data.get("entities");
         List<List> groups = Lists.newArrayList(Lists.newArrayList());
         BigDecimal total = new BigDecimal(0);
-        for(int i=0;i<entities.get(0).size();i++){
+        List extraList = Lists.newArrayList();
+        Map extra = Maps.newHashMap(
+                "description", "",
+                "name", "",
+                "price", 0,
+                "quantity", 1,
+                "type", 0);
+        for (int i = 0; i < entities.get(0).size(); i++) {
             Map map = (Map) entities.get(0).get(i);
             Map items = Maps.newHashMap();
-            items.put("id",Long.valueOf(map.get("id").toString()));
-            items.put("name",map.get("name"));
-            items.put("packing_fee",map.get("packing_fee"));
-            items.put("price",map.get("price"));
-            items.put("quantity",map.get("quantity"));
+            items.put("id", Long.valueOf(map.get("id").toString()));
+            items.put("name", map.get("name"));
+            items.put("packing_fee", map.get("packing_fee"));
+            items.put("price", map.get("price"));
+            items.put("quantity", map.get("quantity"));
+            Double amount= Double.valueOf(map.get("packing_fee").toString()) * Integer.valueOf(map.get("quantity").toString());
+            extra = Maps.newHashMap(
+                    "description", "",
+                    "name", extra.get("name").toString() + " " + map.get("name").toString() + "-" + ((List) map.get("specs")).get(0),
+                    "price", Double.valueOf(extra.get("price").toString()) + amount,
+                    "quantity", Integer.valueOf(extra.get("quantity").toString()) + Integer.valueOf(map.get("quantity").toString()),
+                    "type", 0
+            );
 
             total = total.add(new BigDecimal(items.get("price").toString()).multiply(new BigDecimal(items.get("quantity").toString())));
 
             groups.get(0).add(items);
         }
+
+        extraList.add(extra);
+        cart.setExtra(extraList);
+
         cart.setTotal(total.toPlainString());
         cart.setGroups(groups);
         carts.setCart(cart);
-        data.put("id",idsService.getId(Ids.CATEGORY_ID));
+
         //todo 暂时不保存,开发中
-//        mongoRepository.save(data,"carts");
-        return  Rets.success(carts);
+        mongoRepository.save(carts, "carts");
+        return Rets.success(carts);
     }
-    @RequestMapping(value = "/v1/carts/{cart_id}/remarks",method = RequestMethod.GET)
-    public Object remarks(@PathVariable("cart_id")Long cartId, @RequestParam(value = "sig",required = false) String sig){
+
+    @RequestMapping(value = "/v1/carts/{cart_id}/remarks", method = RequestMethod.GET)
+    public Object remarks(@PathVariable("cart_id") Long cartId, @RequestParam(value = "sig", required = false) String sig) {
         return Rets.success(mongoRepository.findOne("remarks"));
     }
 }

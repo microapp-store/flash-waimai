@@ -19,8 +19,8 @@ public class Order extends BaseMongoEntity {
     @Id
     private String _id;
     private Long id;
-    private Double total_amount;
-    private Double total_quantity;
+    private Integer total_amount;
+    private Integer total_quantity;
     private Long unique_id;
     private Long user_id;
     private Long address_id;
@@ -29,25 +29,26 @@ public class Order extends BaseMongoEntity {
     private OrderStatusBar status_bar;
     private OrderTimelineNode timeline_node;
     private String formatted_create_at;
-    private Double order_time;
-    private Integer time_pass;
-    private Integer is_brand;
-    private Integer is_deletable;
-    private Integer is_new_pay;
-    private Integer is_pindan;
-    private Integer operation_confirm;
-    private Integer operation_rate;
-    private Integer operation_rebuy;
-    private Integer operation_upload_photo;
-    private Integer pay_remain_seconds;
-    private Integer rated_point;
-    private Integer remind_reply_count;
+    private Long order_time;
+    private Integer time_pass=900;
+    private Integer is_brand=0;
+    private Integer is_deletable=1;
+    private Integer is_new_pay=1;
+    private Integer is_pindan=0;
+    private Integer operation_confirm=0;
+    private Integer operation_rate=0;
+    private Integer operation_rebuy=2;
+    private Integer operation_pay=0;
+    private Integer operation_upload_photo=0;
+    private Integer pay_remain_seconds=0;
+    private Integer rated_point=0;
+    private Integer remind_reply_count=0;
     private Long restaurant_id;
     private String restaurant_image_hash;
     private String restaurant_image_url;
     private String restaurant_name;
-    private Integer restaurant_type;
-    private Integer status_code;
+    private Integer restaurant_type=0;
+    private Integer status_code=0;
     @JSONField(name="_id")
     public String get_id() {
         return _id;

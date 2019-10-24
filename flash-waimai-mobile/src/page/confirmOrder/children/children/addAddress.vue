@@ -35,7 +35,7 @@
             <section class="section_list">
                 <span class="section_left">送餐地址</span>
                 <section class="section_right">
-                    <router-link to="/confirmOrder/chooseAddress/addAddress/searchAddress" tag="div" class="choose_address">{{searchAddress? searchAddress.name : '小区/写字楼/学校等'}}</router-link>
+                    <router-link to="/confirmOrder/chooseAddress/addAddress/searchAddress" tag="div" class="choose_address">{{searchAddress? searchAddress.address : '小区/写字楼/学校等'}}</router-link>
                     <input type="text" name="address_detail" placeholder="详细地址（如门牌号等）" v-model="address_detail" class="input_style">
 
                 </section>
@@ -122,7 +122,7 @@
                 }else if(this.tag == '公司'){
                     this.tag_type = 4;
                 }
-                let res = await postAddAddress(this.userInfo.user_id, this.searchAddress.name, this.address_detail, this.geohash, this.name, this.phone, this.anntherPhoneNumber, 0, this.sex, this.tag, this.tag_type);
+                let res = await postAddAddress(this.userInfo.user_id, this.searchAddress.address, this.address_detail, this.geohash, this.name, this.phone, this.anntherPhoneNumber, 0, this.sex, this.tag, this.tag_type);
                 //保存成功返沪上一页，否则弹出提示框
                 if (res.message) {
                     this.showAlert = true;

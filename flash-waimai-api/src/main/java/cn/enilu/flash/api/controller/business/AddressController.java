@@ -5,9 +5,11 @@ import cn.enilu.flash.bean.entity.front.Address;
 import cn.enilu.flash.bean.entity.front.Ids;
 import cn.enilu.flash.bean.enumeration.BizExceptionEnum;
 import cn.enilu.flash.bean.exception.ApplicationException;
+import cn.enilu.flash.bean.vo.business.City;
 import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.dao.MongoRepository;
 import cn.enilu.flash.service.front.IdsService;
+import cn.enilu.flash.service.front.PositionService;
 import cn.enilu.flash.utils.Maps;
 import cn.enilu.flash.utils.ToolUtil;
 import org.slf4j.Logger;
@@ -30,19 +32,23 @@ public class AddressController extends BaseController {
     private MongoRepository mongoRepository;
     @Autowired
     private IdsService idsService;
+    @Autowired
+    private PositionService positionService;
     @RequestMapping(value = "/v1/users/{user_id}/addresses",method = RequestMethod.GET)
     public Object address(@PathVariable("user_id")Long userId){
         return Rets.success(mongoRepository.findAll(Address.class,"user_id",userId));
     }
-    @RequestMapping(value = "/v1/usres/{user_id}/addresses",method =  RequestMethod.POST)
+    @RequestMapping(value = "/v1/users/{user_id}/addresses",method =  RequestMethod.POST)
     public Object save(@PathVariable("user_id")Long userId){
+        City city = positionService.guessCity(getIp());
         Address address = getRequestPayload(Address.class);
         address.setUser_id(userId);
+        address.setCity_id(city.getId());
         address.setId(idsService.getId(Ids.ADDRESS_ID));
         mongoRepository.save(address);
         return Rets.success("添加地址成功");
     }
-    @RequestMapping(value = "/v1/usres/${user_id}/addresses/${address_id}",method =  RequestMethod.POST)
+    @RequestMapping(value = "/v1/users/${user_id}/addresses/${address_id}",method =  RequestMethod.POST)
     public Object delete(@PathVariable("user_id")Long userId,@PathVariable("address_id") Long addressId){
         mongoRepository.delete("addresses", Maps.newHashMap("user_id",userId,"id",addressId));
         return Rets.success("删除地址成功");

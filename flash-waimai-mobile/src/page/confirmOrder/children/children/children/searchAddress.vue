@@ -49,6 +49,7 @@
             },
             //选择搜素结果
             choooedAddress(item){
+              console.log('item',item)
                 this.CHOOSE_SEARCH_ADDRESS(item);
                 this.$router.go(-1);
             },

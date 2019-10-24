@@ -163,6 +163,7 @@ export default {
 	},
 	//选择搜索的地址
 	[CHOOSE_SEARCH_ADDRESS](state, place) {
+	  console.log('place',place);
 		state.searchAddress = place;
 	},
 	//保存geohash

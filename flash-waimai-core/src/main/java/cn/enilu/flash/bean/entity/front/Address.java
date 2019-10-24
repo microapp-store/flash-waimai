@@ -25,11 +25,11 @@ public class Address extends BaseMongoEntity{
     private String address_detail;
     private Integer tag_type;
     private Long user_id;
-    private Boolean phone_had_bound;
-    private Integer deliver_amount;
-    private Integer agent_fee;
-    private Boolean is_deliverable;
-    private Boolean is_user_default;
+    private Boolean phone_had_bound=true;
+    private Integer deliver_amount=0;
+    private Integer agent_fee=0;
+    private Boolean is_deliverable=true;
+    private Boolean is_user_default=true;
     private String tag;
     private Integer city_id;
     private Integer sex;

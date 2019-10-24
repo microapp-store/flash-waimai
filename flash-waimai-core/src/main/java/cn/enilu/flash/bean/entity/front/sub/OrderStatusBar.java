@@ -10,8 +10,8 @@ import lombok.Data;
 @Data
 public class OrderStatusBar {
     private String color;
-    private String image_type;
+    private String image_type="";
     private String sub_title;
-    private String title;
+    private String title="";
 
 }

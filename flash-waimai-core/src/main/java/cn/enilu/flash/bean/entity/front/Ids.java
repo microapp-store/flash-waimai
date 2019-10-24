@@ -20,6 +20,7 @@ public class Ids extends BaseMongoEntity{
     public static  final String CART_ID = "cart_id";
     public static  final String ADDRESS_ID="address_id";
     public static  final String USER_ID="user_id";
+    public static  final String ORDER_ID="order_id";
     @Id
     private String _id;
     private Long restaurant_id;
