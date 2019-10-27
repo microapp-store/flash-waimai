@@ -173,14 +173,39 @@ public class MongoRepository {
         return mongoTemplate.find(Query.query(criteria), Map.class, collectionName);
     }
 
-    public GeoResults<Map> near(double x, double y, String collectionName, Map<String, Object> params) {
+    /**
+     * 查询指定位置附近的商家
+     * @param x
+     * @param y
+     * @param collectionName
+     * @param params
+     * @param miles 公里数
+     * @return
+     */
+    public GeoResults<Map> near(double x, double y, String collectionName, Map<String, Object> params,Integer miles) {
         Point location = new Point(x, y);
-        NearQuery nearQuery = NearQuery.near(location).maxDistance(new Distance(5, Metrics.MILES));
+        NearQuery nearQuery = NearQuery.near(location).maxDistance(new Distance(miles, Metrics.MILES));
         if (params != null && !params.isEmpty()) {
             Query query = Query.query(criteria(params));
             nearQuery.query(query);
         }
-        return mongoTemplate.geoNear(nearQuery, Map.class, collectionName);
+        try {
+            return mongoTemplate.geoNear(nearQuery, Map.class, collectionName);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+    /**
+     * 查询指定位置附近的商家，默认查询十公里范围内
+     * @param x
+     * @param y
+     * @param collectionName
+     * @param params
+     * @return
+     */
+    public GeoResults<Map> near(double x, double y, String collectionName, Map<String, Object> params) {
+      return near(x,y,collectionName,params,10);
     }
 
     public long count(Class klass) {

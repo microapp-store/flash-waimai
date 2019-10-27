@@ -28,4 +28,14 @@
     - 将图片存放到t_sys_cfg表中system.file.upload.path配置的目录下
   
   
-  
+## 清空测试数据
+
+如果想清空所有测试数据，自己通过后台管理功能区录入测试数据，可以通过使用下面配置清空系统测试数据
+```properties
+# 开启该配置自动创建数据库
+spring.jpa.hibernate.ddl-auto=create
+# 是否重新清空mongodb测试数据
+flash.waimai.mongodb.init=true
+使用客户端连接mongodb数据库为shop表创建索引:
+db.shops.createIndex({location: "2dsphere"})
+```  

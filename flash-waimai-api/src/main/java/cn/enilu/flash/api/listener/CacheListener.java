@@ -1,4 +1,4 @@
-package cn.enilu.flash.core.listener;
+package cn.enilu.flash.api.listener;
 
 import cn.enilu.flash.cache.ConfigCache;
 import cn.enilu.flash.cache.DictCache;
