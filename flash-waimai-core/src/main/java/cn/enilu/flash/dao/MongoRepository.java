@@ -47,7 +47,14 @@ public class MongoRepository {
     public void delete(String collectionName, Map<String, Object> keyValues) {
         mongoTemplate.remove(Query.query(criteria(keyValues)), collectionName);
     }
-
+    public void clear(Class klass){
+         mongoTemplate.dropCollection(klass);
+         mongoTemplate.createCollection(klass);
+    }
+    public void clear(String collectionName){
+        mongoTemplate.dropCollection(collectionName);
+        mongoTemplate.createCollection(collectionName);
+    }
     public void update(BaseMongoEntity entity) {
         mongoTemplate.save(entity);
     }
