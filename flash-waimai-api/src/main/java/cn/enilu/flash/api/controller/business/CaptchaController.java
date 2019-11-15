@@ -11,12 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import sun.misc.BASE64Encoder;
+
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Map;
 import java.util.UUID;
 
@@ -41,8 +42,8 @@ public class CaptchaController extends BaseController {
         logger.info("captchCode:{}", map.get("strEnsure").toString().toLowerCase());
         try {
             ImageIO.write((BufferedImage) map.get("image"), "png", outputStream);
-            BASE64Encoder encoder = new BASE64Encoder();
-            String base64 = encoder.encode(outputStream.toByteArray());
+            Base64.Encoder encoder = Base64.getEncoder();
+            String base64 = String.valueOf(encoder.encode(outputStream.toByteArray()));
             String captchaBase64 = "data:image/png;base64," + base64.replaceAll("\r\n", "");
             return Rets.success(Maps.newHashMap("captchCodeId",captchCodeId,"code",captchaBase64));
         } catch (IOException e) {
