@@ -17,7 +17,7 @@
 - mongodb(安装4.0的版本)
     - 创建mongodb库
         ```sql
-        user flash-waimai
+        use flash-waimai
         ```
     - 初始化数据，由于测试数据量较大，将测试数据打包放在了百度云盘：链接：[https://pan.baidu.com/s/1mfO7yckFL7lMb_O0BPsviw](https://pan.baidu.com/s/1mfO7yckFL7lMb_O0BPsviw)  提取码：apgd 下载后将文件解压到d:\\elm，使用如下命令导入数据：
         ```
