@@ -66,7 +66,8 @@ mongorestore.exe -d flash-waimai d:\\elm
 
 ## 鸣谢
 - 感谢[bailicangdu](https://github.com/bailicangdu),[enilu](https://github.com/enilu),本项目参考参考借鉴了[vue2-elm](https://github.com/bailicangdu/vue2-elm)，[web-flash](https://github.com/enilu/web-flash)，[vue2-manage](https://github.com/bailicangdu/vue2-manage)
-- 开发过程遇到问题也可以多翻翻上述项目的issue，详细我，你遇到的问题，总有人比你更早遇到
+- 该项目克隆并扩展自[web-flash](https://github.com/enilu/web-flash),所以开发的时候多看看web-flash的[在线文档](http://enilu.gitee.io/web-flash)
+- 该项目不适用与商城系统解决方案，如果有商城系统需求，可以查看另外一个商城的开源系统[https://gitee.com/microapp/linjiashop](https://gitee.com/microapp/linjiashop)(支持H5,微信小程序,APP)
 
 ## 交流
 - QQ群:936439613 微信:myenilu
