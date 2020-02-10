@@ -29,7 +29,7 @@
         <file_encoding>UTF-8</file_encoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!--driver libs-->
-        <mysql.connector.java.version>5.1.45</mysql.connector.java.version>
+        <mysql.connector.java.version>8.0.11</mysql.connector.java.version>
         <!--auth libs-->
         <spring.security.jwt.version>1.0.9.RELEASE</spring.security.jwt.version>
         <spring.security.oauth2.version>2.2.0.RELEASE</spring.security.oauth2.version>
@@ -51,7 +51,7 @@
         <commons-lang3.version>3.6</commons-lang3.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <github.kaptcha.version>1.0.0</github.kaptcha.version>
-        <lombok.version>1.16.20</lombok.version>
+        <lombok.version>1.18.4</lombok.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -65,7 +65,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <scope>compile</scope>
+                <scope>provided</scope>
                 <version>${lombok.version}</version>
             </dependency>
 
@@ -307,8 +307,6 @@
                 <version>1.0.6</version>
             </dependency>
             <!-- message end-->
-
-
         </dependencies>
 
     </dependencyManagement>
