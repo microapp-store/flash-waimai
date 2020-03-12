@@ -2,7 +2,7 @@
 - 一个完整的外卖系统，包括手机端，后台管理，api
 - 基于spring boot和vue的前后端分离的外卖系统
 - 包含完整的手机端，后台管理功能
-
+- 本项目主要供交流学习，不建议商用。
 ## 技术选型
 - 核心框架：Spring Boot
 - 数据库层：Spring data jpa/Spring data mongodb
@@ -55,8 +55,8 @@ mongorestore.exe -d flash-waimai d:\\elm
 
 ## 在线演示
 - 查看演示系统请不要随意删除数据
-- 后台管理：[http://waimai-admin.microapp.store](http://waimai-admin.microapp.store)
-- 手机端:[http://waimai-mobile.microapp.store](http://waimai-mobile.microapp.store)
+- 后台管理：[http://waimai-admin.microapp.store](http://waimai-admin.microapp.store) [服务器资源不足，暂停演示]
+- 手机端:[http://waimai-mobile.microapp.store](http://waimai-mobile.microapp.store) [服务器资源不足，暂停演示]
 
 ## 文档
 [https://microapp.gitee.io/flash-waimai](https://microapp.gitee.io/flash-waimai)
