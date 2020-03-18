@@ -70,4 +70,6 @@ mongorestore.exe -d flash-waimai d:\\elm
 - 该项目不适用与商城系统解决方案，如果有商城系统需求，可以查看另外一个商城的开源系统[https://gitee.com/microapp/linjiashop](https://gitee.com/microapp/linjiashop)(支持H5,微信小程序,APP)
 
 ## 交流
-- QQ群:936439613 微信:myenilu 
+- 关注公众号：嗨客帝国，点击flash-waimai菜单进群交流。
+
+![公众号二维码](doc/img/haike.jpg)
