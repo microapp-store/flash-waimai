@@ -6,6 +6,7 @@ import { getToken } from '@/utils/auth'
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
+  withCredentials: true, // send cookies when cross-domain requests
   timeout: 10000
 
 })

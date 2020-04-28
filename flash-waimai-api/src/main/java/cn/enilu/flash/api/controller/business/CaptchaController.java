@@ -43,7 +43,7 @@ public class CaptchaController extends BaseController {
         try {
             ImageIO.write((BufferedImage) map.get("image"), "png", outputStream);
             Base64.Encoder encoder = Base64.getEncoder();
-            String base64 = String.valueOf(encoder.encode(outputStream.toByteArray()));
+            String base64 =  new String(encoder.encode(outputStream.toByteArray()));;
             String captchaBase64 = "data:image/png;base64," + base64.replaceAll("\r\n", "");
             return Rets.success(Maps.newHashMap("captchCodeId",captchCodeId,"code",captchaBase64));
         } catch (IOException e) {
