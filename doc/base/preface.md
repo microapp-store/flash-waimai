@@ -67,7 +67,7 @@ mongorestore.exe -d flash-waimai d:\\elm
 - 开发过程遇到问题也可以多翻翻上述项目的issue，详细我，你遇到的问题，总有人比你更早遇到
 
 ## 交流
-- QQ群:936439613 微信:myenilu
+- qq群： 936439613；qq群仅为方便网友互相交流，作者基本不会在群里回复，如果需要跟作者提问题，可以通过项目主页提issue；qq群禁止发广告，发者立删
 # License
 
 [GPL](https://github.com/microapp-store/flash-waimai/blob/master/COPYING)
