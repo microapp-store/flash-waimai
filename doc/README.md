@@ -14,7 +14,7 @@ footer: MIT Licensed | Copyright © 2019-present microapp.store
 <div class="features">
   <div class="feature">
     <h2>简单快捷</h2>
-    <p>基于spring boot，vuejs，futter快速构建外卖平台</p>
+    <p>基于spring boot，vuejs快速构建外卖平台</p>
   </div>
    
   <div class="feature">
