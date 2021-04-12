@@ -1,7 +1,6 @@
 *.iml
 **/node_modules/
 **/COPYING
-**/readme.md
 **/package-lock.json
 .idea
 .DS_Store
