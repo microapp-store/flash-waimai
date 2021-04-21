@@ -34,7 +34,7 @@
 ```
 mongorestore.exe -d flash-waimai d:\\elm
 ```
-- 下载项目测试数据的图片（商家和食品图片）：链接：https://pan.baidu.com/s/1rvZDspoapWa6rEq2D_5kzw 提取码：urzw ，将图片存放到t_sys_cfg表中system.file.upload.path配置的目录下
+- 下载项目测试数据的图片（商家和食品图片）： 链接：https://pan.baidu.com/s/15uiA8hUCwdZv6Bycn1y_yg 提取码：cvas   ，将图片存放到t_sys_cfg表中system.file.upload.path配置的目录下
 - 启动api服务：
     - 进入flash-waimai-api模块
     - 直接运行ApiApplication主类启动api服务
