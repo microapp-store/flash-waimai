@@ -82,12 +82,12 @@ export const shopList = (latitude, longitude, offset, restaurant_category_id = '
 		longitude,
 		offset,
 		limit: '20',
-		'extras[]': 'activities',
+		'extras': 'activities',
 		keyword: '',
 		restaurant_category_id,
-		'restaurant_category_ids[]': restaurant_category_ids,
+		'restaurant_category_ids': restaurant_category_ids,
 		order_by,
-		'delivery_mode[]': delivery_mode + supportStr
+		'delivery_mode': delivery_mode + supportStr
 	};
 	return fetch('/shopping/restaurants', data);
 };
