@@ -16,8 +16,8 @@ if (process.env.NODE_ENV == 'development') {
   imgBaseUrl = 'http://localhost:8082/file/getImgStream?fileName='
   baseUrl = "http://localhost:8082"
 } else if (process.env.NODE_ENV == 'production') {
-  baseUrl = 'http://120.77.155.162/api';
-  imgBaseUrl = 'http://120.77.155.162/api/file/getImgStream?fileName=';
+  baseUrl = 'http://waimai-api.microapp.store/api';
+  imgBaseUrl = 'http://waimai-api.microapp.store/api/file/getImgStream?fileName=';
 }
 
 export {
