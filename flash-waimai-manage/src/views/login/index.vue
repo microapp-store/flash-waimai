@@ -51,6 +51,10 @@
           <span style="margin-right:18px;">{{ $t('login.username') }} : developer</span>
           <span>{{ $t('login.password') }} : developer</span>
         </div>
+        <div class="tips">
+          <span>商铺账号 : 各个商铺自己的名称</span>
+          <span>{{ $t('login.password') }} : 123456</span>
+        </div>
       </div>
     </el-form>
 
