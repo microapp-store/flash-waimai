@@ -81,6 +81,9 @@ public class AccountController extends BaseController{
             } else if (Constants.USER_TYPE_SHOP.equals(userType)) {
 
                 Shop shop = mongoRepository.findOne(Shop.class, Maps.newHashMap("name", userName, "password", password));
+                if(shop==null){
+                    return Rets.failure("没有改账号");
+                }
                 if(shop.getDisabled() == 1){
                     return Rets.failure("该商户已停用");
                 }

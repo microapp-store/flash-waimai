@@ -127,11 +127,18 @@ export const asyncRouterMap = [
       icon: 'shopping'
     },
     children: [
+
       {
         path: 'sdetail',
         name: 'sdetail',
         component: () => import('@/views/business/sdetail/index'),
         meta: {title: 'sdetail'}
+      },
+      {
+        path: 'shop/add',
+        name: 'shop_add',
+        component: () => import('@/views/business/shop/add.vue'),
+        meta: {title: '添加商铺'}
       },
       {
         path: 'shop',
@@ -159,12 +166,7 @@ export const asyncRouterMap = [
         component: () => import('@/views/business/orderdetail/index'),
         meta: {title: '订单详情'}
       },
-      {
-        path: 'shop/add',
-        name: 'shop_add',
-        component: () => import('@/views/business/shop/add.vue'),
-        meta: {title: '添加商铺'}
-      },
+
       {
         path: 'food/add',
         name: 'food_add',

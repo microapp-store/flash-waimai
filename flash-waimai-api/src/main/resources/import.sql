@@ -53,11 +53,14 @@ INSERT INTO `t_cms_contacts` VALUES ('1', null, '2019-07-31 17:44:27', null, '20
 -- ----------------------------
 -- Records of t_sys_cfg
 -- ----------------------------
-INSERT INTO `t_sys_cfg` VALUES ('1', null, null, '1', '2019-04-15 21:36:07', '应用名称update by 2019-03-27 11:47:04', 'system.app.name', 'flash-waimai');
-INSERT INTO `t_sys_cfg` VALUES ('2', null, null, '1', '2019-04-15 21:36:17', '系统默认上传文件路径', 'system.file.upload.path', '/data/flash-waimai/runtime/upload');
-INSERT INTO `t_sys_cfg` VALUES ('3', null, null, '1', '2019-04-15 21:36:17', '腾讯sms接口appid', 'api.tencent.sms.appid', '1400219425');
-INSERT INTO `t_sys_cfg` VALUES ('4', null, null, '1', '2019-04-15 21:36:17', '腾讯sms接口appkey', 'api.tencent.sms.appkey', '5f71ed5325f3b292946530a1773e997a');
-INSERT INTO `t_sys_cfg` VALUES ('5', null, null, '1', '2019-04-15 21:36:17', '腾讯sms接口签名参数', 'api.tencent.sms.sign', '需要去申请咯');
+INSERT INTO `t_sys_cfg` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `cfg_desc`, `cfg_name`, `cfg_value`) VALUES (1, NULL, NULL, -1, '2021-5-14 17:00:00', 'update by 2021-05-14 17:00:00', 'system.app.name', 'flash-waimai');
+INSERT INTO `t_sys_cfg` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `cfg_desc`, `cfg_name`, `cfg_value`) VALUES (2, NULL, NULL, 1, '2019-4-15 21:36:17', '系统默认上传文件路径', 'system.file.upload.path', '/data/flash-waimai/runtime/upload');
+INSERT INTO `t_sys_cfg` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `cfg_desc`, `cfg_name`, `cfg_value`) VALUES (3, NULL, NULL, 1, '2019-4-15 21:36:17', '腾讯sms接口appid', 'api.tencent.sms.appid', '1400219425');
+INSERT INTO `t_sys_cfg` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `cfg_desc`, `cfg_name`, `cfg_value`) VALUES (4, NULL, NULL, 1, '2019-4-15 21:36:17', '腾讯sms接口appkey', 'api.tencent.sms.appkey', '5f71ed5325f3b292946530a1773e997a');
+INSERT INTO `t_sys_cfg` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `cfg_desc`, `cfg_name`, `cfg_value`) VALUES (5, NULL, NULL, 1, '2019-4-15 21:36:17', '腾讯sms接口签名参数', 'api.tencent.sms.sign', '需要去申请咯');
+INSERT INTO `t_sys_cfg` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `cfg_desc`, `cfg_name`, `cfg_value`) VALUES (6, NULL, NULL, 1, '2021-5-14 16:59:49', '平台盈利额', 'system.platform.total.amount', '-5.80');
+INSERT INTO `t_sys_cfg` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `cfg_desc`, `cfg_name`, `cfg_value`) VALUES (7, NULL, NULL, 1, '2021-5-13 22:59:20', '小程序appid', 'api.tencent.mini.program.appid', 'wx234234234234234');
+INSERT INTO `t_sys_cfg` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `cfg_desc`, `cfg_name`, `cfg_value`) VALUES (8, NULL, NULL, 1, '2021-5-13 22:59:20', '小程序appsecret', 'api.tencent.mini.program.secret', '234234234234');
 
 -- ----------------------------
 -- Records of t_sys_dept
@@ -168,13 +171,13 @@ INSERT INTO `t_sys_menu` (`id`, `create_by`, `create_time`, `modify_by`, `modify
 INSERT INTO `t_sys_menu` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `code`, `icon`, `ismenu`, `isopen`, `levels`, `name`, `num`, `pcode`, `pcodes`, `status`, `tips`, `url`) VALUES (69, 1, '2019-7-31 22:04:30', 1, '2019-7-31 22:04:30', 'channel.delete', NULL, '0', NULL, '3', '删除栏目', '2', 'channel', '[0],[cms],[channel],', '1', NULL, NULL);
 INSERT INTO `t_sys_menu` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `code`, `icon`, `ismenu`, `isopen`, `levels`, `name`, `num`, `pcode`, `pcodes`, `status`, `tips`, `url`) VALUES (70, 1, '2019-7-31 22:04:30', 1, '2019-7-31 22:04:30', 'article.delete', NULL, '0', NULL, '3', '删除文章', '2', 'article', '[0],[cms],[article]', '1', NULL, NULL);
 INSERT INTO `t_sys_menu` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `code`, `icon`, `ismenu`, `isopen`, `levels`, `name`, `num`, `pcode`, `pcodes`, `status`, `tips`, `url`) VALUES (71, 1, '2021-5-14 16:49:20', NULL, NULL, 'businessMgr', '', '1', '', '1', '业务管理', '1', '0', '[0],', '1', '', '/business');
-INSERT INTO `t_sys_menu` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `code`, `icon`, `ismenu`, `isopen`, `levels`, `name`, `num`, `pcode`, `pcodes`, `status`, `tips`, `url`) VALUES (72, 1, '2021-5-14 16:49:20', NULL, NULL, 'shop', '', '1', '', '2', '商铺管理', '1', 'businessMgr', '[0],[businessMgr],', '1', '', '/business/shop');
-INSERT INTO `t_sys_menu` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `code`, `icon`, `ismenu`, `isopen`, `levels`, `name`, `num`, `pcode`, `pcodes`, `status`, `tips`, `url`) VALUES (73, 1, '2021-5-14 16:49:20', NULL, NULL, 'food', '', '1', '', '2', '食品管理', '3', 'businessMgr', '[0],[businessMgr],', '1', '', '/business/food');
-INSERT INTO `t_sys_menu` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `code`, `icon`, `ismenu`, `isopen`, `levels`, `name`, `num`, `pcode`, `pcodes`, `status`, `tips`, `url`) VALUES (74, 1, '2021-5-14 16:49:20', NULL, NULL, 'order', '', '1', '', '2', '订单管理', '4', 'businessMgr', '[0],[businessMgr],', '1', '', '/business/order');
-INSERT INTO `t_sys_menu` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `code`, `icon`, `ismenu`, `isopen`, `levels`, `name`, `num`, `pcode`, `pcodes`, `status`, `tips`, `url`) VALUES (75, 1, '2021-5-14 16:49:20', NULL, NULL, 'shop.add', '', '1', '', '2', '添加商铺', '5', 'businessMgr', '[0],[businessMgr],', '1', '', '/business/shop/add');
+INSERT INTO `t_sys_menu` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `code`, `icon`, `ismenu`, `isopen`, `levels`, `name`, `num`, `pcode`, `pcodes`, `status`, `tips`, `url`) VALUES (72, 1, '2021-5-14 16:49:20', NULL, NULL, 'shop', '', '1', '', '2', '商铺管理', '2', 'businessMgr', '[0],[businessMgr],', '1', '', '/business/shop');
+INSERT INTO `t_sys_menu` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `code`, `icon`, `ismenu`, `isopen`, `levels`, `name`, `num`, `pcode`, `pcodes`, `status`, `tips`, `url`) VALUES (73, 1, '2021-5-14 16:49:20', NULL, NULL, 'shop.add', '', '1', '', '2', '添加商铺', '1', 'businessMgr', '[0],[businessMgr],', '1', '', '/business/shop/add');
+INSERT INTO `t_sys_menu` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `code`, `icon`, `ismenu`, `isopen`, `levels`, `name`, `num`, `pcode`, `pcodes`, `status`, `tips`, `url`) VALUES (74, 1, '2021-5-14 16:49:20', NULL, NULL, 'food', '', '1', '', '2', '食品管理', '3', 'businessMgr', '[0],[businessMgr],', '1', '', '/business/food');
+INSERT INTO `t_sys_menu` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `code`, `icon`, `ismenu`, `isopen`, `levels`, `name`, `num`, `pcode`, `pcodes`, `status`, `tips`, `url`) VALUES (75, 1, '2021-5-14 16:49:20', NULL, NULL, 'order', '', '1', '', '2', '订单管理', '4', 'businessMgr', '[0],[businessMgr],', '1', '', '/business/order');
 INSERT INTO `t_sys_menu` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `code`, `icon`, `ismenu`, `isopen`, `levels`, `name`, `num`, `pcode`, `pcodes`, `status`, `tips`, `url`) VALUES (76, 1, '2021-5-14 16:49:20', NULL, NULL, 'food.add', '', '1', '', '2', '添加食品', '6', 'businessMgr', '[0],[businessMgr],', '1', '', '/business/food/add');
 INSERT INTO `t_sys_menu` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `code`, `icon`, `ismenu`, `isopen`, `levels`, `name`, `num`, `pcode`, `pcodes`, `status`, `tips`, `url`) VALUES (77, 1, '2021-5-14 16:49:20', NULL, NULL, 'shop.edit', '', '0', '', '3', '修改商铺', '1', 'shop', '[0],[businessMgr],[shop],', '1', '', '/business/shop/edit');
-INSERT INTO `t_sys_menu` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `code`, `icon`, `ismenu`, `isopen`, `levels`, `name`, `num`, `pcode`, `pcodes`, `status`, `tips`, `url`) VALUES (78, 1, '2021-5-14 16:49:20', NULL, NULL, 'shop.delete', '', '0', '', '3', '删除商铺', '2', 'shop', '[0],[businessMgr],[shop],', '1', '', '/business/shop/delete');
+INSERT INTO `t_sys_menu` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `code`, `icon`, `ismenu`, `isopen`, `levels`, `name`, `num`, `pcode`, `pcodes`, `status`, `tips`, `url`) VALUES (78, 1, '2021-5-14 16:49:20', NULL, NULL, 'shop.delete', '', '0', '', '3', '删除商铺', '5', 'shop', '[0],[businessMgr],[shop],', '1', '', '/business/shop/delete');
 INSERT INTO `t_sys_menu` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `code`, `icon`, `ismenu`, `isopen`, `levels`, `name`, `num`, `pcode`, `pcodes`, `status`, `tips`, `url`) VALUES (79, 1, '2021-5-14 16:49:20', NULL, NULL, 'food.edit', '', '0', '', '3', '修改食品', '1', 'food', '[0],[businessMgr],[food],', '1', '', '/business/food/edit');
 INSERT INTO `t_sys_menu` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `code`, `icon`, `ismenu`, `isopen`, `levels`, `name`, `num`, `pcode`, `pcodes`, `status`, `tips`, `url`) VALUES (80, 1, '2021-5-14 16:49:20', NULL, NULL, 'food.delete', '', '0', '', '3', '删除食品', '2', 'food', '[0],[businessMgr],[food],', '1', '', '/business/food/delete');
 INSERT INTO `t_sys_menu` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `code`, `icon`, `ismenu`, `isopen`, `levels`, `name`, `num`, `pcode`, `pcodes`, `status`, `tips`, `url`) VALUES (81, 1, '2021-5-14 16:49:20', NULL, NULL, 'food.audit', '', '0', '', '3', '审核食品', '3', 'food', '[0],[businessMgr],[food],', '1', '', '/business/food/audit');
@@ -295,10 +298,10 @@ INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES (153, 80, 3);
 INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES (154, 79, 3);
 INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES (155, 77, 3);
 INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES (156, 74, 3);
-INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES (157, 73, 3);
+INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES (157, 75, 3);
 INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES (158, 83, 3);
 INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES (159, 71, 3);
-
+INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES (160, 75, 1);
 
 -- ----------------------------
 -- Records of t_sys_role
