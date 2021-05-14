@@ -25,7 +25,8 @@ export default {
     messageMgr:'Message',
     historyMessage:'History',
     messageTemplate:'Template',
-    messageSender:'Sender'
+    messageSender:'Sender',
+    sdetail: 'My Shop'
   },
   navbar: {
     logOut: 'Log Out',
@@ -38,7 +39,7 @@ export default {
     size: 'Global Size'
   },
   login: {
-    title: 'flash-waimai',
+    title: 'waimai',
     logIn: 'Log in',
     username: 'Username',
     password: 'Password'

@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Created  on 2017/12/29 0029.
  *
- * @author zt
+ *@Author enilu
  */
 @Document(collection = "ids")
 public class Ids extends BaseMongoEntity{

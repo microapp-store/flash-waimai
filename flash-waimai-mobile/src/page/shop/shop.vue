@@ -118,7 +118,7 @@
                                                     <span>好评率{{foods.satisfy_rate}}%</span>
                                                 </p>
                                                 <p v-if="foods.activity" class="food_activity">
-                                                <span :style="{color: '#' + foods.activity.image_text_color,borderColor:'#' +foods.activity.icon_color}">{{foods.activity.image_text}}</span>
+                                                <!--<span :style="{color: '#' + foods.activity.image_text_color,borderColor:'#' +foods.activity.icon_color}">{{foods.activity.image_text}}</span>-->
                                                 </p>
                                             </section>
                                         </router-link>

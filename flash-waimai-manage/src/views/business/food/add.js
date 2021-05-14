@@ -81,7 +81,7 @@ export default {
         cancelButtonText: '取消',
         beforeClose: (action, instance, done) => {
           if (action === 'confirm') {
-            this.$router.push('/data/shop')
+            this.$router.push('/business/shop')
             done()
           } else {
             this.$message({

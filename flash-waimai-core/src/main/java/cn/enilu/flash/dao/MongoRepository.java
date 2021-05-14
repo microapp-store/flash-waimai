@@ -26,10 +26,11 @@ import java.util.Objects;
 /**
  * Created on 2017/12/29 0029.
  *
- * @author zt
+ * @Author enilu
  */
 @Repository
 public class MongoRepository {
+
     @Autowired
     private MongoTemplate mongoTemplate;
 
@@ -50,8 +51,8 @@ public class MongoRepository {
         mongoTemplate.remove(Query.query(criteria(keyValues)), collectionName);
     }
     public void clear(Class klass){
-         mongoTemplate.dropCollection(klass);
-         mongoTemplate.createCollection(klass);
+        mongoTemplate.dropCollection(klass);
+        mongoTemplate.createCollection(klass);
     }
     public void clear(String collectionName){
         mongoTemplate.dropCollection(collectionName);
@@ -90,7 +91,7 @@ public class MongoRepository {
     }
     public <T> T findOne(Class<T> klass, Map<String,Object> params) {
         Criteria criteria = criteria(params);
-        if (criteria == null) {
+        if (criteria != null) {
             return mongoTemplate.findOne(Query.query(criteria), klass);
         }
         return null;
@@ -207,7 +208,7 @@ public class MongoRepository {
      * @return
      */
     public GeoResults<Map> near(double x, double y, String collectionName, Map<String, Object> params) {
-      return near(x,y,collectionName,params,10);
+        return near(x,y,collectionName,params,10);
     }
 
     public long count(Class klass) {
@@ -269,5 +270,4 @@ public class MongoRepository {
         }
         return criteria;
     }
-
 }

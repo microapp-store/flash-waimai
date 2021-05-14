@@ -10,7 +10,7 @@ import java.util.Random;
 /**
  * Created  on 2018/1/5 0005.
  *
- * @author zt
+ *@Author enilu
  */
 public class CaptchaCode {
     public static  String CAPTCH_KEY = "captcha";

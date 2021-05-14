@@ -1,17 +1,11 @@
 package cn.enilu.flash.api.controller.business;
 
 import cn.enilu.flash.api.controller.BaseController;
-import cn.enilu.flash.bean.constant.factory.PageFactory;
 import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.dao.MongoRepository;
 import cn.enilu.flash.utils.Lists;
 import cn.enilu.flash.utils.Maps;
-import cn.enilu.flash.utils.factory.Page;
 import cn.enilu.flash.utils.gps.Distance;
-
-import java.util.List;
-import java.util.Map;
-
 import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.GeoResult;
@@ -21,10 +15,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created on 2018/1/5 0005. todo 未完成
  * 
- * @author zt
+ *@Author enilu
  */
 @RestController
 public class RestaurantController extends BaseController {
@@ -49,6 +46,6 @@ public class RestaurantController extends BaseController {
             map.put("distance", distance.getDistance());
             list.add(map);
         }
-        return Rets.success(list);        
+        return Rets.success(list);
     }
 }

@@ -29,7 +29,7 @@ import javax.validation.Valid;
 /**
  * CfgController
  *
- * @author enilu
+ *@Author enilu
  * @version 2018/11/17 0017
  */
 @RestController

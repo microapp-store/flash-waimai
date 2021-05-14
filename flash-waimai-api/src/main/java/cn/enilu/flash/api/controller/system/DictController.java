@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * DictController
  *
- * @author enilu
+ *@Author enilu
  * @version 2018/11/17 0017
  */
 @RestController

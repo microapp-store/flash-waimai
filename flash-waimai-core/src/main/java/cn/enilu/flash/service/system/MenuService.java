@@ -21,7 +21,7 @@ import java.util.*;
 /**
  * Created  on 2018/3/23 0023.
  *
- * @author enilu
+ *@Author enilu
  */
 @Service
 public class MenuService  extends BaseService<Menu,Long,MenuRepository> {

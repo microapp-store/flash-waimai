@@ -72,7 +72,7 @@ export default [{
         {
             path: '/msite',
             component: msite,
-            meta: { keepAlive: true },
+            meta: { keepAlive: false },
         },
         //特色商铺列表页
         {
@@ -81,6 +81,7 @@ export default [{
         },
         //搜索页
         {
+          name:'search',
             path: '/search/:geohash',
             component: search
         },

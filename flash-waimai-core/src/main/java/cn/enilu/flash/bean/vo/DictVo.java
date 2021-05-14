@@ -3,7 +3,7 @@ package cn.enilu.flash.bean.vo;
 /**
  * DictVo
  *
- * @author enilu
+ *@Author enilu
  * @version 2018/8/14 0014
  */
 public class DictVo {

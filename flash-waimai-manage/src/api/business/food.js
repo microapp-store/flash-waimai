@@ -45,3 +45,15 @@ export function deleteFood(id) {
     method: 'delete'
   })
 }
+
+/**
+ * 审核商铺
+ * @param params
+ */
+export function auditFood(params) {
+  return request({
+    url: '/shopping/auditFood',
+    method: 'post',
+    params
+  })
+}

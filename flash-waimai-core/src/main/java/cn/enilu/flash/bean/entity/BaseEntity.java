@@ -18,7 +18,7 @@ import java.util.Date;
 /**
  * Created  on 2019/1/8 0002.
  *
- * @author enilu
+ *@Author enilu
  */
 @MappedSuperclass
 @Data

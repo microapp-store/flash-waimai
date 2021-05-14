@@ -38,7 +38,7 @@ var context = config.dev.context
 
 switch(process.env.NODE_ENV){
     case 'local': var proxypath = 'http://localhost:8082'; break;
-    case 'online': var proxypath = 'http://waimai-api.microapp.store'; break;
+    case 'online': var proxypath = 'http://120.77.155.162/api'; break;
     default:  var proxypath = config.dev.proxypath;
 }
 var options = {

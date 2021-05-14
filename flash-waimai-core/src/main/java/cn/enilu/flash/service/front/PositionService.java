@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ import java.util.Map;
 /**
  * Created  on 2017/12/29 0029.
  *
- * @author zt
+ *@Author enilu
  */
 @Service
 public class PositionService {
@@ -103,8 +104,16 @@ public class PositionService {
         logger.info("获取地址信息:{}，{}",cityName,keyword);
         Map<String, String> params = Maps.newHashMap();
         params.put("key", appConfiguration.getTencentKey());
-        params.put("keyword", URLEncoder.encode(keyword));
-        params.put("boundary", "region(" + URLEncoder.encode(cityName) + ",0)");
+        try {
+            params.put("keyword", URLEncoder.encode(keyword,"utf-8"));
+        } catch (UnsupportedEncodingException e) {
+           logger.error(e.getMessage(),e);
+        }
+        try {
+            params.put("boundary", "region(" + URLEncoder.encode(cityName,"utf-8") + ",0)");
+        } catch (UnsupportedEncodingException e) {
+            logger.error(e.getMessage(),e);
+        }
         params.put("page_size", "10");
         try {
             String str = HttpClients.get(appConfiguration.getQqApiUrl() + "place/v1/search", params);

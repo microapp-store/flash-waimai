@@ -11,7 +11,7 @@ import javax.persistence.Id;
 /**
  * Created  on 2018/4/2 0002.
  *
- * @author enilu
+ *@Author enilu
  */
 @Entity(name = "t_sys_relation")
 @Table(appliesTo = "t_sys_relation",comment = "菜单角色关系")

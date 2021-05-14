@@ -22,7 +22,7 @@ import Layout from '../views/layout/Layout'
   }
  **/
 export const constantRouterMap = [
-  { path: '/login', component: () => import('@/views/login/index'), hidden: true },
+  {path: '/login', component: () => import('@/views/login/index'), hidden: true},
   {
     path: '/',
     component: Layout,
@@ -32,14 +32,14 @@ export const constantRouterMap = [
     children: [{
       path: 'dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'dashboard', icon: 'dashboard', noCache: true }
+      meta: {title: 'dashboard', icon: 'dashboard', noCache: true}
     },
       {
         path: '/account/profile',
         name: '个人资料',
         component: () => import('@/views/account/profile.vue'),
         hidden: true,
-        meta: { title: '个人资料' }
+        meta: {title: '个人资料'}
 
       },
       {
@@ -47,7 +47,7 @@ export const constantRouterMap = [
         name: '最近活动',
         component: () => import('@/views/account/timeline.vue'),
         hidden: true,
-        meta: { title: '最近活动' }
+        meta: {title: '最近活动'}
 
       },
       {
@@ -55,66 +55,125 @@ export const constantRouterMap = [
         name: '修改密码',
         component: () => import('@/views/account/updatePwd.vue'),
         hidden: true,
-        meta: { title: '修改密码' }
+        meta: {title: '修改密码'}
 
       }
     ]
   },
-  {
-    path: '/data',
-    component: Layout,
-    redirect: '#',
-    name: 'data',
-    alwaysShow: true,
-    meta: {
-      roles: ['administrator', 'developer'],
-      title: '业务管理',
-      icon: 'shopping'
-    },
-    children: [
-      {
-        path: 'shop',
-        name: 'shop',
-        component: () => import('@/views/business/shop/index'),
-        meta: { title: '商铺管理' }
-      },
-      {
-        path: 'food',
-        name: 'food',
-        component: () => import('@/views/business/food/index'),
-        meta: { title: '食品管理' }
-      },
-      {
-        path: 'order',
-        name: 'order',
-        component: () => import('@/views/business/order/index'),
-        meta: { title: '订单管理' }
-      },
-      {
-        path: 'shop/add',
-        name: 'shop_add',
-        component: () => import('@/views/business/shop/add.vue'),
-        meta: { title: '添加商铺' }
-      },
-      {
-        path: 'food/add',
-        name: 'food_add',
-        component: () => import('@/views/business/food/add.vue'),
-        meta: { title: '添加食品' }
-      }
-    ]
-  },
-  { path: '/404', component: () => import('@/views/404'), hidden: true }
+  // {
+  //   path: '/data',
+  //   component: Layout,
+  //   redirect: '#',
+  //   name: 'data',
+  //   alwaysShow: true,
+  //   meta: {
+  //     roles: ['administrator', 'developer'],
+  //     title: '业务管理',
+  //     icon: 'shopping'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'shop',
+  //       name: 'shop',
+  //       component: () => import('@/views/business/shop/index'),
+  //       meta: { title: '商铺管理' }
+  //     },
+  //     {
+  //       path: 'food',
+  //       name: 'food',
+  //       component: () => import('@/views/business/food/index'),
+  //       meta: { title: '食品管理' }
+  //     },
+  //     {
+  //       path: 'order',
+  //       name: 'order',
+  //       component: () => import('@/views/business/order/index'),
+  //       meta: { title: '订单管理' }
+  //     },
+  //     {
+  //       path: 'shop/add',
+  //       name: 'shop_add',
+  //       component: () => import('@/views/business/shop/add.vue'),
+  //       meta: { title: '添加商铺' }
+  //     },
+  //     {
+  //       path: 'food/add',
+  //       name: 'food_add',
+  //       component: () => import('@/views/business/food/add.vue'),
+  //       meta: { title: '添加食品' }
+  //     }
+  //   ]
+  // },
+  {path: '/404', component: () => import('@/views/404'), hidden: true}
 
 ]
 
 export default new Router({
   // mode: 'history', //后端支持可开
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: () => ({y: 0}),
   routes: constantRouterMap
 })
 
 export const asyncRouterMap = [
+  {
+    path: '/business',
+    component: Layout,
+    redirect: '#',
+    name: 'Bussiness',
+    alwaysShow: true,
+    meta: {
+      // roles: ['administrator'],
+      title: 'businessMgr',
+      icon: 'shopping'
+    },
+    children: [
+      {
+        path: 'sdetail',
+        name: 'sdetail',
+        component: () => import('@/views/business/sdetail/index'),
+        meta: {title: 'sdetail'}
+      },
+      {
+        path: 'shop',
+        name: 'shop',
+        component: () => import('@/views/business/shop/index'),
+        meta: {title: 'shopMgr'}
+      },
+
+      {
+        path: 'food',
+        name: 'food',
+        component: () => import('@/views/business/food/index'),
+        meta: {title: 'foodMgr'}
+      },
+      {
+        path: 'order',
+        name: 'order',
+        component: () => import('@/views/business/order/index'),
+        meta: {title: 'orderMgr'}
+      },
+      {
+        path: 'orderdetail',
+        name: 'orderdetail',
+        hidden:true,
+        component: () => import('@/views/business/orderdetail/index'),
+        meta: {title: '订单详情'}
+      },
+      {
+        path: 'shop/add',
+        name: 'shop_add',
+        component: () => import('@/views/business/shop/add.vue'),
+        meta: {title: '添加商铺'}
+      },
+      {
+        path: 'food/add',
+        name: 'food_add',
+        hidden: true,
+        component: () => import('@/views/business/food/add.vue'),
+        meta: {title: '添加食品'}
+      }
+    ]
+  },
   {
     path: '/system',
     component: Layout,
@@ -147,33 +206,33 @@ export const asyncRouterMap = [
         path: 'mgr',
         name: 'Account',
         component: () => import('@/views/system/user/index'),
-        meta: { title: 'userMgr' }
+        meta: {title: 'userMgr'}
       },
       {
         path: 'role',
         name: 'roleMgr',
         component: () => import('@/views/system/role/index'),
-        meta: { title: 'roleMgr' }
+        meta: {title: 'roleMgr'}
       },
       {
         path: 'task',
         name: 'Task',
         component: () => import('@/views/system/task/index'),
-        meta: { title: 'taskMgr' }
+        meta: {title: 'taskMgr'}
       },
       {
         path: 'taskLog',
         name: 'taskLog',
         component: () => import('@/views/system/task/taskLog.vue'),
         hidden: true,
-        meta: { title: 'taskLog' }
+        meta: {title: 'taskLog'}
 
       },
       {
         path: 'dict',
         name: 'Dict',
         component: () => import('@/views/system/dict/index'),
-        meta: { title: 'dictMgr' }
+        meta: {title: 'dictMgr'}
       },
       {
         path: 'cfg',
@@ -185,59 +244,7 @@ export const asyncRouterMap = [
       }
     ]
   },
-  {
-    path: '/cms',
-    component: Layout,
-    redirect: '#',
-    name: 'Cms',
-    alwaysShow: true,
-    meta: {
-      roles: ['administrator', 'developer'],
-      title: 'cmsMgr',
-      icon: 'documentation'
-    },
-    children: [
-      {
-        path: 'banner',
-        name: 'Banner',
-        component: () => import('@/views/cms/banner/index'),
-        meta: { title: 'bannerMgr' }
-      },
-      {
-        path: 'channel',
-        name: 'Channel',
-        component: () => import('@/views/cms/channel/index'),
-        meta: { title: 'channelMgr' }
-      },
-      {
-        path: 'article',
-        name: 'Article',
-        component: () => import('@/views/cms/article/index'),
-        meta: { title: 'articleMgr' }
-      },
-      {
-        path: 'article/edit',
-        name: 'Edit Article',
-        component: () => import('@/views/cms/article/edit.vue'),
-        hidden: true,
-        meta: { title: 'editArticle' }
-      },
-      {
-        path: 'contacts',
-        name: 'Contacts',
-        component: () => import('@/views/cms/contacts/index'),
-        meta: { title: 'contactsMgr' }
-      },
-      {
-        path: 'file',
-        name: 'File',
-        component: () => import('@/views/cms/file/index'),
-        meta: {
-          title: 'fileMgr'
-        }
-      }
-    ]
-  },
+
   {
     path: '/optionMgr',
     component: Layout,
@@ -254,25 +261,25 @@ export const asyncRouterMap = [
         path: 'druid',
         name: 'druid',
         component: () => import('@/views/operation/druid/index'),
-        meta: { title: 'druid' }
+        meta: {title: 'druid'}
       },
       {
         path: 'swagger',
         name: 'swagger',
         component: () => import('@/views/operation/api/index'),
-        meta: { title: 'swagger' }
+        meta: {title: 'swagger'}
       },
       {
         path: 'loginLog',
         name: 'Login Log',
         component: () => import('@/views/system/loginLog/index'),
-        meta: { title: 'loginLog' }
+        meta: {title: 'loginLog'}
       },
       {
         path: 'log',
         name: 'Bussiness Log',
         component: () => import('@/views/system/log/index'),
-        meta: { title: 'bussinessLog' }
+        meta: {title: 'bussinessLog'}
       }
     ]
   },
@@ -292,22 +299,22 @@ export const asyncRouterMap = [
         path: 'history',
         name: 'message',
         component: () => import('@/views/message/message/index'),
-        meta: { title: 'historyMessage' }
+        meta: {title: 'historyMessage'}
       },
       {
         path: 'template',
         name: 'template',
         component: () => import('@/views/message/template/index'),
-        meta: { title: 'messageTemplate' }
+        meta: {title: 'messageTemplate'}
       },
       {
         path: 'sender',
         name: 'Message Sender',
         component: () => import('@/views/message/sender/index'),
-        meta: { title: 'messageSender' }
+        meta: {title: 'messageSender'}
       }
     ]
   },
-  { path: '/404', component: () => import('@/views/404'), hidden: true }
+  {path: '/404', component: () => import('@/views/404'), hidden: true}
 ]
 

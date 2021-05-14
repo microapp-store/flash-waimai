@@ -11,11 +11,25 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Created  on 2018/1/5 0005.
  *
- * @author enilu
+ *@Author enilu
  */
 @Document(collection = "orders")
 @Data
 public class Order extends BaseMongoEntity {
+    //等待支付
+    public static  final Integer STATUS_INIT = 0;
+    //已支付
+    public static  final Integer STATUS_PAID = 1;
+    //制作中
+    public static  final Integer STATUS_DOING = 2;
+    //派送中
+    public static  final Integer STATUS_DELIVERYING= 3;
+    //完成订单
+    public static  final Integer STATUS_DONE = 4;
+    //完成订单
+    public static  final Integer STATUS_CANCEL = -1;
+
+
     @Id
     private String _id;
     private Long id;
@@ -48,7 +62,29 @@ public class Order extends BaseMongoEntity {
     private String restaurant_image_url;
     private String restaurant_name;
     private Integer restaurant_type=0;
-    private Integer status_code=0;
+    /**
+     * 订单状态
+     */
+    private Integer status_code=STATUS_PAID;
+
+    public static String getStatusCodeStr(Integer status_code){
+        switch (status_code){
+            case -1:
+                return "已取消";
+            case 0:
+                return "等待支付";
+            case 1:
+                return "已支付";
+            case 2:
+                return "制作中";
+            case 3:
+                return "派送中";
+            case 4:
+                return "订单完成";
+
+        }
+        return "";
+    }
     @JSONField(name="_id")
     public String get_id() {
         return _id;

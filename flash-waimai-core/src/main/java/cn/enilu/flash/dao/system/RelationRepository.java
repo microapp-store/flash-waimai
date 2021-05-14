@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Created  on 2018/3/21 0021.
  *
- * @author enilu
+ *@Author enilu
  */
 public interface RelationRepository extends BaseRepository<Relation,Long> {
     @Transactional

@@ -13,31 +13,91 @@ import java.util.List;
  */
 @Document(collection = "foods")
 public class Food extends BaseMongoEntity{
+    /**
+     * 审核状态：审核中
+     */
+    public static  final String STATE_ING="0";
+    /**
+     * 审核状态：审核通过
+     */
+    public static  final String STATE_YES = "1";
+    /**
+     * 审核状态：审核拒绝
+     */
+    public static  final String STATE_NO = "-1";
     @Id
     private String _id;
+    /**
+     * 用户评分
+     */
     private Double rating;
     private Integer is_featured=0;
+    /**
+     * 所属商铺id
+     */
     private Long restaurant_id;
+    /**
+     * 所属类别id
+     */
     private Long category_id;
     private String pinyin_name;
     private List display_times;
+    /**
+     * 食品特点，例如：新品，招牌
+     */
     private List attrs;
+    /**
+     * 食品描述
+     */
     private String description;
+    /**
+     * 月销量
+     */
     private Integer month_sales;
+    /**
+     * 评论数
+     */
     private Integer rating_count;
+    /**
+     * 食品评价信息，例：498评价 月售43份
+     */
     private String tips;
+    /**
+     * 菜单图片
+     */
     private String image_path;
+    /**
+     * 食品规格名称列表
+     */
     private List specifications;
     private String server_utc;
     private boolean is_essential;
     private List attributes;
+    /**
+     * 食品id
+     */
     private Long item_id;
     private List limitation;
     private String name;
     private Double satisfy_count;
     private String activity;
     private Double satisfy_rate;
+    /**
+     * 食品详细规格信息列表
+     */
     private List<SpecFood> specfoods;
+
+    /**
+     *审核状态：0:审核中，1:审核通过，-1:审核失败
+     */
+    private String state ;
+    /**
+     * 审核拒绝的时候备注信息
+     */
+    private String auditRemark;
+
+    private String shopName;
+
 
     //必须在setget方法加上该注释，否则_id值会覆盖在id上
     @JSONField(name="_id")
@@ -230,6 +290,49 @@ public class Food extends BaseMongoEntity{
 
     public void setSpecfoods(List<SpecFood> specfoods) {
         this.specfoods = specfoods;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getAuditRemark() {
+        return auditRemark;
+    }
+
+    public void setAuditRemark(String auditRemark) {
+        this.auditRemark = auditRemark;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    /**
+     * 转换审核状态为字符串形式
+     * @return
+     */
+    public String getStateStr(){
+        if(STATE_ING.equals(state)){
+            return "审核中";
+        }
+
+        if(STATE_YES.equals(state)){
+            return "审核通过";
+        }
+
+        if(STATE_NO.equals(state)){
+            return "审核失败";
+        }
+        return "";
     }
 }
 

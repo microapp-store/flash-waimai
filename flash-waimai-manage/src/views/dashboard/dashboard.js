@@ -180,12 +180,8 @@ export default {
       const self = this
       getList(self.listQuery).then(response => {
         for (var i = 0; i < response.data.length; i++) {
-          var notice = response.data[i]
-          self.$notify({
-            title: notice.title,
-            message: notice.content,
-            duration: 3000
-          })
+
+
         }
         self.listLoading = false
       })

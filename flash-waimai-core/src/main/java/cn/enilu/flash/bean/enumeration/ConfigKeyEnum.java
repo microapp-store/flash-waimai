@@ -10,6 +10,18 @@ public enum ConfigKeyEnum {
      */
     SYSTEM_APP_NAME("system.app.name"),
     /**
+     * 平台盈利额
+     */
+    SYSTEM_PLATFORM_TOTAL_AMOUNT("system.platform.total.amount"),
+    /**
+     * 小程序APPID
+     */
+    API_TENCENT_MINI_PROGRAM_APPID("api.tencent.mini.program.appid"),
+    /**
+     * 小程序 appSecret
+     */
+    API_TENCENT_MINI_PROGRAM_APPSECRET("api.tencent.mini.program.secret"),
+    /**
      * 腾讯sms接口appid
      */
     API_TENCENT_SMS_APPID("api.tencent.sms.appid"),

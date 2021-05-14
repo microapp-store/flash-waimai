@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * Created  on 2019/10/09
  *
- * @author enilu.cn
+ *@Author enilu.cn
  */
 @Data
 @Document(collection = "userinfos")

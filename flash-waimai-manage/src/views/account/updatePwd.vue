@@ -8,21 +8,21 @@
       <el-col :span="6" class="profile">
         <img class="user-avatar" src="@/assets/img/avatar.gif"><br>
         <p><span class="title"><i class="el-icon-phone"></i>&nbsp;&nbsp;{{ user.phone }}</span></p>
-        <p><span class="title"><i class="el-icon-message"></i>&nbsp;&nbsp;{{ user.email }}</span></p>
-        <p><span class="title"><i class="el-icon-open"></i>&nbsp;&nbsp;{{ user.status == '1'?'启用' : '禁用' }}</span></p>
-        <p><span class="title"><i class="el-icon-location-outline"></i>&nbsp;&nbsp;上海市浦东大道290弄</span></p>
+        <p><span class="title"><i class="el-icon-user"></i>&nbsp;&nbsp;{{ user.name }}</span></p>
+        <!--<p><span class="title"><i class="el-icon-open"></i>&nbsp;&nbsp;{{ user.status == '1'?'启用' : '禁用' }}</span></p>-->
+        <!--<p><span class="title"><i class="el-icon-location-outline"></i>&nbsp;&nbsp;上海市浦东大道290弄</span></p>-->
       </el-col>
       <el-col :span="18" style="padding-left:10px;">
         <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="个人资料" name="profile"></el-tab-pane>
-          <el-tab-pane label="最近活动" name="timeline"></el-tab-pane>
+          <el-tab-pane label="个人资料" name="profile"   v-permission="['/business/shop/add']"></el-tab-pane>
+          <!--<el-tab-pane label="最近活动" name="timeline"   v-permission="['/business/shop/add']"></el-tab-pane>-->
           <el-tab-pane label="修改密码" name="updatePwd"></el-tab-pane>
         </el-tabs>
         <el-form ref="form" :model="form"   label-width="150px">
 
         <el-row>
           <el-col :span="24">
-            <el-form-item label="原密码">
+            <el-form-item label="原密码" >
               <el-input type="password" v-model="form.oldPassword"  ></el-input>
             </el-form-item>
           </el-col>

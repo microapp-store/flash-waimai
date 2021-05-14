@@ -23,7 +23,7 @@
 - 创建mysql数据库
 ```sql
     CREATE DATABASE IF NOT EXISTS waimai DEFAULT CHARSET utf8 COLLATE utf8_general_ci; 
-    CREATE USER 'waimai'@'%' IDENTIFIED BY 'waimai123';
+    CREATE USER 'waimai'@'%' IDENTIFIED BY 'waiMAI@123';
     GRANT ALL privileges ON waimai.* TO 'waimai'@'%';
     flush privileges;
 ```
@@ -46,7 +46,7 @@ mongorestore.exe -d flash-waimai d:\\elm
 - 启动手机端:
     - 进入flash-waimai-mobile目录：    
     - 运行 npm install --registry=https://registry.npm.taobao.org
-    - 运行npm run local
+    - 运行npm run dev
     - 启动成功后访问 http://localhost:8000
 
 ## 运行效果图
@@ -57,8 +57,8 @@ mongorestore.exe -d flash-waimai d:\\elm
 
 ## 在线演示
 - 查看演示系统请不要随意删除数据
-- 后台管理：[http://waimai-admin.microapp.store](http://waimai-admin.microapp.store) [服务器资源不足，暂停演示]
-- 手机端:[http://waimai-mobile.microapp.store](http://waimai-mobile.microapp.store) [服务器资源不足，暂停演示]
+- 后台管理：[http://waimai-admin.microapp.store](http://waimai-admin.microapp.store)
+- 手机端:[http://waimai-mobile.microapp.store](http://waimai-mobile.microapp.store)
 
 ## 文档
 [https://microapp.gitee.io/flash-waimai](https://microapp.gitee.io/flash-waimai)

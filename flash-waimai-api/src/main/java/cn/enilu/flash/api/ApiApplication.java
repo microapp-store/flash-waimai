@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 /**
  * ApiApplication
  *
- * @author enilu
+ *@Author enilu
  * @version 2018/9/11 0011
  */
 @EnableCaching

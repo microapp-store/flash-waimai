@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created  on 2018/3/21 0021.
  *
- * @author enilu
+ *@Author enilu
  */
 @Service
 public class DeptService extends BaseService<Dept,Long,DeptRepository> {

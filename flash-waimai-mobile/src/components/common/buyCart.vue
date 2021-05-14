@@ -17,14 +17,19 @@
         </section>
         <section v-else class="choose_specification">
             <section class="choose_icon_container">
-                <transition name="showReduce">
-                    <svg class="specs_reduce_icon" v-if="foodNum" @click="showReduceTip">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart-minus"></use>
-                    </svg>
-                </transition>
+                <!--<transition name="showReduce">-->
+                    <!--<svg class="specs_reduce_icon" v-if="foodNum" @click="showReduceTip">-->
+                        <!--<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart-minus"></use>-->
+                    <!--</svg>-->
+                <!--</transition>-->
                 <transition name="fade">
                     <span class="cart_num" v-if="foodNum">{{foodNum}}</span>
                 </transition>
+              <!--<transition name="showReduce">-->
+                <!--<svg class="specs_reduce_icon" v-if="foodNum" @click="showReduceTip">-->
+                  <!--<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart-add"></use>-->
+                <!--</svg>-->
+              <!--</transition>-->
                 <span class="show_chooselist" @click="showChooseList(foods)">选规格</span>
             </section>
         </section>

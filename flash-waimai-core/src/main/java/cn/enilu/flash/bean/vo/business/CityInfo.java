@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created  on 2017/12/29 0029.
  *
- * @author zt
+ *@Author enilu
  */
 @Data
 public class CityInfo implements Serializable {

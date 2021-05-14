@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -24,7 +23,7 @@ import java.util.UUID;
 /**
  * Created  on 2018/1/5 0005.
  *
- * @author zt
+ *@Author enilu
  */
 @RestController
 public class CaptchaController extends BaseController {

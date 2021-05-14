@@ -56,6 +56,21 @@
         label="状态"
         prop="status_bar.title">
       </el-table-column>
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <el-dropdown  size="small"   split-button type="primary">
+
+            操作
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item  @click.native="handleViewOrder(scope.row)">查看详情</el-dropdown-item>
+              <el-dropdown-item  v-permission="['/business/food/delete']" v-if="scope.row.status_bar.title == '等待支付' || scope.row.status_bar.title == '已支付'"
+                                 @click.native="handleUpdateOrderStatus(scope.row,2)">确认下单</el-dropdown-item>
+              <el-dropdown-item  v-permission="['/business/food/delete']" v-if="scope.row.status_bar.title == '制作中'" @click.native="handleUpdateOrderStatus(scope.row,3)">确认派送</el-dropdown-item>
+
+            </el-dropdown-menu>
+          </el-dropdown>
+        </template>
+      </el-table-column>
     </el-table>
 
     <el-pagination

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * 食品规格
  *
- * @author zt
+ *@Author enilu
  */
 public class SpecFood {
     //原价

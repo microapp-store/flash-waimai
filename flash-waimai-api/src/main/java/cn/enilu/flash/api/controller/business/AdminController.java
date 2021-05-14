@@ -33,7 +33,7 @@ import static cn.enilu.flash.utils.MD5.getMD5String;
 
 /**
  * Created on 2017/12/12 0012.
- * @author zt
+ *@Author enilu
  */
 
 @RestController
@@ -101,7 +101,7 @@ public class AdminController extends BaseController {
     @RequestMapping(value="all",method = RequestMethod.GET)
     @ResponseBody
     public Object all(@RequestParam( name="offset") Integer offset,
-                       @RequestParam(name="limit") Integer limit) {
+                      @RequestParam(name="limit") Integer limit) {
          List list = mongoRepository.findAll("admins");
         return Rets.success("data",list);
     }
@@ -114,7 +114,7 @@ public class AdminController extends BaseController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "/update/avatar/{id}")
     @ResponseBody
-    public Object uploadImg(@PathVariable("id") Long adminId,@RequestParam("file") MultipartFile file) {
+    public Object uploadImg(@PathVariable("id") Long adminId, @RequestParam("file") MultipartFile file) {
         if (!file.isEmpty()) {
             try {
                 String fileName= System.currentTimeMillis()+"."+file.getOriginalFilename().split("\\.")[1];

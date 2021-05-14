@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 /**
  * Created  on 2018/3/21 0021.
  *
- * @author enilu
+ *@Author enilu
  */
 public interface OperationLogRepository extends BaseRepository<OperationLog,Long> {
     @Modifying

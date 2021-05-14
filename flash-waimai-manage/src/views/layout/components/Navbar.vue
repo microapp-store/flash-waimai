@@ -12,7 +12,7 @@
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown">
-          <router-link to="/account/profile">
+          <router-link to="/account/profile" >
             <el-dropdown-item>
               {{ $t('navbar.profile') }}
             </el-dropdown-item>
@@ -36,7 +36,9 @@ import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import LangSelect from '@/components/LangSelect'
+import permission from '@/directive/permission/index.js'
 export default {
+  directives: { permission },
   components: {
     Breadcrumb,
     Hamburger,

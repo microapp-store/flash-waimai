@@ -15,24 +15,24 @@ import java.util.Map;
 /**
  * Created  on 2018/1/5 0005.
  *
- * @author zt
+ *@Author enilu
  */
 @RestController
 public class RatingController extends BaseController {
     @Autowired
     private MongoRepository mongoRepository;
     @RequestMapping(value = "/ugc/v2/restaurants/{restaurant_id}/ratings",method = RequestMethod.GET)
-    public Object ratings(@PathVariable("restaurant_id")Long restaurantId){
+    public Object ratings(@PathVariable("restaurant_id") Long restaurantId){
         Map map = mongoRepository.findOne("ratings","restaurant_id",restaurantId);
         return Rets.success(map.get("ratings"));
     }
     @RequestMapping(value = "ugc/v2/restaurants/{restaurant_id}/ratings/scores",method = RequestMethod.GET)
-    public Object score(@PathVariable("restaurant_id")Long restaurantId){
+    public Object score(@PathVariable("restaurant_id") Long restaurantId){
         Map map = mongoRepository.findOne("ratings","restaurant_id",restaurantId);
         return map.get("scores");
     }
     @RequestMapping(value = "ugc/v2/restaurants/{restaurant_id}/ratings/tags",method = RequestMethod.GET)
-    public Object tags(@PathVariable("restaurant_id")Long restaurantId){
+    public Object tags(@PathVariable("restaurant_id") Long restaurantId){
         Ratings ratings = mongoRepository.findOne(Ratings.class,"restaurant_id",restaurantId);
 //        return map.get("tags");
         return  Rets.success(ratings.getTags());

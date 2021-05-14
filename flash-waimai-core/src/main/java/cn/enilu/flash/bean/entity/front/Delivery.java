@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Created  on 2018/1/5 0005.
  *
- * @author zt
+ *@Author enilu
  */
 @Document(collection = "deliveries")
 public class Delivery extends BaseMongoEntity {

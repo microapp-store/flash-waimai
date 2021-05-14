@@ -25,7 +25,12 @@ export default {
     messageMgr:'消息管理',
     historyMessage:'历史消息',
     messageTemplate:'消息模板',
-    messageSender:'消息发送器'
+    messageSender:'消息发送器',
+    businessMgr:'业务管理',
+    shopMgr:'商铺管理',
+    foodMgr:'食品管理',
+    orderMgr:'订单管理',
+    sdetail:'我的商铺'
   },
   navbar: {
     logOut: '退出登录',
@@ -38,7 +43,7 @@ export default {
     size: '布局大小'
   },
   login: {
-    title: 'flash-waimai',
+    title: 'waimai',
     logIn: '登录',
     username: '账号',
     password: '密码'

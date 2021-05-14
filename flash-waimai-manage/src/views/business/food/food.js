@@ -1,11 +1,12 @@
 import { getApiUrl } from '@/utils/utils'
 import { getToken } from '@/utils/auth'
-
-import { getFoods, updateFood, deleteFood } from '@/api/business/food'
+import permission from '@/directive/permission/index.js'
+import { getFoods, updateFood, deleteFood ,auditFood} from '@/api/business/food'
 import { getResturantDetail, getMenuById, getMenu } from '@/api/business/shop'
 import { Loading } from 'element-ui'
 
 export default {
+  directives: { permission },
   data() {
     return {
       fileMgrUrl: '',
@@ -37,9 +38,17 @@ export default {
       specsFormVisible: false,
       expendRow: [],
       total: 0,
+      stateList: [
+        {label: '审核中', value: '0'},
+        {label: '审核通过', value: '1'},
+        {label: '审核拒绝', value: '-1'},
+      ],
+      audit: {show: false, auditRemark: ''},
       listQuery: {
         page: 1,
-        limit: 20
+        limit: 20,
+        name:'',
+        state: ''
       }
     }
   },
@@ -65,13 +74,20 @@ export default {
     }
   },
   methods: {
+    search() {
+      this.fetchData()
+    },
+    reset() {
+      this.listQuery.state = ''
+      this.listQuery.name = ''
+      this.fetchData()
+    },
     async initData() {
       this.fetchData()
     },
     async getMenu() {
       this.menuOptions = []
       try {
-        console.log('seltable', this.selectTable)
         const menuResponse = await getMenu({ restaurant_id: this.selectTable.restaurant_id, allMenu: true })
         const menu = menuResponse.data
         menu.forEach((item, index) => {
@@ -89,6 +105,8 @@ export default {
       getFoods({
         page: this.listQuery.page,
         limit: this.listQuery.limit,
+        state:this.listQuery.state,
+        name:this.listQuery.name,
         restaurant_id: this.restaurant_id
       }).then(response => {
         this.tableData = []
@@ -106,6 +124,10 @@ export default {
           tableData.image_path = item.image_path
           tableData.specfoods = item.specfoods
           tableData.index = index
+          tableData.state = item.state
+          tableData.stateStr = item.stateStr
+          tableData.auditRemark = item.auditRemark
+          tableData.shopName = item.shopName
           this.tableData.push(tableData)
         })
       })
@@ -143,6 +165,32 @@ export default {
         const index = this.expendRow.indexOf(row.index)
         this.expendRow.splice(index, 1)
       }
+    },
+    handleAudit( row) {
+      this.audit.show=true
+      this.selectTable = row
+    },
+    handleAuditConfirm(state){
+
+      if(state == "-1"){
+        if(this.audit.auditRemark ==''){
+          this.$message({
+            type: 'warning',
+            message: '请输入拒绝原因'
+          })
+          return
+        }
+      }
+      const params = {item_id:this.selectTable.item_id,state:state,auditRemark:this.audit.auditRemark}
+
+      auditFood(params).then(response => {
+        this.$message({
+          type: 'success',
+          message: '审核成功'
+        })
+        this.fetchData()
+      })
+      this.audit.show=false
     },
     handleEdit(row) {
       this.getSelectItemData(row, 'edit')

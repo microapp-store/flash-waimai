@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Created  on 2018/1/4 0004.
  *
- * @author zt
+ *@Author enilu
  */
 @RestController
 public class EntryController extends BaseController {

@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Created  on 2018/1/4 0004.
  *
- * @author zt
+ *@Author enilu
  */
 @Document(collection = "entries")
 public class Entry extends BaseMongoEntity {

@@ -10,7 +10,7 @@ import lombok.Data;
 /**
  * Created  on 2019/10/10
  *
- * @author enilu.cn
+ *@Author enilu.cn
  */
 @Data
 @Document(collection = "explains")

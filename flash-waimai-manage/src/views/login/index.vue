@@ -7,7 +7,10 @@
         <h3 class="title">{{ $t('login.title') }}</h3>
         <lang-select class="set-language"/>
       </div>
-
+      <div style="margin-bottom:20px;text-align: center;">
+      <el-radio v-model="loginForm.userType" label="1">我是管理员</el-radio>
+      <el-radio v-model="loginForm.userType" label="2">我是商户</el-radio>
+      </div>
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />

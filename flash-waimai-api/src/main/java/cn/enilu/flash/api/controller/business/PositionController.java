@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * Created  on 2017/12/29 0029.
  *
- * @author zt
+ *@Author enilu
  */
 @RestController
 public class PositionController extends BaseController {
@@ -33,11 +33,15 @@ public class PositionController extends BaseController {
         switch (type){
             case "guess":
                 CityInfo cityInfo = positionService.getPostion(getIp());
-                String city = cityInfo.getCity();
-                if (Strings.isNullOrEmpty(city)) {
-                    return Rets.failure();
+                if(cityInfo!=null) {
+                    String city = cityInfo.getCity();
+                    if (Strings.isNullOrEmpty(city)) {
+                        return Rets.failure();
+                    }
+                    return Rets.success(positionService.findByName(city));
+                }else{
+                    Rets.success();
                 }
-                return  Rets.success(positionService.findByName(city));
 
             case "hot":
 
@@ -56,14 +60,14 @@ public class PositionController extends BaseController {
 
     }
     @RequestMapping(value = "/v1/cities/{id}",method = RequestMethod.GET)
-    public Object getCity(@PathVariable("id")Integer id){
+    public Object getCity(@PathVariable("id") Integer id){
         return Rets.success(positionService.findById(id));
     }
 
     @RequestMapping(value = "/v1/pois",method = RequestMethod.GET)
-    public Object getPoiByCityAndKeyword(@RequestParam(value = "type",defaultValue = "search")String type,
-                       @RequestParam(value = "city_id",required = false)Integer cityId,
-                       @RequestParam(value = "keyword")String keyword){
+    public Object getPoiByCityAndKeyword(@RequestParam(value = "type",defaultValue = "search") String type,
+                                         @RequestParam(value = "city_id",required = false) Integer cityId,
+                                         @RequestParam(value = "keyword") String keyword){
         String cityName = null;
         if(cityId==null){
             City city = positionService.guessCity(getIp());
@@ -77,7 +81,7 @@ public class PositionController extends BaseController {
     }
 
     @RequestMapping(value = "/v1/position/pois",method = RequestMethod.GET)
-    public Object getPoiByGeoHash(@RequestParam("geohash")String geoHash){
+    public Object getPoiByGeoHash(@RequestParam("geohash") String geoHash){
         System.out.println("geohash:"+geoHash);
         return Rets.success(positionService.pois(geoHash));
     }

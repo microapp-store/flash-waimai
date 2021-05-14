@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * Created  on 2019/10/09
  *
- * @author enilu.cn
+ *@Author enilu.cn
  */
 @Data
 @Document(collection = "users")
@@ -17,5 +17,9 @@ public class FrontUser extends BaseMongoEntity{
     private String username;
     private String password;
     private Long user_id;
+    /**
+     * 小程序openid
+     */
+    private String miniappOpenid;
 
 }

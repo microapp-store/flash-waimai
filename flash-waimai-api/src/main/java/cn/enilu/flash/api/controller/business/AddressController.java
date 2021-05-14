@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Created  on 2018/1/5 0005.
  *
- * @author zt
+ *@Author enilu
  */
 @RestController
 public class AddressController extends BaseController {
@@ -35,11 +35,11 @@ public class AddressController extends BaseController {
     @Autowired
     private PositionService positionService;
     @RequestMapping(value = "/v1/users/{user_id}/addresses",method = RequestMethod.GET)
-    public Object address(@PathVariable("user_id")Long userId){
+    public Object address(@PathVariable("user_id") Long userId){
         return Rets.success(mongoRepository.findAll(Address.class,"user_id",userId));
     }
     @RequestMapping(value = "/v1/users/{user_id}/addresses",method =  RequestMethod.POST)
-    public Object save(@PathVariable("user_id")Long userId){
+    public Object save(@PathVariable("user_id") Long userId){
         City city = positionService.guessCity(getIp());
         Address address = getRequestPayload(Address.class);
         address.setUser_id(userId);
@@ -49,7 +49,7 @@ public class AddressController extends BaseController {
         return Rets.success("添加地址成功");
     }
     @RequestMapping(value = "/v1/users/${user_id}/addresses/${address_id}",method =  RequestMethod.POST)
-    public Object delete(@PathVariable("user_id")Long userId,@PathVariable("address_id") Long addressId){
+    public Object delete(@PathVariable("user_id") Long userId, @PathVariable("address_id") Long addressId){
         mongoRepository.delete("addresses", Maps.newHashMap("user_id",userId,"id",addressId));
         return Rets.success("删除地址成功");
     }

@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * Created  on 2018/2/26 0026.
  *
- * @author enilu
+ *@Author enilu
  */
 public class BeanUtil {
     /**

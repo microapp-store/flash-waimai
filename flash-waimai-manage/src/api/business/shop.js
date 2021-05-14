@@ -32,7 +32,7 @@ export function foodCategory(params) {
 
 export function getResturants(params) {
   return request({
-    url: '/shopping/restaurants',
+    url: '/shopping/listShop',
     method: 'get',
     params
   })
@@ -72,6 +72,40 @@ export function updateResturant(params) {
   })
 }
 
+/**
+ * 结算金额
+ * @param params
+ */
+export function check(params) {
+  return request({
+    url: '/shopping/check',
+    method: 'post',
+    params
+  })
+}
+/**
+ * 审核商铺
+ * @param params
+ */
+export function auditResturant(params) {
+  return request({
+    url: '/shopping/auditShop',
+    method: 'post',
+    params
+  })
+}
+
+/**
+ * 停用商铺
+ * @param params
+ */
+export function stopResturant(params) {
+  return request({
+    url: '/shopping/stopShop',
+    method: 'post',
+    params
+  })
+}
 /**
  * 删除餐馆
  */

@@ -1,20 +1,25 @@
-import { getApiUrl } from '@/utils/utils'
-import { getToken } from '@/utils/auth'
-import { cityGuess } from '@/api/getData'
+import {getApiUrl} from '@/utils/utils'
+import {getToken} from '@/utils/auth'
+import {cityGuess} from '@/api/getData'
+import permission from '@/directive/permission/index.js'
 import {
   getResturants,
   getResturantsCount,
   foodCategory,
   updateResturant,
+  stopResturant,
+  auditResturant,
   searchplace,
-  deleteResturant
+  deleteResturant,
+  check
 } from '@/api/business/shop'
 
 export default {
+  directives: {permission},
   data() {
     return {
-      city: {},
-      count: 0,
+      // city: {},
+      // count: 0,
       fileMgrUrl: getApiUrl() + '/file',
       uploadHeaders: {
         'Authorization': ''
@@ -27,10 +32,17 @@ export default {
       selectedCategory: [],
       address: {},
       total: 0,
+      stateList: [
+        {label: '审核中', value: '0'},
+        {label: '审核通过', value: '1'},
+        {label: '审核拒绝', value: '-1'},
+      ],
+      audit: {show: false, auditRemark: ''},
       listQuery: {
         page: 1,
         limit: 20,
-        name:undefined
+        name: undefined,
+        state: ''
       }
     }
   },
@@ -41,17 +53,7 @@ export default {
 
   methods: {
     async initData() {
-      try {
-        cityGuess().then(response => {
-          this.city = response.data
-          getResturantsCount().then(response2 => {
-            this.count = response2.count
-            this.fetchData()
-          })
-        })
-      } catch (err) {
-        console.log('获取数据失败', err)
-      }
+      this.fetchData()
     },
     async getCategory() {
       try {
@@ -81,8 +83,6 @@ export default {
       }
     },
     async fetchData() {
-      const latitude = ''
-      const longitude = ''
       getResturants(this.listQuery).then(response => {
         const restaurants = response.data.records
         this.total = response.data.total
@@ -98,7 +98,15 @@ export default {
           tableData.recent_order_num = item.recent_order_num
           tableData.category = item.category
           tableData.image_path = item.image_path
+          tableData.state = item.state
+          tableData.stateStr = item.stateStr
+          tableData.auditRemark = item.auditRemark
+          tableData.disabled = item.disabled
+          tableData.unliquidatedAmount = item.unliquidatedAmount
+          tableData.totalAmount = item.totalAmount
+          tableData.platform_rate = item.platform_rate
           this.tableData.push(tableData)
+          this.shopDetail = tableData
         })
       })
     },
@@ -108,6 +116,7 @@ export default {
     },
     reset() {
       this.listQuery.name = ''
+      this.listQuery.state = ''
       this.fetchData()
     },
     handleSizeChange(val) {
@@ -134,7 +143,75 @@ export default {
       this.listQuery.limit = limit
       this.fetchData()
     },
+    handleStop(index, row, disabled) {
+      let me = this
+      this.$confirm('确认' + (disabled == 1 ? '停用商铺' : '启用商铺') + '?', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消'
+      }).then(({value}) => {
+        stopResturant({id: row.id, disabled: disabled}).then(response => {
+          this.$message({
+            type: 'success',
+            message: (disabled == 1 ? '停用商铺' : '启用商铺') + '成功'
+          })
+          me.fetchData()
+        })
+      }).catch(({value}) => {
+      });
+
+    },
+    handleAuditConfirm(state) {
+
+      if (state == "-1") {
+        if (this.audit.auditRemark == '') {
+          this.$message({
+            type: 'warning',
+            message: '请输入拒绝原因'
+          })
+          return
+        }
+      }
+      const params = {id: this.selectTable.id, state: state, auditRemark: this.audit.auditRemark}
+      console.log(params)
+
+      auditResturant(params).then(response => {
+        this.$message({
+          type: 'success',
+          message: '审核成功'
+        })
+        this.getResturants()
+      })
+      this.audit.show = false
+    },
+    handleAudit(index, row) {
+      this.audit.show = true
+      this.selectTable = row
+    },
+    handleCheck(index, row) {
+      if(row.unliquidatedAmount=='' || row.unliquidatedAmount=='0'){
+        this.$message({
+          type: 'warning',
+          message: '没有可结算的交易额'
+        })
+        return ;
+      }
+      let me = this
+      this.$confirm('待结算金额' + row.unliquidatedAmount + '元,确认结算?', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消'
+      }).then(({value}) => {
+        check({id: row.id}).then(response => {
+          this.$message({
+            type: 'success',
+            message: '结算成功'
+          })
+          me.fetchData()
+        })
+      }).catch(({value}) => {
+      });
+    },
     handleEdit(index, row) {
+      console.log('row', row)
       this.selectTable = row
       this.selectTable.image = getApiUrl() + '/file/getImgStream?fileName=' + row.image_path
       this.address.address = row.address
@@ -145,10 +222,10 @@ export default {
       }
     },
     addFood(index, row) {
-      this.$router.push({ path: '/data/food/add', query: { restaurant_id: row.id }})
+      this.$router.push({path: '/business/food/add', query: {restaurant_id: row.id}})
     },
-    viewFood(index,row) {
-      this.$router.push({path:'/data/food',query:{restaurant_id:row.id}})
+    viewFood(index, row) {
+      this.$router.push({path: '/business/food', query: {restaurant_id: row.id}})
     },
     async handleDelete(index, row) {
       try {
@@ -187,12 +264,12 @@ export default {
       }
     },
     addressSelect(vale) {
-      const { address, latitude, longitude } = vale
-      this.address = { address, latitude, longitude }
+      const {address, latitude, longitude} = vale
+      this.address = {address, latitude, longitude}
     },
     handleServiceAvatarScucess(res, file) {
       this.selectTable.image_path = res.data.realFileName
-      this.selectTable.image =  getApiUrl() + '/file/getImgStream?fileName=' + res.data.realFileName
+      this.selectTable.image = getApiUrl() + '/file/getImgStream?fileName=' + res.data.realFileName
 
     },
     beforeAvatarUpload(file) {

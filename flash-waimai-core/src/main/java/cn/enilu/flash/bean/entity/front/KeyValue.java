@@ -3,7 +3,7 @@ package cn.enilu.flash.bean.entity.front;
 /**
  * Created  on 2018/1/3 0003.
  *
- * @author zt
+ *@Author enilu
  */
 public class KeyValue {
     private String name;

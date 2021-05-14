@@ -3,10 +3,9 @@ package cn.enilu.flash.core.factory;
 import cn.enilu.flash.bean.dictmap.base.AbstractDictMap;
 import cn.enilu.flash.utils.DateUtil;
 import cn.enilu.flash.utils.StringUtils;
+import org.nutz.lang.Mirror;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Date;
@@ -31,6 +30,8 @@ public class Contrast {
      */
     public static String contrastObj(Object pojo1, Object pojo2) {
         String str = "";
+        Mirror mirror1 = Mirror.me(pojo1);
+        Mirror mirror2 = Mirror.me(pojo2);
         try {
             Class clazz = pojo1.getClass();
             Field[] fields = pojo1.getClass().getDeclaredFields();
@@ -39,10 +40,8 @@ public class Contrast {
                 if ("serialVersionUID".equals(field.getName())) {
                     continue;
                 }
-                PropertyDescriptor pd = new PropertyDescriptor(field.getName(), clazz);
-                Method getMethod = pd.getReadMethod();
-                Object o1 = getMethod.invoke(pojo1);
-                Object o2 = getMethod.invoke(pojo2);
+                Object o1 = mirror1.getValue(pojo1,field.getName());// getMethod.invoke(pojo1);
+                Object o2 = mirror2.getValue(pojo2,field.getName());//getMethod.invoke(pojo2);
                 if (o1 == null || o2 == null) {
                     continue;
                 }
@@ -71,6 +70,7 @@ public class Contrast {
     public static String contrastObj(Class dictClass, String key, Object pojo1, Map<String, String> pojo2) throws IllegalAccessException, InstantiationException {
         AbstractDictMap dictMap = (AbstractDictMap) dictClass.newInstance();
         String str = parseMutiKey(dictMap, key, pojo2) + SEPARATOR;
+        Mirror mirror = Mirror.me(pojo1);
         try {
             Class clazz = pojo1.getClass();
             Field[] fields = pojo1.getClass().getDeclaredFields();
@@ -79,10 +79,9 @@ public class Contrast {
                 if ("serialVersionUID".equals(field.getName())) {
                     continue;
                 }
-                PropertyDescriptor pd = new PropertyDescriptor(field.getName(), clazz);
-                Method getMethod = pd.getReadMethod();
-                Object o1 = getMethod.invoke(pojo1);
-                Object o2 = pojo2.get(StringUtils.firstCharToLowerCase(getMethod.getName().substring(3)));
+
+                Object o1 = mirror.getValue(pojo1,field.getName());
+                Object o2 = pojo2.get(StringUtils.firstCharToLowerCase(field.getName()));
                 if (o1 == null || o2 == null) {
                     continue;
                 }

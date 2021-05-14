@@ -3,7 +3,7 @@
     <div class="block">
       <el-row>
         <el-col :span="12" :offset="4">
-          <el-form :model="formData" :rules="rules" ref="formData" label-width="110px" class="demo-formData">
+          <el-form :model="formData" :rules="rules" ref="formData" label-width="120px" class="demo-formData">
             <el-form-item label="店铺名称" prop="name">
               <el-input v-model="formData.name"></el-input>
             </el-form-item>
@@ -17,6 +17,7 @@
               ></el-autocomplete>
               <span>当前城市：{{city.name}}</span>
             </el-form-item>
+
             <el-form-item label="联系电话" prop="phone">
               <el-input v-model.number="formData.phone" maxLength="11"></el-input>
             </el-form-item>
@@ -32,6 +33,9 @@
                 v-model="selectedCategory"
                 change-on-select
               ></el-cascader>
+            </el-form-item>
+            <el-form-item label="平台收取费率(%)" prop="description">
+              <el-input type="number" v-model="formData.platform_rate"></el-input>
             </el-form-item>
             <el-form-item label="店铺特点" style="white-space: nowrap;">
               <span>品牌保证</span>

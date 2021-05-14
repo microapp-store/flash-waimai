@@ -1,6 +1,28 @@
 <template>
-  <div class="fillcontain">
+
     <div class="table_container">
+      <div class="fillcontain">
+
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <el-input v-model="listQuery.name" placeholder="食品名称"></el-input>
+          </el-col>
+          <el-col :span="6">
+            <el-select v-model="listQuery.state" placeholder="请选择审核状态">
+              <el-option
+                v-for="item in stateList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-col>
+          <el-col :span="6">
+            <el-button type="success" icon="el-icon-search" @click.native="search">{{ $t('button.search') }}</el-button>
+            <el-button type="primary" icon="el-icon-refresh" @click.native="reset">{{ $t('button.reset') }}</el-button>
+          </el-col>
+        </el-row>
+        <br>
       <el-table
         :data="tableData"
         @expand='expand'
@@ -14,7 +36,7 @@
                 <span>{{ props.row.name }}</span>
               </el-form-item>
               <el-form-item label="餐馆名称">
-                <span>{{ props.row.restaurant_name }}</span>
+                <span>{{ props.row.shopName }}</span>
               </el-form-item>
               <el-form-item label="食品 ID">
                 <span>{{ props.row.item_id }}</span>
@@ -37,6 +59,12 @@
               <el-form-item label="月销量">
                 <span>{{ props.row.month_sales }}</span>
               </el-form-item>
+              <el-form-item label="审批状态">
+                <span>{{ props.row.stateStr }}</span>
+              </el-form-item>
+              <el-form-item label="审批结果">
+                <span>{{ props.row.auditRemark }}</span>
+              </el-form-item>
             </el-form>
           </template>
         </el-table-column>
@@ -52,14 +80,23 @@
           label="评分"
           prop="rating">
         </el-table-column>
-        <el-table-column label="操作" width="160">
+        <el-table-column label="操作" width="250">
           <template slot-scope="scope">
             <el-button
+              v-if="scope.row.state=='0'"
               size="small"
+              type="primary"
+              v-permission="['/business/food/audit']"
+              @click="handleAudit(scope.row)">审核</el-button>
+            <el-button
+              size="small"
+              type="info"
+              v-permission="['/business/food/edit']"
               @click="handleEdit(scope.row)">编辑</el-button>
             <el-button
               size="small"
               type="danger"
+              v-permission="['/business/food/delete']"
               @click="handleDelete(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -159,6 +196,24 @@
           <el-button type="primary" @click="addspecs">确 定</el-button>
         </div>
       </el-dialog>
+
+        <el-dialog
+          title="食品审核"
+          :visible.sync="audit.show"
+          width="30%">
+          <el-input
+            type="textarea"
+            :rows="2"
+            placeholder="请输入拒绝原因"
+            v-model="audit.auditRemark">
+          </el-input>
+          <span slot="footer" class="dialog-footer">
+            <el-button type="danger" @click="handleAuditConfirm(-1)">拒绝</el-button>
+            <el-button type="primary" @click="handleAuditConfirm(1)">通过</el-button>
+          </span>
+        </el-dialog>
+
+
     </div>
   </div>
 </template>

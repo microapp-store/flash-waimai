@@ -1,9 +1,10 @@
-import { getList } from '@/api/business/order'
+import { getList, updateOrderStatus } from '@/api/business/order'
 import { getResturantDetail } from '@/api/business/shop'
 import { getUserInfo } from '@/api/business/user'
 import { getAddressById } from '@/api/business/address'
-
+import permission from '@/directive/permission/index.js'
 export default {
+  directives: { permission },
   data() {
     return {
       listQuery: {
@@ -90,6 +91,25 @@ export default {
     changeSize(limit) {
       this.listQuery.limit = limit
       this.fetchData()
+    },
+    handleUpdateOrderStatus(row,status){
+      this.$confirm('确定该操作?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        updateOrderStatus({id:row.id,status:status}).then(response => {
+          this.$message({
+            message: '操作成功',
+            type: 'sucess'
+          })
+          this.fetchData()
+        })
+      }).catch(() => {
+      })
+    },
+    handleViewOrder(row){
+      this.$router.push({path: '/business/orderdetail', query: {id: row.id}})
     },
     clear() {
       this.$confirm('确定清空数据?', '提示', {

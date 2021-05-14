@@ -1,6 +1,8 @@
 package cn.enilu.flash.security;
 
+import cn.enilu.flash.bean.entity.front.Shop;
 import cn.enilu.flash.bean.entity.system.User;
+import cn.enilu.flash.utils.Constants;
 import cn.enilu.flash.utils.HttpKit;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -17,11 +19,12 @@ import java.util.Date;
  */
 public class JwtUtil {
     // 过期时间60分钟
-    private static final long EXPIRE_TIME = 60*60*1000;
+    private static final long EXPIRE_TIME = 60 * 60 * 1000;
 
     /**
      * 校验token是否正确
-     * @param token 密钥
+     *
+     * @param token  密钥
      * @param secret 用户的密码
      * @return 是否正确
      */
@@ -40,6 +43,7 @@ public class JwtUtil {
 
     /**
      * 获得token中的信息无需secret解密也能获得
+     *
      * @return token中包含的用户名
      */
     public static String getUsername(String token) {
@@ -51,9 +55,32 @@ public class JwtUtil {
         }
     }
 
-    public static Long getUserId() {
-       return getUserId(HttpKit.getToken());
+    /**
+     * 获取token中的账号信息
+     *
+     * @param token
+     * @return
+     */
+    public static AccountInfo getAccountInfo(String token) {
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+            String username = jwt.getClaim("username").asString();
+            Long userId = jwt.getClaim("userId").asLong();
+            String userType = jwt.getClaim("userType").asString();
+            String password = jwt.getClaim("password").asString();
+            return new AccountInfo(username, userId, userType,password);
+        } catch (JWTDecodeException e) {
+            return null;
+        }
     }
+    public static AccountInfo getAccountInfo(   ) {
+       return getAccountInfo(HttpKit.getToken());
+    }
+
+    public static Long getUserId() {
+        return getUserId(HttpKit.getToken());
+    }
+
     public static Long getUserId(String token) {
         try {
             DecodedJWT jwt = JWT.decode(token);
@@ -65,17 +92,43 @@ public class JwtUtil {
 
     /**
      * 生成签名,5min后过期
+     *
      * @param user 用户
      * @return 加密的token
      */
     public static String sign(User user) {
         try {
-            Date date = new Date(System.currentTimeMillis()+EXPIRE_TIME);
+            Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
             Algorithm algorithm = Algorithm.HMAC256(user.getPassword());
             // 附带username信息
             return JWT.create()
                     .withClaim("username", user.getAccount())
-                    .withClaim("userId",user.getId())
+                    .withClaim("userId", user.getId())
+                    .withClaim("userType", Constants.USER_TYPE_MGR)
+                    .withClaim("password", user.getPassword())
+                    .withExpiresAt(date)
+                    .sign(algorithm);
+        } catch (UnsupportedEncodingException e) {
+            return null;
+        }
+    }
+
+    /**
+     * 生成签名
+     *
+     * @param shop 用户
+     * @return 加密的token
+     */
+    public static String sign(Shop shop) {
+        try {
+            Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
+            Algorithm algorithm = Algorithm.HMAC256(shop.getPassword());
+            // 附带username信息
+            return JWT.create()
+                    .withClaim("username", shop.getName())
+                    .withClaim("userId", shop.getId())
+                    .withClaim("userType", Constants.USER_TYPE_SHOP)
+                    .withClaim("password", shop.getPassword())
                     .withExpiresAt(date)
                     .sign(algorithm);
         } catch (UnsupportedEncodingException e) {

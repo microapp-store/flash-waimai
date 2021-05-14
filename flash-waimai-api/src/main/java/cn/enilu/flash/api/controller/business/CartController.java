@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * Created  on 2018/1/5 0005.
  *
- * @author zt
+ *@Author enilu
  */
 @RestController
 public class CartController extends BaseController {
@@ -69,24 +69,32 @@ public class CartController extends BaseController {
             Map map = (Map) entities.get(0).get(i);
             Map items = Maps.newHashMap();
             items.put("id", Long.valueOf(map.get("id").toString()));
-            items.put("name", map.get("name"));
+            Food food = mongoRepository.findOne(Food.class, Maps.newHashMap("item_id",items.get("id")));
+            items.put("name", food.getName()+"("+map.get("name")+")");
             items.put("packing_fee", map.get("packing_fee"));
             items.put("price", map.get("price"));
             items.put("quantity", map.get("quantity"));
             Double amount= Double.valueOf(map.get("packing_fee").toString()) * Integer.valueOf(map.get("quantity").toString());
-            extra = Maps.newHashMap(
-                    "description", "",
-                    "name", extra.get("name").toString() + " " + map.get("name").toString() + "-" + ((List) map.get("specs")).get(0),
-                    "price", Double.valueOf(extra.get("price").toString()) + amount,
-                    "quantity", Integer.valueOf(extra.get("quantity").toString()) + Integer.valueOf(map.get("quantity").toString()),
-                    "type", 0
-            );
+            if(!"0".equals(map.get("packing_fee"))){
+                extra = Maps.newHashMap(
+                        "description", "",
+                        "name", "打包费" + "-" + ((List) map.get("specs")).get(0),
+                        "price", Double.valueOf(extra.get("price").toString()) + amount,
+                        "quantity", Integer.valueOf(extra.get("quantity").toString()) + Integer.valueOf(map.get("quantity").toString()),
+                        "type", 0
+                );
+                //包装费
+                total  = total.add(new BigDecimal(extra.get("price").toString()));
+            }
+
 
             total = total.add(new BigDecimal(items.get("price").toString()).multiply(new BigDecimal(items.get("quantity").toString())));
 
+
             groups.get(0).add(items);
         }
-
+        //配送费
+        total = total.add(new BigDecimal(cart.getDeliver_amount()));
         extraList.add(extra);
         cart.setExtra(extraList);
 

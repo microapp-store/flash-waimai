@@ -31,7 +31,8 @@ export default {
         endTime: '',
         image_path: '',
         business_license_image: '',
-        catering_service_license_image: ''
+        catering_service_license_image: '',
+        platform_rate:'10'
 
       },
       rules: {

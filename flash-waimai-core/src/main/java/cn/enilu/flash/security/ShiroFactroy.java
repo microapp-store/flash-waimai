@@ -2,6 +2,7 @@ package cn.enilu.flash.security;
 
 import cn.enilu.flash.bean.constant.state.ManagerStatus;
 import cn.enilu.flash.bean.core.ShiroUser;
+import cn.enilu.flash.bean.entity.front.Shop;
 import cn.enilu.flash.bean.entity.system.Role;
 import cn.enilu.flash.bean.entity.system.User;
 import cn.enilu.flash.bean.vo.SpringContextHolder;
@@ -10,6 +11,7 @@ import cn.enilu.flash.dao.system.MenuRepository;
 import cn.enilu.flash.dao.system.RoleRepository;
 import cn.enilu.flash.dao.system.UserRepository;
 import cn.enilu.flash.service.system.impl.ConstantFactory;
+import cn.enilu.flash.utils.Constants;
 import cn.enilu.flash.utils.Convert;
 import cn.enilu.flash.utils.HttpKit;
 import org.apache.shiro.authc.CredentialsException;
@@ -76,6 +78,42 @@ public class ShiroFactroy     {
         shiroUser.setName(user.getName());        // 用户名称
         shiroUser.setPassword(user.getPassword());
         Long[] roleArray = Convert.toLongArray(",", user.getRoleid());
+        List<Long> roleList = new ArrayList<Long>();
+        List<String> roleNameList = new ArrayList<String>();
+        List<String> roleCodeList = new ArrayList<String>();
+        Set<String> permissions = new HashSet<String>();
+        Set<String> resUrls = new HashSet<>();
+        for (Long roleId : roleArray) {
+            roleList.add(roleId);
+            Role role = roleRepository.getOne(roleId);
+            roleNameList.add(role.getName());
+            roleCodeList.add(role.getTips());
+            permissions.addAll(menuRepository.getResCodesByRoleId(roleId));
+            resUrls.addAll(menuRepository.getResUrlsByRoleId(roleId));
+
+        }
+        shiroUser.setRoleList(roleList);
+        shiroUser.setRoleNames(roleNameList);
+        shiroUser.setRoleCodes(roleCodeList);
+        shiroUser.setPermissions(permissions);
+        shiroUser.setUrls(resUrls);
+        tokenCache.setUser(HttpKit.getToken(),shiroUser);
+        return shiroUser;
+    }
+
+    public ShiroUser shiroUser(Shop shop) {
+        ShiroUser shiroUser = tokenCache.getUser(HttpKit.getToken());
+        if(shiroUser!=null){
+            return shiroUser;
+        }
+        shiroUser = new ShiroUser();
+        shiroUser.setId(Long.valueOf(shop.getId()));            // 账号id
+        shiroUser.setAccount(shop.getName());// 账号
+//        shiroUser.setDeptId(user.getDeptid());    // 部门id
+//        shiroUser.setDeptName(ConstantFactory.me().getDeptName(user.getDeptid()));// 部门名称
+        shiroUser.setName(shop.getName());        // 用户名称
+        shiroUser.setPassword(shop.getPassword());
+        Long[] roleArray = new Long[]{Constants.ROLE_ID_SHOP};
         List<Long> roleList = new ArrayList<Long>();
         List<String> roleNameList = new ArrayList<String>();
         List<String> roleCodeList = new ArrayList<String>();

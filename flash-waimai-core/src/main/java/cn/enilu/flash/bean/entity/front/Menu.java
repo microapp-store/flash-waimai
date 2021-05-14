@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created  on 2018/1/3 0003.
  *
- * @author zt
+ *@Author enilu
  */
 @Document(collection = "menus")
 public class Menu  extends BaseMongoEntity{

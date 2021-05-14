@@ -1,7 +1,11 @@
 package cn.enilu.flash.security;
 
 import cn.enilu.flash.bean.core.ShiroUser;
+import cn.enilu.flash.bean.entity.front.Shop;
+import cn.enilu.flash.dao.MongoRepository;
 import cn.enilu.flash.service.system.UserService;
+import cn.enilu.flash.utils.Constants;
+import cn.enilu.flash.utils.Maps;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.AuthenticationException;
@@ -24,11 +28,13 @@ import java.util.Set;
 @Service
 public class ApiRealm extends AuthorizingRealm {
 
-    private     Logger logger = LogManager.getLogger(getClass());
+    private Logger logger = LogManager.getLogger(getClass());
     @Autowired
     private UserService userService;
     @Autowired
     private ShiroFactroy shiroFactroy;
+    @Autowired
+    private MongoRepository mongoRepository;
 
 
     /**
@@ -44,9 +50,15 @@ public class ApiRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        String username = JwtUtil.getUsername(principals.toString());
-
-        ShiroUser user = shiroFactroy.shiroUser(userService.findByAccount(username));
+        AccountInfo accountInfo = JwtUtil.getAccountInfo();
+        ShiroUser user = null;
+        if (accountInfo != null && !accountInfo.isMgr()) {
+            Shop shop = mongoRepository.findOne(Shop.class, Maps.newHashMap("name", accountInfo.getUsername(), "password", accountInfo.getPassword()));
+            user = shiroFactroy.shiroUser(shop);
+        } else {
+            String username = JwtUtil.getUsername(principals.toString());
+            user = shiroFactroy.shiroUser(userService.findByAccount(username));
+        }
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         simpleAuthorizationInfo.addRoles(user.getRoleCodes());
         Set<String> permission = user.getPermissions();
@@ -61,17 +73,21 @@ public class ApiRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken auth) throws AuthenticationException {
         String token = (String) auth.getCredentials();
         // 解密获得username，用于和数据库进行对比
-        String username = JwtUtil.getUsername(token);
-        if (username == null) {
+        AccountInfo accountInfo = JwtUtil.getAccountInfo(token);
+        if (accountInfo == null) {
             throw new AuthenticationException("token invalid");
         }
-
-        ShiroUser userBean =  ShiroFactroy.me().shiroUser(userService.findByAccount(username));
+        ShiroUser userBean = null;
+        if (Constants.USER_TYPE_MGR.equals(accountInfo.getUserType())) {
+            userBean = ShiroFactroy.me().shiroUser(userService.findByAccount(accountInfo.getUsername()));
+        } else if (Constants.USER_TYPE_SHOP.equals(accountInfo.getUserType())) {
+            userBean = ShiroFactroy.me().shiroUser(mongoRepository.findOne(Shop.class, Maps.newHashMap("name", accountInfo.getUsername(), "password", accountInfo.getPassword())));
+        }
         if (userBean == null) {
             throw new AuthenticationException("User didn't existed!");
         }
 
-        if (! JwtUtil.verify(token, username, userBean.getPassword())) {
+        if (!JwtUtil.verify(token, accountInfo.getUsername(), userBean.getPassword())) {
             throw new AuthenticationException("Username or password error");
         }
 

@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * Created  on 2018/4/2 0002.
  *
- * @author enilu
+ *@Author enilu
  */
 @Entity(name = "t_sys_user")
 @Table(appliesTo = "t_sys_user",comment = "账号")

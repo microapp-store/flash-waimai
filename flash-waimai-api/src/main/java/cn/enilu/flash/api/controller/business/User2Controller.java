@@ -4,6 +4,7 @@ import cn.enilu.flash.api.controller.BaseController;
 import cn.enilu.flash.bean.entity.front.FrontUser;
 import cn.enilu.flash.bean.entity.front.FrontUserInfo;
 import cn.enilu.flash.bean.entity.front.Ids;
+import cn.enilu.flash.bean.vo.SpringContextHolder;
 import cn.enilu.flash.bean.vo.business.CityInfo;
 import cn.enilu.flash.bean.vo.business.LoginVo;
 import cn.enilu.flash.bean.vo.front.Rets;
@@ -11,10 +12,7 @@ import cn.enilu.flash.cache.TokenCache;
 import cn.enilu.flash.dao.MongoRepository;
 import cn.enilu.flash.service.front.IdsService;
 import cn.enilu.flash.service.front.PositionService;
-import cn.enilu.flash.utils.CaptchaCode;
-import cn.enilu.flash.utils.DateUtil;
-import cn.enilu.flash.utils.MD5;
-import cn.enilu.flash.utils.Maps;
+import cn.enilu.flash.utils.*;
 import org.nutz.lang.Strings;
 import org.nutz.mapl.Mapl;
 import org.slf4j.Logger;
@@ -44,12 +42,26 @@ public class User2Controller extends BaseController {
 
     @RequestMapping(value = "/v1/user", method = RequestMethod.GET)
     public Object getUser() {
-        return getSession("currentUser");
+        Object ret = getSession("currentUser");
+        if (ret == null) {
+            String token = getRequest().getParameter("token");
+            logger.info("token:{}", token);
+            if (StringUtils.isNotEmpty(token)) {
+                Long userId = SpringContextHolder.getBean(TokenCache.class).get(token, Long.class);
+                logger.info("userId:{}", userId);
+                FrontUser frontUser = mongoRepository.findOne(FrontUser.class, "user_id", userId);
+                FrontUserInfo userInfo = mongoRepository.findOne(FrontUserInfo.class, Maps.newHashMap("user_id", userId));
+                Object result = Mapl.merge(frontUser, userInfo);
+                return result;
+            }
+        }
+        logger.error("获取用户信息失败");
+        return null;
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public Object getUser(@RequestParam("user_id") Long userId) {
-          return Rets.success(mongoRepository.findOne(FrontUser.class,"user_id",userId));
+        return Rets.success(mongoRepository.findOne(FrontUser.class, "user_id", userId));
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -65,7 +77,7 @@ public class User2Controller extends BaseController {
 
     @RequestMapping(value = "/v2/login", method = RequestMethod.POST)
     public Object login(@RequestBody LoginVo loginVo) {
-        String captchCode =   tokenCache.get(loginVo.getCaptchCodeId(),String.class);
+        String captchCode = tokenCache.get(loginVo.getCaptchCodeId(), String.class);
         if (!Strings.equals(loginVo.getCaptchaCode(), captchCode)) {
             return Rets.failure(Maps.newHashMap("type", "ERROR_CAPTCHA", "message", "验证码不正确"));
         }

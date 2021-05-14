@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 /**
  * Created  on 2018/3/23 0023.
  *
- * @author enilu
+ *@Author enilu
  */
 @Service
 public class UserService  extends BaseService<User,Long,UserRepository> {

@@ -20,7 +20,9 @@ export default {
       }
     }
     return {
+
       loginForm: {
+        userType:'1',
         username: '',
         password: ''
       },
@@ -41,6 +43,7 @@ export default {
       }
     },
     handleLogin() {
+
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true

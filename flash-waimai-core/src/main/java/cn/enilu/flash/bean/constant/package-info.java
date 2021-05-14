@@ -1,6 +1,6 @@
 /**
  * Created  on 2018/3/28 0028.
  *
- * @author enilu
+ *@Author enilu
  */
 package cn.enilu.flash.bean.constant;

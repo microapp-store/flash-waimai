@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * Created  on 2018/4/5 0005.
  *
- * @author enilu
+ *@Author enilu
  */
 public class DeptServiceTest  extends BaseApplicationStartTest {
     @Autowired
