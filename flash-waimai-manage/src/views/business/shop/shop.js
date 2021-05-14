@@ -104,6 +104,7 @@ export default {
           tableData.disabled = item.disabled
           tableData.unliquidatedAmount = item.unliquidatedAmount
           tableData.totalAmount = item.totalAmount
+          tableData.isInSchool = item.isInSchool + ''
           tableData.platform_rate = item.platform_rate
           this.tableData.push(tableData)
           this.shopDetail = tableData
@@ -179,7 +180,7 @@ export default {
           type: 'success',
           message: '审核成功'
         })
-        this.getResturants()
+        this.fetchData()
       })
       this.audit.show = false
     },

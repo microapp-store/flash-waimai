@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="block">
-      <el-row :gutter="20" v-permission="['/business/shop/delete']">
+      <el-row :gutter="20" v-permission="['/business/shop/audit']">
         <el-col :span="6">
           <el-input v-model="listQuery.name" placeholder="店铺名称"></el-input>
         </el-col>
@@ -22,7 +22,7 @@
       </el-row>
       <br>
 
-      <div class="table_container" v-permission="['/business/shop/delete']">
+      <div class="table_container" v-permission="['/business/shop/audit']">
         <el-table
           :data="tableData"
           style="width: 100%">
@@ -52,6 +52,9 @@
                 </el-form-item>
                 <el-form-item label="分类">
                   <span>{{ props.row.category }}</span>
+                </el-form-item>
+                <el-form-item label="商铺地点">
+                  <span>{{ props.row.isInSchool =='1'?'校内':'校外' }}</span>
                 </el-form-item>
                 <el-form-item label="审批状态">
                   <span>{{ props.row.stateStr }}</span>
@@ -132,12 +135,6 @@
 
                 @click="viewFood(scope.$index, scope.row)">查看食品
               </el-button>
-              <!--<el-button-->
-                <!--size="mini"-->
-                <!--type="danger"-->
-                <!--v-permission="['/business/shop/delete']"-->
-                <!--@click="handleDelete(scope.$index, scope.row)">删除-->
-              <!--</el-button>-->
             </template>
           </el-table-column>
         </el-table>
@@ -154,6 +151,8 @@
         </el-pagination>
 
       </div>
+
+
 
       <el-dialog
         title="商铺审核"
