@@ -208,7 +208,7 @@ public class MongoRepository {
      * @return
      */
     public GeoResults<Map> near(double x, double y, String collectionName, Map<String, Object> params) {
-        return near(x,y,collectionName,params,10);
+        return near(x,y,collectionName,params,50);
     }
 
     public long count(Class klass) {
