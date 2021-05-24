@@ -6,7 +6,7 @@
     - 创建数据库
         ```sql
         CREATE DATABASE IF NOT EXISTS waimai DEFAULT CHARSET utf8 COLLATE utf8_general_ci; 
-        CREATE USER 'waimai'@'%' IDENTIFIED BY 'waimai123';
+        CREATE USER 'waimai'@'%' IDENTIFIED BY 'waiMAI@123';
         GRANT ALL privileges ON waimai.* TO 'waimai'@'%';
         flush privileges;
         ```
@@ -26,8 +26,8 @@
 - 测试图片数据，系统中测试数据中包含了大量的商铺，食品图片。
     - 由于数据量较大， 放在了百度云盘，链接：[https://pan.baidu.com/s/1rvZDspoapWa6rEq2D_5kzw](https://pan.baidu.com/s/1rvZDspoapWa6rEq2D_5kzw) 提取码：urzw ，
     - 将图片存放到t_sys_cfg表中system.file.upload.path配置的目录下
-  
-  
+
+
 ## 清空测试数据
 
 如果想清空所有测试数据，自己通过后台管理功能区录入测试数据，可以通过使用下面配置清空系统测试数据
@@ -38,4 +38,4 @@ spring.jpa.hibernate.ddl-auto=create
 flash.waimai.mongodb.init=true
 使用客户端连接mongodb数据库为shop表创建索引:
 db.shops.createIndex({location: "2dsphere"})
-```  
+```

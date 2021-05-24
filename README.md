@@ -9,7 +9,7 @@
 - 数据库连接池：Druid
 - 缓存：Ehcache
 - 前端：Vue.js
-- 数据库：mysql5.5以上,Mongodb4.0(不要使用最新版4.2)
+- 数据库：mysql5.5以上,Mongodb建议4.0(不要使用4.2及其已上版本，否则有部分api需要自行调整)
 
 ## 模块
 - flash-waimai-mobile 手机端站点

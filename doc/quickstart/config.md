@@ -6,9 +6,9 @@
 
 ### 数据库配置 
 ```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/web-flash?useUnicode=true&characterEncoding=UTF8
-spring.datasource.username=root
-spring.datasource.password=root
+spring.datasource.url=jdbc:mysql://localhost:3306/waimai?useUnicode=true&characterEncoding=UTF8
+spring.datasource.username=waimai
+spring.datasource.password=waiMAI@123
 ```
 
 ### mongodb 配置
