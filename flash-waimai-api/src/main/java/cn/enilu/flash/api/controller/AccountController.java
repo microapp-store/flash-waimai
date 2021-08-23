@@ -179,7 +179,7 @@ public class AccountController extends BaseController{
                     return Rets.failure("旧密码输入错误");
                 }
                 if(shop.getId()!=accountInfo.getUserId()){
-                    //基本不回出现这种情况
+                    //基本不会出现这种情况
                     return Rets.failure("不允许该操作");
                 }
                 mongoRepository.update(accountInfo.getUserId(),"shops",Maps.newHashMap("password",password));
