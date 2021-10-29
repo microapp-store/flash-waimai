@@ -19,7 +19,7 @@
         ```sql
         use flash-waimai
         ```
-    - 初始化数据，由于测试数据量较大，将测试数据打包放在了百度云盘：链接：[https://pan.baidu.com/s/1mfO7yckFL7lMb_O0BPsviw](https://pan.baidu.com/s/1mfO7yckFL7lMb_O0BPsviw)  提取码：apgd 下载后将文件解压到d:\\elm，使用如下命令导入数据：
+    - 初始化数据，由于测试数据量较大，将测试数据打包放在了百度云盘：链接：https://pan.baidu.com/s/1lOvhN1-Y1M0-FZAwGHus7Q  提取码：4qz7 。 下载后将文件解压到d:\\elm，使用如下命令导入数据：
         ```
         mongorestore.exe -d flash-waimai d:\\elm
         ```
@@ -30,7 +30,7 @@
 
 ## 清空测试数据
 
-如果想清空所有测试数据，自己通过后台管理功能区录入测试数据，可以通过使用下面配置清空系统测试数据
+如果想清空所有测试数据，自己通过后台管理功能录入测试数据，可以通过使用下面配置清空系统测试数据
 ```properties
 # 开启该配置自动创建数据库
 spring.jpa.hibernate.ddl-auto=create
