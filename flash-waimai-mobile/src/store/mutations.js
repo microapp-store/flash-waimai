@@ -163,13 +163,12 @@ export default {
 	},
 	//选择搜索的地址
 	[CHOOSE_SEARCH_ADDRESS](state, place) {
-	  console.log('place',place);
 		state.searchAddress = place;
 	},
 	//保存geohash
 	[SAVE_GEOHASH](state, geohash) {
 		state.geohash = geohash;
-		
+
 	},
 	//确认订单页添加新的的地址
 	[CONFIRM_ADDRESS](state, newAddress) {

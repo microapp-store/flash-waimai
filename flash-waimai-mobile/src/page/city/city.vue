@@ -13,7 +13,7 @@
     </form>
     <header v-if="historytitle" class="pois_search_history">搜索历史</header>
     <ul class="getpois_ul">
-      <li v-for="(item, index) in placelist" @click='nextpage(index, item.location)' :key="index">
+      <li v-for="(item, index) in placelist" @click='nextpage(index, item)' :key="index">
         <h4 class="pois_name ellipsis">{{item.name}}</h4>
         <p class="pois_address ellipsis">{{item.address}}</p>
       </li>
@@ -80,7 +80,9 @@
        * 点击搜索结果进入下一页面时进行判断是否已经有一样的历史记录
        * 如果没有则新增，如果有则不做重复储存，判断完成后进入下一页
        */
-      nextpage(index, geohash) {
+      nextpage(index, item) {
+        console.log('item',item)
+        const geohash = item.location
         let history = getStore('placeHistory');
         let choosePlace = this.placelist[index];
         if (history) {
@@ -98,7 +100,7 @@
           this.placeHistory.push(choosePlace)
         }
         setStore('placeHistory', this.placeHistory)
-        this.$router.push({path: '/msite', query: {'geohash': geohash.lat + ',' + geohash.lng}})
+        this.$router.push({path: '/msite', query: {'geohash': geohash.lat + ',' + geohash.lng,'address':item.address}})
       },
       clearAll() {
         removeStore('placeHistory');

@@ -17,19 +17,23 @@ export default {
     }
   },
   async beforeMount() {
+    let address = ''
     if (!this.$route.query.geohash) {
       const address = await cityGuess();
       this.geohash = address.latitude + ',' + address.longitude;
     } else {
       this.geohash = this.$route.query.geohash
+      address = this.$route.query.address
     }
+    console.log('geohash',this.geohash)
     //保存geohash 到vuex
     this.SAVE_GEOHASH(this.geohash);
     //获取位置信息
-    let res = await msiteAddress(this.geohash);
-    this.msiteTitle = res.name;
+    // let res = await msiteAddress(this.geohash);
+    this.msiteTitle =address;
     // 记录当前经度纬度
-    this.RECORD_ADDRESS(res);
+    const latAndLng = this.geohash.split(',')
+    this.RECORD_ADDRESS({latitude:latAndLng[0],longitude:latAndLng[1]});
 
     this.hasGetData = true;
   },

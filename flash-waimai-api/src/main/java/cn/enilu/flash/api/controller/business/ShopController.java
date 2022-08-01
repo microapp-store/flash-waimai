@@ -127,9 +127,10 @@ public class ShopController extends BaseController {
                 List list = Lists.newArrayList();
                 for (int i = 0; i < geoResultList.size(); i++) {
                     Map map = geoResultList.get(i).getContent();
+
                     Distance distance = new Distance(Double.valueOf(longitude), Double.valueOf(latitude),
                             Double.valueOf(map.get("longitude").toString()), Double.valueOf(map.get("latitude").toString()));
-                    map.put("distance", distance.getDistance());
+                    map.put("distance", distance.getDistance().intValue());
 
                     map.put("order_lead_time", "30分钟");
                     list.add(map);
