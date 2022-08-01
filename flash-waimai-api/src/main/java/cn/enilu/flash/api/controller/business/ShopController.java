@@ -68,20 +68,25 @@ public class ShopController extends BaseController {
             @RequestParam(value = "state", required = false) String state,
             @RequestParam(value = "restaurant_category_ids[]", required = false) Long[] categoryIds) {
         AccountInfo accountInfo = JwtUtil.getAccountInfo();
-        if (Constants.USER_TYPE_SHOP.equals(accountInfo.getUserType())) {
-            Page<Shop> page = new PageFactory<Shop>().defaultPage();
-            return Rets.success(mongoRepository.queryPage(page, Shop.class, Maps.newHashMap("id", accountInfo.getUserId())));
-        }
-        Map<String, Object> params = Maps.newHashMap();
-        if (StringUtils.isNotEmpty(name)) {
-            params.put("name", name);
-        }
-        if (StringUtils.isNotEmpty(state)) {
-            params.put("state", state);
-        }
-
         Page<Shop> page = new PageFactory<Shop>().defaultPage();
-        return Rets.success(mongoRepository.queryPage(page, Shop.class, params));
+        if (Constants.USER_TYPE_SHOP.equals(accountInfo.getUserType())) {
+            page = mongoRepository.queryPage(page, Shop.class, Maps.newHashMap("id", accountInfo.getUserId()));
+        }else {
+            Map<String, Object> params = Maps.newHashMap();
+            if (StringUtils.isNotEmpty(name)) {
+                params.put("name", name);
+            }
+            if (StringUtils.isNotEmpty(state)) {
+                params.put("state", state);
+            }
+            page = mongoRepository.queryPage(page, Shop.class, params);
+        }
+        List<Shop> list = page.getRecords();
+        for(Shop shop:list){
+            shop.setPassword(null);
+        }
+        page.setRecords(list);
+        return Rets.success(page);
 
     }
 
