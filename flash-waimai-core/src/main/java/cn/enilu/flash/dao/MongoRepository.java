@@ -200,7 +200,7 @@ public class MongoRepository {
         return null;
     }
     /**
-     * 查询指定位置附近的商家，默认查询十公里范围内
+     * 查询指定位置附近的商家，默认查询五十公里范围内(测试环境方便演示，设置的值较大，实际业务中建议设置为5公里以内)
      * @param x
      * @param y
      * @param collectionName

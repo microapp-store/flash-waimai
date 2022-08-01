@@ -30,7 +30,7 @@
 ```
 - mysql数据库创建好了之后，启动flash-waimai-api服务，会自动初始化数据，无需开发人员自己手动初始化数据
 - 安装mongodb并创建数据库:flash-waimai
-使用mongorestore命令  导入mongodb数据,由于测试数据量较大，打包放在了百度云盘：链接：https://pan.baidu.com/s/1mfO7yckFL7lMb_O0BPsviw   提取码：apgd 下载后将文件解压到d:\\elm，如下命令导入数据：
+使用mongorestore命令  导入mongodb数据,由于测试数据量较大，打包放在了百度云盘：链接：https://pan.baidu.com/s/1lOvhN1-Y1M0-FZAwGHus7Q  提取码：4qz7 下载后将文件解压到d:\\elm，如下命令导入数据：
                                               
 ```
 mongorestore.exe -d flash-waimai d:\\elm
