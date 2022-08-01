@@ -25,6 +25,10 @@ public class Food extends BaseMongoEntity{
      * 审核状态：审核拒绝
      */
     public static  final String STATE_NO = "-1";
+    /**
+     * 已删除
+     */
+    public static  final String STATE_DEL = "-2";
     @Id
     private String _id;
     /**
@@ -331,6 +335,9 @@ public class Food extends BaseMongoEntity{
 
         if(STATE_NO.equals(state)){
             return "审核失败";
+        }
+        if(STATE_DEL.equals(state)){
+            return "已删除";
         }
         return "";
     }

@@ -80,6 +80,10 @@
           label="评分"
           prop="rating">
         </el-table-column>
+        <el-table-column
+          label="状态"
+          prop="stateStr">
+        </el-table-column>
         <el-table-column label="操作" width="250">
           <template slot-scope="scope">
             <el-button
@@ -94,6 +98,7 @@
               v-permission="['/business/food/edit']"
               @click="handleEdit(scope.row)">编辑</el-button>
             <el-button
+              v-if="scope.row.stateStr!=='已删除'"
               size="small"
               type="danger"
               v-permission="['/business/food/delete']"

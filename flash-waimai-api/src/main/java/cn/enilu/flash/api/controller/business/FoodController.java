@@ -170,7 +170,19 @@ public class FoodController extends BaseController {
      */
     @RequestMapping(value = "/v2/food/{id}", method = RequestMethod.DELETE)
     public Object delete(@PathVariable("id") Long id) {
-        mongoRepository.delete("foods", Maps.newHashMap("item_id", id));
+        //下架食品
+        Food food =mongoRepository.findOne(Food.class, Maps.newHashMap("item_id",id));
+        food.setState(Food.STATE_DEL);
+        mongoRepository.update(food);
+        //从菜单中移除当前食品
+        Long restaurantId = food.getRestaurant_id();
+        Menu menu = mongoRepository.findOne(Menu.class,Maps.newHashMap("restaurant_id",restaurantId));
+        List<Food> foods = menu.getFoods();
+
+        foods.removeIf(s-> s.getItem_id().intValue() == id.intValue());
+
+        mongoRepository.update(menu);
+
         return Rets.success();
     }
 
