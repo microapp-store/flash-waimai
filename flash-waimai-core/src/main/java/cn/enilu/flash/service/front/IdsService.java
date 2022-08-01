@@ -31,6 +31,7 @@ public class IdsService {
             ids.setSku_id(0L);
             ids.setAdmin_id(0L);
             ids.setStatis_id(0L);
+            ids.setItem_id(0L);
             beans.set(propName,1L);
             mongoRepository.save(ids);
             return 1L;
