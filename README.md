@@ -40,12 +40,12 @@ mongorestore.exe -d flash-waimai d:\\elm
     - 直接运行ApiApplication主类启动api服务
 - 启动管理平台:
     - 进入flash-waimai-manage目录：
-    - 运行 npm install --registry=https://registry.npm.taobao.org
+    - 运行 npm install --registry=https://registry.npmmirror.com
     - 运行npm run dev
     - 启动成功后访问 http://localhost:9528 ,登录，用户名密码:admin/admin
 - 启动手机端:
     - 进入flash-waimai-mobile目录：    
-    - 运行 npm install --registry=https://registry.npm.taobao.org
+    - 运行 npm install --registry=https://registry.npmmirror.com
     - 运行npm run dev
     - 启动成功后访问 http://localhost:8000
 
@@ -72,6 +72,6 @@ mongorestore.exe -d flash-waimai d:\\elm
 - 该项目不适用与商城系统解决方案，如果有商城系统需求，可以查看另外一个商城的开源系统[https://gitee.com/microapp/linjiashop](https://gitee.com/microapp/linjiashop)(支持H5,微信小程序,APP)
 
 ## 交流
-- qq群： 936439613；qq群仅为方便网友互相交流，作者基本不会在群里回复，如果需要跟作者提问题，可以通过项目主页提issue；qq群禁止发广告，发者立删;为了提高加群门槛，避免随意入群发广告等，加入qq群需要付费1元
+- qq群仅为方便网友互相交流，作者基本不会在群里回复，如果需要跟作者提问题，可以通过项目主页提issue；qq群禁止发广告，发者立删;为了提高加群门槛，请先通过下面链接打赏后加项目作者qq，并将打赏截图发过去，作者将邀请你进群，[打赏链接](https://microapp.gitee.io/flash-waimai/donate.html),打赏金额随缘
 
 

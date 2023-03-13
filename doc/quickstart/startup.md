@@ -6,7 +6,7 @@
 ![api](../img/flash-waimai-api.jpg)
 ## 启动flash-waimai-manage
 - 进入flash-waimai-manage目录
-    - 命令行窗口运行 npm install --registry=https://registry.npm.taobao.org
+    - 命令行窗口运行 npm install --registry=https://registry.npmmirror.com
     - 运行  npm run dev
     - 启动成功后访问 http://localhost:9528,登录，用户名密码:admin/admin 
  ![vue](../admin.gif)
