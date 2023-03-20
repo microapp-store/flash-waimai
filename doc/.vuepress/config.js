@@ -1,7 +1,7 @@
 module.exports = {
     title: 'flash-waimai',
     description: '使用flash-waimai快速构建外卖系统',
-    base: '/flash-waimai/',
+    base: '/waimai/',
     head: [
         ['link', { rel: 'shortcut icon', type: "image/x-icon", href: './favicon.ico' }]
     ],

@@ -61,7 +61,7 @@ mongorestore.exe -d flash-waimai d:\\elm
 - 手机端:[http://waimai-mobile.microapp.store](http://waimai-mobile.microapp.store)
 
 ## 文档
-[https://microapp.gitee.io/flash-waimai](https://microapp.gitee.io/flash-waimai)
+[http://waimai.enilu.cn](http://waimai.enilu.cn)
 ## 开发进度
 - flash-waimai-manage [初步完成]
 - flash-waimai-mobile[完善中]
@@ -72,6 +72,6 @@ mongorestore.exe -d flash-waimai d:\\elm
 - 该项目不适用与商城系统解决方案，如果有商城系统需求，可以查看另外一个商城的开源系统[https://gitee.com/microapp/linjiashop](https://gitee.com/microapp/linjiashop)(支持H5,微信小程序,APP)
 
 ## 交流
-- qq群仅为方便网友互相交流，作者基本不会在群里回复，如果需要跟作者提问题，可以通过项目主页提issue；qq群禁止发广告，发者立删;为了提高加群门槛，请先通过下面链接打赏后加项目作者qq(82552623)，并将打赏截图发过去，作者将邀请你进群，[打赏链接](https://microapp.gitee.io/flash-waimai/donate.html),打赏金额随缘
+- qq群仅为方便网友互相交流，作者基本不会在群里回复，如果需要跟作者提问题，可以通过项目主页提issue；qq群禁止发广告，发者立删;为了提高加群门槛，请先通过下面链接打赏后加项目作者qq(82552623)，并将打赏截图发过去，作者将邀请你进群，[打赏链接](http://waimai.enilu.cn/waimai/donate.html),打赏金额随缘
 
 
