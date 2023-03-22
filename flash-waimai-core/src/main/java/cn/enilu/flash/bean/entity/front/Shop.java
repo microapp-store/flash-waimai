@@ -89,9 +89,9 @@ public class Shop extends BaseMongoEntity {
      */
     private String password;
     /**
-     * 是否停用，0/null：不禁用，1：禁用
+     * 是否停用，0/null：不禁用，1：禁用，默认禁用状态
      */
-    private Integer disabled;
+    private Integer disabled=1;
     /**
      * 平台收取费率（百分比）
      */
